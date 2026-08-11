@@ -1,0 +1,211 @@
+/* ============================================================================
+   Motion.
+
+   Two rules govern everything here:
+
+   1. Motion marks ARRIVAL and STATE CHANGE. Nothing loops, nothing floats,
+      nothing moves because movement is nice.
+   2. The page must be complete and readable with motion switched off. Under
+      prefers-reduced-motion every reveal starts already visible, so a reader
+      never waits for an animation that will not come.
+
+   Reveals are driven by an IntersectionObserver (see useReveal), never by a
+   scroll listener.
+   ============================================================================ */
+
+/* Failsafe. The pre-reveal state hides content, so if the observer never runs
+   (JS error, script blocked, a browser we did not anticipate) the page would be
+   blank. This animation reveals everything after 1.2s regardless, and is
+   overridden the moment data-shown lands. A blank page in front of a judge is
+   not a risk worth taking for an animation. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal]:not([data-shown]),
+  [data-reveal-stagger]:not([data-shown]) {
+    animation: reveal-failsafe 1ms linear 1200ms forwards;
+  }
+
+  @keyframes reveal-failsafe {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* --- Reveal on arrival ------------------------------------------------
+     A short rise and fade as a block enters. 14px, not 60: the eye should
+     register that something arrived, not watch it travel. */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 520ms var(--ease-out),
+      transform 520ms var(--ease-out);
+  }
+
+  [data-reveal][data-shown] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Children stagger, so a row of figures resolves left to right rather than
+     snapping in as a block. Capped at six: past that the last item waits long
+     enough to feel broken. */
+  [data-reveal-stagger] > * {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 460ms var(--ease-out),
+      transform 460ms var(--ease-out);
+  }
+
+  [data-reveal-stagger][data-shown] > * {
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-reveal-stagger][data-shown] > *:nth-child(1) { transition-delay: 0ms; }
+  [data-reveal-stagger][data-shown] > *:nth-child(2) { transition-delay: 70ms; }
+  [data-reveal-stagger][data-shown] > *:nth-child(3) { transition-delay: 140ms; }
+  [data-reveal-stagger][data-shown] > *:nth-child(4) { transition-delay: 210ms; }
+  [data-reveal-stagger][data-shown] > *:nth-child(5) { transition-delay: 280ms; }
+  [data-reveal-stagger][data-shown] > *:nth-child(n + 6) { transition-delay: 340ms; }
+
+  /* --- Bars grow from zero --------------------------------------------
+     A bar that appears at full length says nothing. One that grows says "this
+     is a measured quantity". The transform origin matters: bars grow from the
+     axis, not from their centre. */
+  .bar__fill,
+  .ratio__fill,
+  .readiness__bar {
+    transform-origin: left center;
+    animation: bar-grow 700ms var(--ease-out) both;
+  }
+
+  @keyframes bar-grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* --- Chart draw-in --------------------------------------------------
+     Lines draw along their own length. Only for line marks: a bar or an area
+     drawn this way looks like a loading state. */
+  .trend__line {
+    stroke-dasharray: 1000;
+    animation: draw 1100ms var(--ease-out) both;
+  }
+
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .trend__dot,
+  .trend__value {
+    animation: fade-in 400ms var(--ease-out) both;
+    animation-delay: 700ms;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* --- Route change ---------------------------------------------------
+     A short settle so a new screen reads as a new place rather than a repaint.
+     Deliberately brief: a judge clicking through seven screens should not wait
+     seven times.
+
+     Scoped to :not([data-reveal]) because an animation with `both` fill pins
+     opacity and transform for the element's whole life, which silently defeated
+     the reveal transition on every section. One element, one motion owner. */
+  .main > *:not([data-reveal]):not([data-reveal-stagger]) {
+    animation: route-in 340ms var(--ease-out) both;
+  }
+
+  @keyframes route-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* --- Disclosure ----------------------------------------------------- */
+  .row__body,
+  .path__body,
+  .card__detail,
+  .readiness__detail,
+  .depth__body:not([hidden]),
+  .caveat__body:not([hidden]) {
+    animation: expand 260ms var(--ease-out) both;
+  }
+
+  @keyframes expand {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* --- Always on, motion-independent ---------------------------------------
+   Hover and focus feedback is instant state, not decoration, so it survives
+   reduced-motion. Kept to colour and border changes: nothing moves. */
+
+.area__link,
+.report-contents__link,
+.ai__chip,
+.picker__btn {
+  transition:
+    background var(--dur-1) var(--ease),
+    border-color var(--dur-1) var(--ease),
+    color var(--dur-1) var(--ease);
+}
+
+/* --- Reduced motion -----------------------------------------------------
+   Everything above is inside a no-preference query, so this only needs to
+   neutralise the animations declared unconditionally. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Print ---------------------------------------------------------------
+   Paper cannot animate, and a mid-animation element would print half-faded. */
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

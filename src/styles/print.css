@@ -1,0 +1,187 @@
+/* ============================================================================
+   Print stylesheet.
+
+   Task 1 must produce a polished multi-page PDF from the SAME components the
+   screen uses, with no duplicated content. Ctrl+P on the research route yields
+   a clean publication.
+
+   Three jobs:
+     1. Remove interface chrome that means nothing on paper (nav, tooltips,
+        table-view toggles, hover affordances).
+     2. Restore page structure paper needs and screens do not (running heads,
+        page breaks, printed URLs for links).
+     3. Force every color to a print-safe rendering, since printer color
+        management cannot be trusted.
+   ============================================================================ */
+
+@media print {
+  /* --- Page geometry ---------------------------------------------------
+     A4 with a wide outer margin for the running head and folio. */
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm;
+  }
+
+  :root {
+    /* Paper is white; the ivory surface would waste ink and grey the plate.
+       Ink darkens slightly because toner spreads on paper. */
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --surface-sunken: #f4f2ec;
+    --ink: #000000;
+    --ink-secondary: #1f2020;
+    --ink-muted: #45463f;
+    --rule: #b9b3a4;
+    --rule-soft: #d6d1c4;
+    --rule-strong: #6b6558;
+
+    /* All motion off. */
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+  }
+
+  html {
+    font-size: 10.5pt;
+  }
+
+  body {
+    background: #ffffff;
+    /* Keeps the sequential ramp and risk marks printing as designed rather
+       than being dropped by "do not print backgrounds". */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* --- Chrome removal --------------------------------------------------- */
+  .masthead,
+  .colophon,
+  .skip-link,
+  .no-print,
+  .chart-toggle,
+  .tooltip,
+  [data-print='hide'] {
+    display: none !important;
+  }
+
+  .main {
+    min-height: 0;
+  }
+
+  /* Reveal animations must never leave content invisible on paper. */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* --- Link handling ---------------------------------------------------
+     On paper a link is useless unless its target is printed. Source URLs are
+     spelled out; internal navigation links are not (they would be noise). */
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  .prose a,
+  .source-list a {
+    text-decoration: underline;
+  }
+
+  .source-list a::after {
+    content: ' <' attr(href) '>';
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    word-break: break-all;
+    color: #45463f;
+  }
+
+  /* --- Pagination -----------------------------------------------------
+     Report sections start on a fresh page; figures, tables, and callouts are
+     never split across a page boundary. */
+  .report-section {
+    break-before: page;
+    break-inside: auto;
+  }
+
+  .report-section:first-of-type {
+    break-before: avoid;
+  }
+
+  figure,
+  .panel,
+  .callout,
+  .figure-frame,
+  .scenario-panel,
+  table {
+    break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  /* Widow and orphan control for long-form serif body. */
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* --- Print-only apparatus -------------------------------------------
+     The screen has persistent navigation for orientation; paper needs a
+     running head and folio instead. */
+  .print-only {
+    display: block !important;
+  }
+
+  .print-masthead {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 3mm;
+    margin-bottom: 8mm;
+    border-bottom: 1.5pt solid #000000;
+  }
+
+  /* Wide screen layouts collapse: paper is one narrow column. Multi-column
+     grids that read well at 1400px become unreadable at 178mm. */
+  .page {
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    display: block;
+  }
+
+  .grid-2 > * + *,
+  .grid-3 > * + *,
+  .grid-4 > * + * {
+    margin-top: var(--s-5);
+  }
+
+  /* Charts hold their aspect on paper but lose interactive affordances. */
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Tables that back up charts should print, since a printed chart cannot be
+     hovered for values. */
+  .chart-table {
+    display: table !important;
+    margin-top: var(--s-4);
+    font-size: 8.5pt;
+  }
+}
+
+/* Print-only elements are hidden on screen. */
+.print-only,
+.print-masthead {
+  display: none;
+}

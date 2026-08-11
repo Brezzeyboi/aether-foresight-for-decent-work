@@ -1,0 +1,477 @@
+/* ============================================================================
+   Research board: opening, headline band, section variants, depth disclosure.
+
+   These are the structural answers to a single problem: the research is deep,
+   and depth presented as thirteen pages of unbroken prose is a wall that gets
+   read by nobody. The fix is three reading layers, not less research.
+
+     1. takeaway    one line per section, always visible
+     2. figures     charts and matrices, scannable
+     3. depth       the full analysis, behind a disclosure
+   ============================================================================ */
+
+/* --- The opening ---------------------------------------------------------
+   Image and title share one frame. The photograph does argumentative work:
+   hands, a mechanism mid-repair, its components laid out in order. Work being
+   figured out rather than discarded, which is the report's thesis. */
+
+.opening {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+  padding-block: clamp(2rem, 1.5rem + 3vw, 4rem) clamp(2rem, 1.5rem + 2vw, 3.5rem);
+}
+
+.opening__figure {
+  margin: 0;
+}
+
+.opening__image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-2);
+  /* The generated plate is already duotone. This only seats it into the page's
+     warmth so it does not read as a pasted-in photograph. */
+  filter: saturate(0.82);
+}
+
+.opening__title {
+  font-size: clamp(2.1rem, 1.3rem + 3.4vw, 4rem);
+  font-weight: 460;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  max-width: 22ch;
+}
+
+.opening__standfirst {
+  margin-top: var(--s-5);
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 0.98rem + 0.5vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  max-width: 42ch;
+}
+
+@media (max-width: 860px) {
+  .opening {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+  /* Text first on narrow screens: the headline is the payload. */
+  .opening__text {
+    order: -1;
+  }
+}
+
+/* --- Headline band ------------------------------------------------------
+   The four findings at real scale, immediately. This is the layer a ten-second
+   reader gets, so the figures are the largest thing after the title. */
+
+.headline {
+  padding-block: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+  border-block: 1px solid var(--ink);
+}
+
+.headline__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--s-6) var(--s-7);
+}
+
+.headline__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.headline__index {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  color: var(--rule-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The figure, at the scale its token was defined for. */
+.headline__value {
+  font-family: var(--font-sans);
+  font-size: var(--t-figure-lg);
+  font-weight: 440;
+  line-height: 0.94;
+  letter-spacing: -0.032em;
+  color: var(--ink);
+  /* Qualitative values wrap rather than shrink, so they do not tower over the
+     numeric ones. */
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.headline__claim {
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  max-width: 30ch;
+}
+
+.headline__claim strong {
+  display: block;
+  font-weight: 550;
+  color: var(--ink);
+}
+
+.headline__foot {
+  margin-top: var(--s-6);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-meta);
+  line-height: 1.55;
+  color: var(--ink-muted);
+  max-width: 74ch;
+}
+
+/* --- Contents -----------------------------------------------------------
+   Doubles as an expectation-setter: each entry says what its section answers,
+   so a reader chooses a path instead of facing an undifferentiated list. */
+
+.report-contents__head {
+  max-width: 58ch;
+  margin-bottom: var(--s-5);
+}
+
+.report-contents__title {
+  font-size: var(--t-section);
+  font-weight: 500;
+  letter-spacing: var(--tr-title);
+}
+
+.report-contents__note {
+  margin-top: var(--s-2);
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.report-contents__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.report-contents__link-title {
+  font-size: var(--t-body);
+  line-height: 1.35;
+}
+
+.report-contents__gist {
+  font-size: var(--t-meta);
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+/* --- Section takeaway ---------------------------------------------------
+   The finding in one line, always visible. For most readers this is the only
+   thing in the section they will read, so it sits at reading scale rather than
+   as a caption. */
+
+.report-section__takeaway {
+  display: flex;
+  gap: var(--s-4);
+  max-width: 62ch;
+  margin-bottom: var(--s-6);
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 1.02rem + 0.5vw, 1.42rem);
+  font-weight: 450;
+  line-height: 1.36;
+  letter-spacing: -0.014em;
+  color: var(--ink);
+}
+
+/* A short accent rule rather than a full left border: it marks the line as the
+   section's claim without turning it into a blockquote. */
+.report-section__takeaway-mark {
+  flex: none;
+  width: 26px;
+  height: 2px;
+  margin-top: 0.62em;
+  background: var(--accent-live);
+}
+
+/* --- Section variants ---------------------------------------------------
+   Four families, chosen by information type rather than for novelty. A reader
+   should be able to tell what kind of content is coming from the shape of the
+   section before reading a word. */
+
+/* figure: chart-led. No margin column, so the visualisation gets full width. */
+.report-section[data-variant='figure'] .report-section__body,
+.report-section[data-variant='figure'] .report-section__head {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.report-section[data-variant='figure'] .report-section__body > * {
+  grid-column: 1;
+}
+
+.report-section[data-variant='figure'] .report-section__head {
+  gap: var(--s-3);
+}
+
+/* The numeral goes inline and small: in a figure-led section the chart is the
+   landmark, so the number stops competing for that role. */
+.report-section[data-variant='figure'] .report-section__number {
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.report-section[data-variant='figure'] .report-section__takeaway {
+  max-width: 74ch;
+}
+
+/* ledger: comparison-led. Wide, tabular, minimal prose. */
+.report-section[data-variant='ledger'] .report-section__body {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.report-section[data-variant='ledger'] .report-section__body > * {
+  grid-column: 1;
+}
+
+.report-section[data-variant='ledger'] .report-section__head {
+  grid-template-columns: 4rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--s-5);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--ink);
+}
+
+.report-section[data-variant='ledger'] .report-section__number {
+  font-size: 1.5rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.report-section[data-variant='ledger'] .report-section__title {
+  font-size: var(--t-section);
+}
+
+/* quiet: method and reference. These sections are apparatus and should not
+   compete with argument, so they recede onto the sunken plane. */
+.report-section[data-variant='quiet'] {
+  background: var(--surface-sunken);
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(var(--gutter), calc(50vw - var(--max-page) / 2 + var(--gutter)));
+}
+
+.report-section[data-variant='quiet'] .report-section__head {
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: var(--s-5);
+  align-items: baseline;
+}
+
+.report-section[data-variant='quiet'] .report-section__number {
+  font-size: 1.125rem;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+.report-section[data-variant='quiet'] .report-section__title {
+  font-size: var(--t-section);
+}
+
+.report-section[data-variant='quiet'] .report-section__takeaway {
+  font-size: var(--t-lead);
+  font-weight: 450;
+}
+
+/* --- Depth --------------------------------------------------------------
+   The full analysis, collapsed. This is what makes a twelve-section research
+   publication skimmable: short surface, optional depth. */
+
+.depth {
+  max-width: 68ch;
+  border-top: 1px solid var(--rule);
+}
+
+.depth__trigger {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  width: 100%;
+  padding-block: var(--s-3);
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--accent-deep);
+  transition: color var(--dur-1) var(--ease);
+}
+
+.depth__trigger:hover {
+  color: var(--ink);
+}
+
+.depth__marker {
+  font-family: var(--font-mono);
+  font-size: 1.05em;
+  line-height: 1;
+  color: var(--accent-live-deep);
+}
+
+/* Reading cost, stated up front. A reader deciding whether to open something is
+   entitled to know how long it is. */
+.depth__cost {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+.depth__body {
+  padding-bottom: var(--s-5);
+}
+
+/* Textured key swatch, matching the scenario band's fill in the horizon chart. */
+.plate__key-swatch--textured {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--seq-500) 0 2px,
+    var(--surface-ink) 2px 5px
+  );
+}
+
+/* --- Print --------------------------------------------------------------
+   Paper has no toggle, so everything expands and the plates flatten. */
+@media print {
+  .depth__body {
+    display: block !important;
+  }
+
+  .depth__trigger {
+    display: none;
+  }
+
+  .depth {
+    max-width: none;
+    border-top: 0;
+  }
+
+  .report-section[data-variant='quiet'] {
+    margin-inline: 0;
+    padding-inline: 0;
+    background: #ffffff;
+  }
+
+  .opening {
+    grid-template-columns: 1fr;
+    gap: 6mm;
+  }
+
+  .opening__image {
+    max-height: 78mm;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  .headline {
+    break-inside: avoid;
+  }
+
+  .report-section__takeaway {
+    break-after: avoid;
+  }
+}
+
+/* --- SDG 8 alignment ----------------------------------------------------
+   The competition brief names Goal 8, so the alignment is stated. It earns its
+   place by naming three specific targets and pointing at the sections where the
+   evidence bears on them, rather than displaying a badge. The mark is set in the
+   project's own type and palette: no imported UN logo, nothing to load. */
+
+.sdg {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(1.25rem, 1rem + 2vw, 2.75rem);
+  align-items: start;
+  padding-block: clamp(1.75rem, 1.5rem + 1.5vw, 2.75rem);
+  border-bottom: 1px solid var(--rule);
+}
+
+.sdg__mark {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: var(--s-4);
+  min-width: 9.5rem;
+  background: var(--surface-ink);
+  color: var(--ink-on-dark);
+  border-radius: var(--r-2);
+}
+
+.sdg__number {
+  font-family: var(--font-sans);
+  font-size: 2.6rem;
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.sdg__name {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  line-height: 1.35;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--ink-on-dark) 82%, transparent);
+}
+
+.sdg__title {
+  font-size: var(--t-subhead);
+  font-weight: 550;
+  line-height: 1.25;
+}
+
+.sdg__text {
+  margin-top: var(--s-2);
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  max-width: 62ch;
+}
+
+.sdg__targets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+
+.sdg__targets > div {
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--rule);
+}
+
+.sdg__targets dt {
+  font-size: var(--t-small);
+  font-weight: 550;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.sdg__targets dd {
+  margin-top: 0.35rem;
+  font-size: var(--t-meta);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 700px) {
+  .sdg {
+    grid-template-columns: 1fr;
+  }
+  .sdg__mark {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--s-3);
+    min-width: 0;
+  }
+}

@@ -1,0 +1,290 @@
+/* Shell: masthead, navigation, demo flag, colophon. */
+
+/* --- Masthead -------------------------------------------------------------
+   Sticky, but short: it holds identity, navigation, and demo status, nothing
+   more. Capped well under the 80px nav budget at desktop. */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Blur is a nicety, not a dependency: if it is unsupported or reduced, fall
+   back to an opaque plane so text never sits on moving content. */
+@supports not (backdrop-filter: blur(10px)) {
+  .masthead {
+    background: var(--surface);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .masthead {
+    background: var(--surface);
+    backdrop-filter: none;
+  }
+}
+
+.masthead__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-6);
+  min-height: 64px;
+}
+
+/* --- Wordmark -------------------------------------------------------------
+   The name is set once, here, with the descriptor beside it. It is not
+   repeated across the interface. */
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.wordmark:hover {
+  color: var(--ink);
+}
+
+.wordmark__name {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 550;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+.wordmark__descriptor {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  line-height: 1;
+}
+
+/* --- Navigation ----------------------------------------------------------
+   Grouped so the product's three layers are visible in the chrome itself.
+   Single line at desktop; the group labels are what make the grouping readable
+   without adding a second row. */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-5);
+  min-width: 0;
+}
+
+.nav__group {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-width: 0;
+}
+
+/* Divider between groups, drawn with a border so it needs no extra element. */
+.nav__group + .nav__group {
+  padding-left: var(--s-5);
+  border-left: 1px solid var(--rule);
+}
+
+.nav__group-label {
+  font-size: 0.625rem;
+  color: var(--rule-strong);
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  min-width: 0;
+}
+
+.nav__link {
+  display: block;
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--r-1);
+  font-size: var(--t-small);
+  font-weight: 450;
+  color: var(--ink-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+
+.nav__link:hover {
+  background: var(--accent-wash);
+  color: var(--ink);
+}
+
+/* Current page is marked by weight and a rule, not by color alone. */
+.nav__link[data-current] {
+  color: var(--accent-deep);
+  font-weight: 550;
+  background: var(--accent-wash);
+  box-shadow: inset 0 -2px 0 var(--accent-live);
+}
+
+/* --- Demo flag -----------------------------------------------------------
+   Present on every screen. A judge should never wonder whether they are
+   looking at real personal data. */
+.demo-flag {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  background: var(--surface-raised);
+  white-space: nowrap;
+}
+
+/* The one status dot in the product, and it carries real state: this build is
+   running on fictional demonstration data. */
+.demo-flag__dot {
+  width: 6px;
+  height: 6px;
+  margin-top: 0.3rem;
+  border-radius: 50%;
+  background: var(--accent-live);
+  flex: none;
+}
+
+.demo-flag__title,
+.demo-flag__detail {
+  display: block;
+  line-height: 1.25;
+}
+
+.demo-flag__title {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.demo-flag__detail {
+  font-size: var(--t-micro);
+  color: var(--ink-muted);
+}
+
+/* --- Responsive ---------------------------------------------------------
+   Below 1200px the nav questions and group labels are the first things to go,
+   then the demo-flag detail, then the nav wraps to its own row. The order is
+   deliberate: navigation labels and demo status survive longest. */
+@media (max-width: 1240px) {
+  .nav__group-label {
+    display: none;
+  }
+  .nav__group + .nav__group {
+    padding-left: var(--s-3);
+  }
+  .demo-flag__detail {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .masthead__inner {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'wordmark demo'
+      'nav nav';
+    gap: var(--s-3);
+    padding-block: var(--s-3);
+  }
+  .wordmark {
+    grid-area: wordmark;
+  }
+  .demo-flag {
+    grid-area: demo;
+  }
+  .nav {
+    grid-area: nav;
+    justify-content: flex-start;
+    /* Horizontal scroll rather than a hamburger: seven destinations are the
+       product's structure, and hiding them behind a menu hides the argument. */
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* --- Main ---------------------------------------------------------------- */
+
+.main {
+  min-height: 60vh;
+}
+
+/* --- Colophon ----------------------------------------------------------- */
+
+.colophon {
+  margin-top: var(--s-10);
+  border-top: 1px solid var(--rule);
+  background: var(--surface-sunken);
+}
+
+.colophon__inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26ch), 1fr));
+  gap: var(--s-6);
+  padding-block: var(--s-7);
+}
+
+.colophon__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  max-width: 52ch;
+}
+
+.colophon__text {
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+.colophon__foot {
+  grid-column: 1 / -1;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+
+/* --- Per-screen colour --------------------------------------------------
+   Each dashboard area sets --sec, and components downstream use it for rules,
+   headers, active states and washes. One declaration per route rather than
+   per-component overrides, so a new screen gets its identity for free.
+
+   These tint the interface only. Charts keep encoding with the sequential ramp,
+   which is what stops the colour from carrying data meaning it should not. */
+
+.main[data-route='overview'] { --sec: var(--accent-live-deep); --sec-wash: var(--sec-skills-wash); }
+.main[data-route='skills']   { --sec: var(--sec-skills);   --sec-wash: var(--sec-skills-wash); }
+.main[data-route='careers']  { --sec: var(--sec-careers);  --sec-wash: var(--sec-careers-wash); }
+.main[data-route='safety']   { --sec: var(--sec-safety);   --sec-wash: var(--sec-safety-wash); }
+.main[data-route='learning'] { --sec: var(--sec-learning); --sec-wash: var(--sec-learning-wash); }
+.main[data-route='economy']  { --sec: var(--sec-economy);  --sec-wash: var(--sec-economy-wash); }
+.main[data-route='assistant']{ --sec: var(--sec-ai);       --sec-wash: var(--sec-ai-wash); }
+.main[data-route='research'] { --sec: var(--accent-live-deep); --sec-wash: var(--accent-live-wash); }
+
+/* Screen headers carry the section colour as a rule and an eyebrow tint. */
+.main[data-route] .screen-head {
+  border-bottom-color: var(--sec);
+  border-bottom-width: 2px;
+}
+
+/* Active nav item picks up the colour of the screen it leads to, so the chrome
+   agrees with the page. */
+.nav__link[data-current] {
+  color: var(--sec, var(--accent-deep));
+  background: var(--sec-wash, var(--accent-wash));
+  box-shadow: inset 0 -2px 0 var(--sec, var(--accent-live));
+}

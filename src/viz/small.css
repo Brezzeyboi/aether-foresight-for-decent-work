@@ -1,0 +1,240 @@
+/* Small visual forms: trend, gap, ratio. Each replaces a paragraph. */
+
+/* --- Trend --------------------------------------------------------------- */
+
+.trend {
+  margin: 0;
+  max-width: 30rem;
+}
+
+.trend__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.trend__base {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.trend__line {
+  fill: none;
+  stroke: var(--accent-live);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.trend__dot {
+  fill: var(--surface);
+  stroke: var(--accent-live-deep);
+  stroke-width: 2;
+}
+
+.trend__value {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  fill: var(--ink);
+}
+
+.trend__label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  fill: var(--ink-muted);
+}
+
+.trend__note {
+  margin-top: var(--s-3);
+  font-size: var(--t-meta);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* --- Gap ----------------------------------------------------------------
+   The distance between the two columns carries the meaning, so the divider is
+   labelled and the columns are deliberately not boxed. */
+
+.gap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--s-5);
+  align-items: start;
+}
+
+.gap__side {
+  padding-top: var(--s-3);
+  border-top: 2px solid var(--ink);
+}
+
+/* Observed practice is the weaker side of the comparison, and reads that way. */
+.gap__side[data-side='observed'] {
+  border-top-color: var(--risk-elevated);
+}
+
+.gap__label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.gap__side[data-side='observed'] .gap__label {
+  color: var(--risk-elevated);
+}
+
+.gap__heading {
+  margin-top: var(--s-2);
+  font-size: var(--t-subhead);
+  font-weight: 550;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.gap__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+.gap__items li {
+  position: relative;
+  padding-left: var(--s-4);
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+}
+
+.gap__items li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 1px;
+  background: var(--rule-strong);
+}
+
+.gap__divide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  padding-top: var(--s-5);
+  height: 100%;
+}
+
+.gap__divide-line {
+  flex: 1;
+  width: 1px;
+  min-height: 1.5rem;
+  background: var(--rule);
+}
+
+.gap__divide-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--risk-elevated);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+@media (max-width: 760px) {
+  .gap {
+    grid-template-columns: 1fr;
+  }
+  .gap__divide {
+    flex-direction: row;
+    height: auto;
+    padding-top: 0;
+    width: 100%;
+  }
+  .gap__divide-line {
+    width: auto;
+    height: 1px;
+    min-height: 0;
+  }
+  .gap__divide-label {
+    writing-mode: horizontal-tb;
+  }
+}
+
+/* --- Ratio --------------------------------------------------------------- */
+
+.ratio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-width: 34rem;
+}
+
+.ratio__row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 14rem) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.ratio__label {
+  font-size: var(--t-small);
+  line-height: 1.35;
+  color: var(--ink-secondary);
+}
+
+.ratio__row[data-emphasis] .ratio__label {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* No background track: a filled track behind a partial fill is dashboard
+   clutter, and the row's own width already communicates the scale. */
+.ratio__track {
+  height: 10px;
+}
+
+.ratio__fill {
+  display: block;
+  height: 100%;
+  border-radius: 1px;
+  background: var(--seq-300);
+}
+
+.ratio__row[data-emphasis] .ratio__fill {
+  background: var(--accent-live);
+}
+
+.ratio__value {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.ratio__sub {
+  grid-column: 2 / -1;
+  font-size: var(--t-micro);
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 620px) {
+  .ratio__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .ratio__track {
+    grid-column: 1 / -1;
+    order: 1;
+  }
+  .ratio__sub {
+    grid-column: 1 / -1;
+    order: 2;
+  }
+}

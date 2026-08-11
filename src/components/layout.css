@@ -1,0 +1,162 @@
+/* Layout primitives: screen header, section, figure frame, panel, grid. */
+
+/* --- Screen header --------------------------------------------------------
+   Asymmetric: text takes the wide column, the aside a narrow one. The rule
+   underneath separates orientation from content without a card. */
+.screen-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--s-6);
+  padding-top: var(--section-y);
+  padding-bottom: var(--s-5);
+  margin-bottom: var(--s-6);
+  border-bottom: 1px solid var(--rule);
+}
+
+.screen-head__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-width: 34ch;
+}
+
+.screen-head__text .lead {
+  max-width: 46ch;
+}
+
+.screen-head__aside {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-6);
+}
+
+@media (max-width: 860px) {
+  .screen-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .screen-head__aside {
+    flex-wrap: wrap;
+  }
+}
+
+/* --- Section ------------------------------------------------------------- */
+
+.section {
+  padding-block: var(--s-7);
+}
+
+/* The screen header already contributes its own bottom padding and margin, so a
+   full section pad on top of that stacked to 6.5rem of dead space before the
+   first row of content. The first section after a header pays only its own way. */
+.screen-head + .section {
+  padding-top: 0;
+}
+
+.section[data-divided] {
+  border-top: 1px solid var(--rule);
+}
+
+.section__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-bottom: var(--s-6);
+  max-width: 62ch;
+}
+
+/* --- Figure frame --------------------------------------------------------
+   Every chart is framed with the question it answers. No borders around the
+   plot itself; the title, the rule, and the footnote do the containing. */
+.figure-frame {
+  margin: 0;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule-soft);
+}
+
+.figure-frame__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-5);
+  margin-bottom: var(--s-5);
+}
+
+.figure-frame__title {
+  font-size: var(--t-subhead);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+  max-width: 44ch;
+}
+
+.figure-frame__help {
+  margin-top: var(--s-2);
+  font-size: var(--t-small);
+  line-height: 1.45;
+  color: var(--ink-muted);
+  max-width: 56ch;
+}
+
+.figure-frame__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex: none;
+}
+
+.figure-frame__body {
+  position: relative;
+}
+
+.figure-frame__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--rule-soft);
+  font-size: var(--t-meta);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 720px) {
+  .figure-frame__head {
+    flex-direction: column;
+  }
+}
+
+/* --- Panel --------------------------------------------------------------- */
+
+.panel {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-2);
+  padding: var(--s-5);
+}
+
+.panel--raised {
+  background: var(--surface-raised);
+}
+
+.panel--sunken {
+  background: var(--surface-sunken);
+  border-color: var(--rule-soft);
+}
+
+/* --- Grid ----------------------------------------------------------------
+   auto-fit with a min width, so columns collapse by available space rather
+   than by breakpoint. Explicit single column below 640px regardless. */
+.grid {
+  display: grid;
+  gap: var(--s-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min, 18rem)), 1fr));
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

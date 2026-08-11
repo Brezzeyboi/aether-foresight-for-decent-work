@@ -1,0 +1,384 @@
+/* Chart chrome: axes, tooltip, table view, texture. */
+
+/* --- Axes ----------------------------------------------------------------
+   Recessive by design. The data must be the darkest thing in the frame. */
+
+.axis__grid {
+  stroke: var(--rule-soft);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.axis__baseline {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.axis__tick {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  fill: var(--ink-muted);
+}
+
+.axis__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  fill: var(--ink-muted);
+}
+
+/* --- Marks ---------------------------------------------------------------- */
+
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Direct value labels on marks. Selective: endpoints and the point being made,
+   never every value. Sits in ink, not in the mark's colour. */
+.mark-label {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  fill: var(--ink);
+}
+
+.mark-label--muted {
+  fill: var(--ink-muted);
+  font-weight: 450;
+}
+
+/* Interactive marks dim their siblings on hover so the hovered one reads
+   clearly. Communicates focus, which is a legitimate use of motion. */
+.mark {
+  transition: opacity var(--dur-1) var(--ease);
+}
+
+.marks[data-hovering] .mark:not([data-active]) {
+  opacity: 0.42;
+}
+
+.mark[data-interactive] {
+  cursor: pointer;
+}
+
+/* Focus ring for keyboard users reaching marks directly. */
+.mark:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- Tooltip -------------------------------------------------------------- */
+
+.chart-block__figure {
+  position: relative;
+}
+
+.chart-tip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  min-width: 11rem;
+  max-width: 17rem;
+  padding: var(--s-3);
+  background: var(--surface-raised);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-2);
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+  /* Offset from the cursor so the mark stays visible. */
+  transform: translate(0.75rem, -50%);
+}
+
+.chart-tip[data-flip] {
+  transform: translate(calc(-100% - 0.75rem), -50%);
+}
+
+.chart-tip__title {
+  font-size: var(--t-small);
+  font-weight: 550;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.chart-tip__value {
+  margin-top: var(--s-1);
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 480;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.chart-tip__detail {
+  margin-top: var(--s-2);
+  font-size: var(--t-meta);
+  line-height: 1.45;
+  color: var(--ink-secondary);
+}
+
+/* --- Table view ----------------------------------------------------------- */
+
+.chart-block__controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--s-2);
+}
+
+.chart-toggle {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  background: var(--surface-raised);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  transition: border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+
+.chart-toggle:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.chart-toggle[aria-expanded='true'] {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+  background: var(--accent-wash);
+}
+
+/* Collapsed by default on screen. `display: none` rather than height animation:
+   a table of unknown length cannot be animated smoothly, and honesty about the
+   state matters more than the transition. */
+.chart-table-wrap {
+  display: none;
+  margin-top: var(--s-4);
+  overflow-x: auto;
+}
+
+.chart-table-wrap[data-open] {
+  display: block;
+}
+
+.chart-table {
+  font-size: var(--t-small);
+  border-collapse: collapse;
+}
+
+.chart-table caption {
+  text-align: left;
+}
+
+.chart-table th,
+.chart-table td {
+  padding: 0.45rem var(--s-3);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+/* One rule under the header, and zebra striping instead of a rule per row.
+   A hairline under every row is the laziest table treatment. */
+.chart-table thead th {
+  border-bottom: 1px solid var(--rule-strong);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.chart-table tbody tr:nth-child(even) {
+  background: var(--surface-sunken);
+}
+
+.chart-table tbody th {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.chart-table td {
+  color: var(--ink-secondary);
+}
+
+.chart-table [data-numeric] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Texture -------------------------------------------------------------
+   The accessibility channel: distinguishes fills without relying on colour. */
+
+.texture__line {
+  stroke: var(--ink);
+  stroke-width: 1.4;
+  opacity: 0.5;
+}
+
+/* --- Forced colors -------------------------------------------------------
+   Fills lose their meaning in high-contrast mode, so texture and the table
+   carry it instead. */
+@media (forced-colors: active) {
+  .axis__grid,
+  .axis__baseline {
+    stroke: CanvasText;
+  }
+
+  .chart-tip {
+    border-color: CanvasText;
+  }
+
+  .texture__line {
+    stroke: CanvasText;
+    opacity: 1;
+  }
+}
+
+/* --- Horizon chart -------------------------------------------------------
+   The widening cone of uncertainty. The spine is solid where published
+   evidence exists and dashed where it does not: the dash pattern is the
+   argument, not decoration. */
+
+.horizon__spine {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.horizon__spine--inferred {
+  stroke: var(--ink-muted);
+  stroke-dasharray: 3 4;
+}
+
+.horizon__tick {
+  stroke: var(--ink);
+  stroke-width: 1;
+  opacity: 0.28;
+}
+
+.horizon__dot {
+  fill: var(--surface);
+  stroke: var(--ink);
+  stroke-width: 1.6;
+}
+
+.mark[data-active] .horizon__dot {
+  fill: var(--accent);
+  stroke: var(--accent-deep);
+}
+
+/* The boundary where published projections stop. The most important line in
+   the chart, so it is drawn with weight rather than as a hairline. */
+.horizon__edge {
+  stroke: var(--ink);
+  stroke-width: 1.25;
+  stroke-dasharray: 2 3;
+  opacity: 0.5;
+}
+
+.horizon__edge-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: var(--ink-muted);
+}
+
+.horizon__year {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  fill: var(--ink);
+}
+
+.horizon__status {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  fill: var(--ink-muted);
+}
+
+.mark[data-active] .horizon__status {
+  fill: var(--accent-deep);
+}
+
+@media (forced-colors: active) {
+  .horizon__spine,
+  .horizon__tick,
+  .horizon__edge {
+    stroke: CanvasText;
+    opacity: 1;
+  }
+  .horizon__dot {
+    fill: Canvas;
+    stroke: CanvasText;
+  }
+}
+
+/* --- Chart chrome on the inverted plate -----------------------------------
+   The one tonal event in an otherwise ivory document, so the chrome has to be
+   re-grounded rather than inherited. Ink-plate values were measured against
+   #1C1E1B: seq-500 (2.82:1) and the accent (2.75:1) both fail the 3:1 mark
+   floor there, which is why the ramp inverts and the spine goes to ivory. */
+
+.chart-svg[data-on-ink] .axis__tick,
+.chart-svg[data-on-ink] .axis__label,
+.chart-svg[data-on-ink] .horizon__status {
+  fill: color-mix(in oklab, var(--ink-on-dark) 66%, transparent);
+}
+
+.chart-svg[data-on-ink] .horizon__year,
+.chart-svg[data-on-ink] .mark-label {
+  fill: var(--ink-on-dark);
+}
+
+.chart-svg[data-on-ink] .horizon__spine {
+  stroke: var(--ink-on-dark);
+}
+
+.chart-svg[data-on-ink] .horizon__spine--inferred {
+  stroke: color-mix(in oklab, var(--ink-on-dark) 52%, transparent);
+}
+
+.chart-svg[data-on-ink] .horizon__tick {
+  stroke: var(--ink-on-dark);
+  opacity: 0.34;
+}
+
+.chart-svg[data-on-ink] .horizon__dot {
+  fill: var(--surface-ink);
+  stroke: var(--ink-on-dark);
+}
+
+.chart-svg[data-on-ink] .mark[data-active] .horizon__dot {
+  fill: var(--seq-100);
+  stroke: var(--seq-100);
+}
+
+.chart-svg[data-on-ink] .mark[data-active] .horizon__status {
+  fill: var(--seq-100);
+}
+
+.chart-svg[data-on-ink] .horizon__edge {
+  stroke: var(--ink-on-dark);
+  opacity: 0.42;
+}
+
+.chart-svg[data-on-ink] .horizon__edge-label {
+  fill: color-mix(in oklab, var(--ink-on-dark) 62%, transparent);
+}
+
+.chart-svg[data-on-ink] .texture__line {
+  stroke: var(--surface-ink);
+  opacity: 0.62;
+}

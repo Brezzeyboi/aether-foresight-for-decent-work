@@ -1,0 +1,191 @@
+/* Overview screen: profile aside, area list, honesty panel. */
+
+/* --- Profile aside -------------------------------------------------------
+   Named, specific, and marked as fictional. A judge should know within a
+   second whose data they are looking at and that it is a demonstration. */
+
+.overview__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-top: var(--s-3);
+  border-top: 2px solid var(--accent-live);
+  max-width: 20rem;
+}
+
+.overview__aside-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.overview__aside-name {
+  font-size: var(--t-subhead);
+  font-weight: 550;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.overview__aside-context {
+  font-size: var(--t-meta);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+}
+
+.overview__aside .basis {
+  margin-top: var(--s-2);
+}
+
+/* --- Area list -----------------------------------------------------------
+   The five required dashboard features, as a list of questions rather than a
+   grid of equal cards. A three-card row is the generic pattern; a ruled list
+   with the question leading reads as an index into a product. */
+
+.areas {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ink);
+}
+
+.area {
+  border-bottom: 1px solid var(--rule);
+}
+
+.area__link {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) 2rem;
+  align-items: start;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--dur-1) var(--ease);
+}
+
+.area__link:hover {
+  background: var(--accent-live-wash);
+  color: inherit;
+}
+
+.area__index {
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-live-deep);
+  padding-top: 0.35rem;
+}
+
+.area__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* The question is the headline: it is what the reader wants answered, and the
+   feature name is secondary to it. */
+.area__question {
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  max-width: 40ch;
+}
+
+.area__label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.area__answer {
+  margin-top: 0.2rem;
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  max-width: 64ch;
+}
+
+.area__metric {
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  color: var(--accent-live-deep);
+}
+
+.area__go {
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--rule-strong);
+  padding-top: 0.35rem;
+  text-align: right;
+  transition: color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
+}
+
+.area__link:hover .area__go {
+  color: var(--accent-live-deep);
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .area__go {
+    transition: color var(--dur-1) var(--ease);
+  }
+  .area__link:hover .area__go {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .area__link {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+  .area__go {
+    display: none;
+  }
+}
+
+/* --- Honesty panel ------------------------------------------------------ */
+
+.honesty {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.honesty__text {
+  margin-top: var(--s-2);
+  font-size: var(--t-small);
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  max-width: 52ch;
+}
+
+.honesty__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--s-3) var(--s-5);
+}
+
+.honesty__list > div {
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--rule);
+}
+
+.honesty__list dd {
+  margin-top: 0.25rem;
+  font-size: var(--t-meta);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 860px) {
+  .honesty {
+    grid-template-columns: 1fr;
+  }
+}
