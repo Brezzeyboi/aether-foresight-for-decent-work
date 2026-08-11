@@ -41,7 +41,7 @@ export const RISKS: readonly Risk[] = [
     gist: 'Monitoring spreading from platform work into standard employment',
     why: 'Over 40% of surveyed platform workers reported regular tracking. Algorithmic management is documented in transport, logistics, banking and healthcare.',
     mitigation:
-      'Article 26 requires notifying workers before deployment. Be clear what is collected, and limit what may be inferred.',
+      'Article 26(7) will require notifying workers before deployment from December 2027. Be clear what is collected, and limit what may be inferred.',
     basis: 'measured',
     source: 'ilo-algo-mgmt',
   },
@@ -65,7 +65,7 @@ export const RISKS: readonly Risk[] = [
     gist: 'Documented in one well-known case, unquantified in general',
     why: 'A recruiting tool downgraded CVs containing indications of women, and was scrapped. No prevalence rate exists, so the scale is unknown.',
     mitigation:
-      'Annex III makes employment AI high-risk, triggering testing, documentation and human review. UNESCO requires redress.',
+      'Annex III classes employment AI as high-risk, and from December 2027 will trigger testing, documentation and human review. UNESCO requires redress.',
     basis: 'measured',
     source: 'reuters-amazon-2018',
   },

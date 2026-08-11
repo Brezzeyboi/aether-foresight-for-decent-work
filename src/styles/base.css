@@ -27,7 +27,16 @@ html {
 }
 
 body {
-  background: var(--surface);
+  /* The plate, not flat paint. `background-attachment: fixed` holds the tonal
+     drift still while content scrolls over it, so the page reads as one milled
+     sheet rather than a gradient that repeats down the scroll. */
+  background: var(--surface) var(--metal-plate) fixed;
+
+  /* The route transition slides the whole screen sideways, which would otherwise
+     push a horizontal scrollbar for the length of the animation. Clipped here
+     rather than on html, because clipping html would break the sticky masthead:
+     `position: sticky` needs a scrolling ancestor. */
+  overflow-x: clip;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--t-body);
@@ -36,6 +45,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-synthesis-weight: none;
   text-rendering: optimizeLegibility;
+}
+
+/* The brushed grain, as a fixed overlay so it stays the same physical size at
+   every scroll position — a grain that scrolls reads as wallpaper, one that
+   holds still reads as the surface itself. Pinned behind all content, and
+   pointer-events off so it can never intercept a click. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--metal-grain);
+  pointer-events: none;
 }
 
 img,
@@ -336,4 +358,14 @@ a:hover {
   .panel {
     border-color: CanvasText;
   }
+}
+
+/* --- Icons ---------------------------------------------------------------
+   Inline SVG, sized in em so an icon tracks the type it labels. `display:
+   block` is set on all svg above, which would drop an icon onto its own line,
+   so icons opt back into the text flow and sit on the baseline. */
+.icon {
+  display: inline-block;
+  vertical-align: -0.135em;
+  flex: none;
 }

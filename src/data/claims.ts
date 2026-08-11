@@ -98,15 +98,15 @@ const RAW_CLAIMS = {
     value: 'Augmentation exceeds automation',
     statement: 'The dominant expected effect of generative AI on work',
     basis: 'projection',
-    source: 'ilo-wp140',
-    note: 'True in every income group. The common assumption that AI mainly replaces work is not what the evidence shows.',
+    source: 'ilo-wp96',
+    note: 'True in every income group. The common assumption that AI mainly replaces work is not what the evidence shows. From the 2023 analysis: the 2025 refinement measures graded exposure instead and does not restate the split.',
   },
   'CLAIM-AUG-02': {
     id: 'CLAIM-AUG-02',
     value: '24%',
     statement: 'Share of clerical tasks that are highly exposed',
     basis: 'projection',
-    source: 'ilo-wp140',
+    source: 'ilo-wp96',
     note: 'Plus 58% at medium exposure. Every other broad occupational group sits between 1% and 4%. Exposure is concentrated, not general.',
   },
   'CLAIM-AUG-03': {
@@ -114,8 +114,8 @@ const RAW_CLAIMS = {
     value: '0.4% vs 5.5%',
     statement: 'Automation potential in low-income against high-income countries',
     basis: 'projection',
-    source: 'ilo-wp140',
-    note: 'Automation potential rises with income. Augmentation potential is large everywhere, 10.4% to 13.4%.',
+    source: 'ilo-wp96',
+    note: 'Automation potential rises with income. Augmentation potential is large everywhere, 10.4% to 13.4%. The later WP140 dropped this split, so these figures exist only in the 2023 analysis.',
   },
   'CLAIM-AUG-04': {
     id: 'CLAIM-AUG-04',
@@ -130,7 +130,7 @@ const RAW_CLAIMS = {
     value: '4 gradients',
     statement: 'The ILO replaced its binary automation split with an exposure spectrum',
     basis: 'measured',
-    source: 'ilo-wp140',
+    source: 'ilo-brief-2025',
     note: 'A methodological change. Exposure is a position on a gradient, not a safe or at-risk verdict.',
   },
   'CLAIM-AUG-06': {
@@ -138,7 +138,7 @@ const RAW_CLAIMS = {
     value: '0.9 → 0.76',
     statement: 'Peak task-level automation score, 2023 estimate against 2025 estimate',
     basis: 'measured',
-    source: 'ilo-wp140',
+    source: 'ilo-brief-2025',
     note: 'Two years of real-world use lowered the ILO’s own peak estimate. Highest occupational mean is 0.7.',
   },
   'CLAIM-AUG-07': {
@@ -146,7 +146,7 @@ const RAW_CLAIMS = {
     value: '2.3% → 3.3%',
     statement: 'Share of employment in the highest exposure gradient, between ILO editions',
     basis: 'measured',
-    source: 'ilo-wp140',
+    source: 'ilo-brief-2025',
     note: 'Rose despite lower task scores. It runs against the augmentation-dominant reading, so it stays in.',
   },
   'CLAIM-AUG-08': {
@@ -160,10 +160,10 @@ const RAW_CLAIMS = {
   'CLAIM-AUG-09': {
     id: 'CLAIM-AUG-09',
     value: '57%',
-    statement: 'Surveyed workers expecting little or no impact on their own job',
+    statement: 'Surveyed workers expecting little or no impact on jobs in their industry',
     basis: 'measured',
     source: 'ilo-wp140',
-    note: 'Polish survey of 1,640 respondents, with clerical workers and managers over-represented. Not a global worker-sentiment finding.',
+    note: '26.5% expect no impact and 30.2% slight impact. The question asks about their industry, not their own job. Polish survey of 1,640 respondents, with managers and groups 8 and 9 over-represented and professionals most under-represented. Not a global worker-sentiment finding.',
   },
 
   /* --- Skills ---------------------------------------------------------- */
@@ -236,8 +236,8 @@ const RAW_CLAIMS = {
     value: 'Toward management and digital',
     statement: 'Direction of AI-driven skill demand shift',
     basis: 'measured',
-    source: 'oecd-eo-2025',
-    note: 'Away from some cognitive and clerical tasks. OECD research synthesis.',
+    source: 'oecd-eo-2023',
+    note: 'Away from some cognitive and clerical tasks. From the 2023 edition, which is the OECD Employment Outlook devoted to AI; the 2025 edition has no AI chapter.',
   },
   'CLAIM-SKILL-10': {
     id: 'CLAIM-SKILL-10',
@@ -321,31 +321,32 @@ const RAW_CLAIMS = {
     statement: 'How the EU AI Act classifies employment and worker-management AI',
     basis: 'measured',
     source: 'eu-ai-act',
-    note: 'Annex III, point 4. Binding law, and the strongest verified requirement in this evidence base.',
+    note: 'Annex III, point 4. Binding law, and the strongest verified requirement in this evidence base. The Annex III obligations apply from 2 December 2027 after the 2026 Digital Omnibus delay, so they are enacted but not yet in force.',
   },
   'CLAIM-GOV-02': {
     id: 'CLAIM-GOV-02',
     value: 'Article 14',
-    statement: 'Human oversight must include genuine override and stop capability',
+    statement: 'Human oversight will have to include genuine override and stop capability',
     basis: 'measured',
     source: 'eu-ai-act',
-    note: 'The Act names automation bias explicitly as something oversight must account for.',
+    note: 'Article 14(4)(b) names automation bias explicitly as something oversight must account for, and 14(4)(e) requires the ability to halt the system. Applies to employment AI from 2 December 2027.',
   },
   'CLAIM-GOV-03': {
     id: 'CLAIM-GOV-03',
     value: 'Notify workers first',
-    statement: 'Employers must inform workers and representatives before deploying high-risk AI',
+    statement:
+      'Employers will have to inform workers and representatives before deploying high-risk AI',
     basis: 'measured',
     source: 'eu-ai-act',
-    note: 'Article 26. Oversight goes to persons with competence, training and authority. That is legal demand for oversight roles.',
+    note: 'Article 26(7). Article 26(2) assigns oversight to persons with competence, training and authority. That is legal demand for oversight roles, applying from 2 December 2027.',
   },
   'CLAIM-GOV-04': {
     id: 'CLAIM-GOV-04',
     value: 'Oversight can be hollow',
     statement: 'Formal human oversight can exist while the algorithm effectively decides',
     basis: 'measured',
-    source: 'eu-ai-act',
-    note: 'EU guidance documents a pay-setting case where oversight existed on paper and appeals rarely changed outcomes.',
+    source: 'eu-ai-act-employment-guidance',
+    note: 'Commission guidance, not the Regulation, documents a pay-setting case where oversight existed on paper and appeals rarely changed outcomes.',
   },
   'CLAIM-GOV-05': {
     id: 'CLAIM-GOV-05',
@@ -434,7 +435,7 @@ const RAW_CLAIMS = {
     statement: 'Internet use in Africa',
     basis: 'measured',
     source: 'itu-ff-2025',
-    note: 'Against 93% in the highest regions.',
+    note: 'Against a band of 88% to 93% across CIS, Europe and the Americas. Asia-Pacific 77%, Arab States 70%.',
   },
   'CLAIM-DIV-07': {
     id: 'CLAIM-DIV-07',
@@ -442,8 +443,8 @@ const RAW_CLAIMS = {
     statement:
       'Female against male employment in the highest exposure gradient, high-income countries',
     basis: 'projection',
-    source: 'ilo-gender-2026',
-    note: 'Women’s jobs are nearly three times as concentrated in the top exposure category.',
+    source: 'ilo-wp140',
+    note: 'Women’s jobs are nearly three times as concentrated in the top exposure category. Globally the same gradient holds 4.7% of female against 2.4% of male employment.',
   },
   'CLAIM-DIV-09': {
     id: 'CLAIM-DIV-09',
@@ -489,11 +490,11 @@ const RAW_CLAIMS = {
   },
   'CLAIM-ECON-03': {
     id: 'CLAIM-ECON-03',
-    value: '0.9-1.6%',
-    statement: 'Estimated ten-year GDP effect range',
+    value: '0.93-1.16%',
+    statement: 'Estimated ten-year GDP effect',
     basis: 'projection',
     source: 'acemoglu-2025',
-    note: 'Consumer welfare tracks TFP rather than GDP, since extra investment comes out of consumption.',
+    note: 'Rising to 1.4-1.56% if investment responds. Consumer welfare tracks TFP rather than GDP, since extra investment comes out of consumption.',
   },
   'CLAIM-ECON-04': {
     id: 'CLAIM-ECON-04',
@@ -530,10 +531,11 @@ const RAW_CLAIMS = {
   'CLAIM-ECON-10': {
     id: 'CLAIM-ECON-10',
     value: '−0.13pp',
-    statement: 'Annual drag on OECD productivity growth from demographic ageing',
+    statement:
+      'Annual drag on OECD productivity growth from ageing, estimated over 2000-2019',
     basis: 'measured',
     source: 'oecd-eo-2025',
-    note: 'Set beside the estimated AI gain of about +0.064pp a year. Demography is the larger measured force.',
+    note: 'Wages fell by 0.10pp on the same estimate. The mechanism is reduced voluntary job-to-job mobility, which declines sharply with age, not a general ageing drag. A historical estimate, not a forward projection. Set beside the projected AI gain of about +0.064pp a year.',
   },
   'CLAIM-ECON-12': {
     id: 'CLAIM-ECON-12',
@@ -555,11 +557,11 @@ const RAW_CLAIMS = {
   },
   'CLAIM-RESK-02': {
     id: 'CLAIM-RESK-02',
-    value: '+14% / +34%',
-    statement: 'Productivity gain from generative AI: average, and for novices',
+    value: '+15% / +30%',
+    statement: 'Productivity gain from generative AI: average, and for the least experienced workers',
     basis: 'measured',
     source: 'brynjolfsson-2025',
-    note: 'Minimal effect on experienced workers. One firm, one occupation, one pre-2024 model. Do not extrapolate to the economy.',
+    note: 'Issues resolved per hour across 5,172 agents. The lowest skill quintile gains 36%. The most skilled see small speed gains alongside small but statistically significant declines in resolution rate and customer satisfaction. One firm, one occupation, one pre-2024 model. Do not extrapolate to the economy.',
   },
   'CLAIM-RESK-03': {
     id: 'CLAIM-RESK-03',
@@ -583,7 +585,7 @@ const RAW_CLAIMS = {
     statement: 'Human-AI teams gain on creation tasks and lose on decision tasks',
     basis: 'measured',
     source: 'vaccaro-2024',
-    note: 'The creation gain, g = +0.19, is not individually significant. Task type is the only significant moderator found.',
+    note: 'The creation gain, g = +0.19, is not individually significant. Task type is one of five significant moderators, alongside data type, relative human and AI performance, AI type, and publication year.',
   },
   'CLAIM-RESK-06': {
     id: 'CLAIM-RESK-06',
@@ -599,7 +601,7 @@ const RAW_CLAIMS = {
     statement: 'Explanations and AI confidence displays did not moderate performance',
     basis: 'measured',
     source: 'vaccaro-2024',
-    note: 'Across 370+ effect sizes. The standard interaction-design levers are not evidenced to work.',
+    note: 'Across 370+ effect sizes. Participant type and division of labour were also non-significant. The standard interaction-design levers are not evidenced to work.',
   },
   'CLAIM-RESK-08': {
     id: 'CLAIM-RESK-08',
@@ -637,19 +639,19 @@ const RAW_CLAIMS = {
   /* --- Uncertainty ----------------------------------------------------- */
   'CLAIM-SCEN-01': {
     id: 'CLAIM-SCEN-01',
-    value: '2030-2034',
+    value: '2034',
     statement: 'The furthest horizon any institutional projection in this base reaches',
     basis: 'measured',
-    source: 'ilo-wp118',
-    note: 'Nothing reaches 2045, so the long horizon here is scenario space, not forecast.',
+    source: 'bls-ep-2034',
+    note: 'The BLS projections run to 2034; WEF reaches 2030 and Acemoglu a ten-year window. Nothing reaches 2045, so the long horizon here is scenario space, not forecast.',
   },
   'CLAIM-SCEN-02': {
     id: 'CLAIM-SCEN-02',
-    value: 'Cannot be predicted',
-    statement: 'ILO on the trajectory of generative AI capability',
+    value: 'A static snapshot',
+    statement: 'ILO on the standing of its own exposure estimates',
     basis: 'measured',
     source: 'ilo-wp140',
-    note: 'Stated explicitly by the ILO. The boundary moves with capability, so no skill can be named as valuable in 2045.',
+    note: 'The ILO calls its classifications only illustrative, carrying a degree of subjectivity, and its estimates a static snapshot. The boundary moves with capability, so no skill can be named as valuable in 2045.',
   },
   'CLAIM-SCEN-04': {
     id: 'CLAIM-SCEN-04',

@@ -7,9 +7,24 @@
   position: sticky;
   top: 0;
   z-index: var(--z-nav);
-  background: color-mix(in oklab, var(--surface) 88%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--rule);
+  background: color-mix(in oklab, var(--surface) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.3);
+  /* A milled edge rather than a drawn line: caught light on top, shadow under.
+     Reads as the lip of a metal plate, which is why there is no border here. */
+  box-shadow:
+    inset 0 1px 0 var(--metal-edge-light),
+    0 1px 0 var(--rule),
+    0 12px 28px -18px rgba(0, 0, 0, 0.9);
+}
+
+/* The grain sits in a pseudo-element so the blur above still samples the page
+   behind it. Painting the texture into `background` would blur the texture too. */
+.masthead::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--metal-grain);
+  pointer-events: none;
 }
 
 /* Blur is a nicety, not a dependency: if it is unsupported or reduced, fall
@@ -28,6 +43,7 @@
 }
 
 .masthead__inner {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -104,7 +120,10 @@
 }
 
 .nav__link {
-  display: block;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.34rem;
   padding: 0.4rem 0.55rem;
   border-radius: var(--r-1);
   font-size: var(--t-small);
@@ -112,12 +131,50 @@
   color: var(--ink-secondary);
   text-decoration: none;
   white-space: nowrap;
-  transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  transition:
+    background var(--dur-1) var(--ease),
+    color var(--dur-1) var(--ease);
+}
+
+/* An underline that wipes in from the left on hover. Transform-only, so it
+   animates on the compositor and never reflows the nav row. */
+.nav__link::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0.55rem;
+  bottom: 0.15rem;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-2) var(--ease-out);
 }
 
 .nav__link:hover {
   background: var(--accent-wash);
   color: var(--ink);
+}
+
+.nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* The current page already has a solid inset rule, so it does not also get the
+   hover wipe: two underlines on one item would read as a rendering bug. */
+.nav__link[data-current]::after {
+  display: none;
+}
+
+/* The icon is the quieter half of the pair: it sits back until the item is
+   hovered or current, so a row of eight icons never competes with the labels. */
+.nav__link .icon {
+  opacity: 0.55;
+  transition: opacity var(--dur-1) var(--ease);
+}
+
+.nav__link:hover .icon,
+.nav__link[data-current] .icon {
+  opacity: 1;
 }
 
 /* Current page is marked by weight and a rule, not by color alone. */
@@ -128,55 +185,116 @@
   box-shadow: inset 0 -2px 0 var(--accent-live);
 }
 
-/* --- Demo flag -----------------------------------------------------------
-   Present on every screen. A judge should never wonder whether they are
-   looking at real personal data. */
-.demo-flag {
+/* --- Status readout ------------------------------------------------------
+   Replaces the old "DEMO MODE" warning chip. It makes the same disclosure, but
+   as an instrument reading rather than a disclaimer: the counts are the real
+   size of the loaded evidence base, so the chrome tells the reader something
+   true about the system instead of only apologising for it. */
+.status {
   display: flex;
-  align-items: flex-start;
-  gap: var(--s-2);
-  padding: 0.4rem 0.6rem;
-  border: 1px solid var(--rule);
-  border-radius: var(--r-1);
-  background: var(--surface-raised);
+  align-items: center;
+  gap: var(--s-3);
+  padding: 0.38rem 0.7rem 0.38rem 0.6rem;
+  border-radius: var(--r-2);
+  background: linear-gradient(
+    140deg,
+    color-mix(in oklab, var(--surface-raised) 92%, var(--accent-live)),
+    var(--surface-sunken)
+  );
+  box-shadow: var(--metal-bevel);
   white-space: nowrap;
+  text-decoration: none;
+  transition:
+    box-shadow var(--dur-2) var(--ease),
+    background var(--dur-2) var(--ease);
 }
 
-/* The one status dot in the product, and it carries real state: this build is
-   running on fictional demonstration data. */
-.demo-flag__dot {
-  width: 6px;
-  height: 6px;
-  margin-top: 0.3rem;
+/* It is a link to the reference list, so it answers to the pointer. The lift is
+   the accent bleeding further into the plate, not a colour swap. */
+.status:hover {
+  background: linear-gradient(
+    140deg,
+    color-mix(in oklab, var(--surface-raised) 84%, var(--accent-live)),
+    var(--surface-sunken)
+  );
+  box-shadow: var(--metal-bevel), var(--glow-mint);
+}
+
+/* The one live element in the chrome. It breathes because the data is loaded,
+   not for decoration, and it is the only thing on screen that moves at rest. */
+.status__pulse {
+  position: relative;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--accent-live);
   flex: none;
+  box-shadow: 0 0 0 0 var(--accent-live-glow);
+  animation: status-pulse 3.2s var(--ease-inout) infinite;
 }
 
-.demo-flag__title,
-.demo-flag__detail {
-  display: block;
-  line-height: 1.25;
+@keyframes status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-live-glow);
+  }
+  40% {
+    box-shadow: 0 0 0 5px transparent;
+  }
 }
 
-.demo-flag__title {
+/* A pulse is motion, so it stops entirely under reduced-motion. The dot stays,
+   because it is the thing carrying the state. */
+@media (prefers-reduced-motion: reduce) {
+  .status__pulse {
+    animation: none;
+  }
+}
+
+.status__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.status__line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
   font-family: var(--font-mono);
   font-size: var(--t-micro);
-  font-weight: 500;
-  letter-spacing: var(--tr-label);
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  line-height: 1.1;
+}
+
+/* Tabular figures so the counts do not shift the layout as data grows. */
+.status__value {
+  font-size: var(--t-small);
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
   color: var(--accent-deep);
 }
 
-.demo-flag__detail {
+.status__sep {
+  width: 1px;
+  height: 0.72em;
+  margin-inline: 0.2rem;
+  background: var(--rule-strong);
+}
+
+.status__detail {
   font-size: var(--t-micro);
+  letter-spacing: 0.02em;
   color: var(--ink-muted);
+  line-height: 1.2;
 }
 
 /* --- Responsive ---------------------------------------------------------
-   Below 1200px the nav questions and group labels are the first things to go,
-   then the demo-flag detail, then the nav wraps to its own row. The order is
-   deliberate: navigation labels and demo status survive longest. */
+   Below 1240px the nav group labels go first, then the status detail line, then
+   the nav wraps to its own row. The order is deliberate: navigation labels and
+   the disclosure that this is demonstration data survive longest. */
 @media (max-width: 1240px) {
   .nav__group-label {
     display: none;
@@ -184,7 +302,7 @@
   .nav__group + .nav__group {
     padding-left: var(--s-3);
   }
-  .demo-flag__detail {
+  .status__detail {
     display: none;
   }
 }
@@ -193,7 +311,7 @@
   .masthead__inner {
     grid-template-columns: 1fr auto;
     grid-template-areas:
-      'wordmark demo'
+      'wordmark status'
       'nav nav';
     gap: var(--s-3);
     padding-block: var(--s-3);
@@ -201,8 +319,13 @@
   .wordmark {
     grid-area: wordmark;
   }
-  .demo-flag {
-    grid-area: demo;
+  /* The grid child is the tooltip wrapper, not .status itself, so the area is
+     assigned to the wrapper. Assigning it to .status left the wrapper in auto
+     placement, which pushed the masthead 8px past the viewport on mobile. */
+  .status-tip {
+    grid-area: status;
+    justify-self: end;
+    min-width: 0;
   }
   .nav {
     grid-area: nav;
@@ -213,6 +336,14 @@
     scrollbar-width: none;
     padding-bottom: 2px;
   }
+
+  /* Tooltips are dropped inside the scrolling nav at this width. They are
+     absolutely positioned, so they escape the scroller and widen the document
+     rather than being clipped by it. Nothing is lost: the panel only repeats
+     the question, and every nav label is already visible. */
+  .nav .tip__panel {
+    display: none;
+  }
   .nav::-webkit-scrollbar {
     display: none;
   }
@@ -222,6 +353,10 @@
 
 .main {
   min-height: 60vh;
+  /* Contains two things that deliberately extend past the page box: the
+     full-bleed section wash on .screen-head, and the route slide. Without this
+     either one adds a horizontal scrollbar on every screen. */
+  overflow-x: clip;
 }
 
 /* --- Colophon ----------------------------------------------------------- */
@@ -254,8 +389,17 @@
 
 .colophon__foot {
   grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-5);
   padding-top: var(--s-4);
   border-top: 1px solid var(--rule);
+}
+
+.colophon__credit {
+  color: var(--ink-muted);
 }
 
 /* --- Per-screen colour --------------------------------------------------

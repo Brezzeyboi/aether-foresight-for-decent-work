@@ -25,9 +25,13 @@ ILO Working Paper 140 (2025).
 <https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html>
 *Authority:* The methodological backbone for occupational exposure in this
 project. Builds a graded exposure index rather than a binary automatable/safe
-split. *Limits:* Exposure measures task overlap with model capability, not
-employment outcomes. Its accompanying worker survey is Polish (1,640
-respondents), not global, with clerical workers and managers over-represented.
+split, and abandons the automation/augmentation split of S3. *Limits:* Exposure
+measures task overlap with model capability, not employment outcomes. Its own
+classifications are described as only illustrative, carrying a degree of
+subjectivity, and as a static snapshot. Its accompanying worker survey is Polish
+(1,640 respondents), not global, asks about jobs in the respondent's *industry*
+rather than their own job, and over-represents managers (group 1) plus groups 8
+and 9, with professionals (group 2) the most under-represented.
 
 **S2. Research Brief: Generative AI and jobs, a 2025 update** (2025).
 <https://www.ilo.org/sites/default/files/2025-05/Research%20brief_GenAI%202025%20Update.pdf>
@@ -38,8 +42,13 @@ document; cite S1 for method.
 quantity and quality** ILO Working Paper 96, Gmyrek, Berg & Bescond (2023).
 <https://www.ilo.org/sites/default/files/2024-07/WP96_web.pdf>
 *Authority:* The earlier global exposure analysis, and the origin of the
-augmentation-exceeds-automation finding. *Limits:* Predates current model
-generations; superseded on exposure figures by S1.
+augmentation-exceeds-automation finding. Also the sole source of the
+automation/augmentation split figures (automation 0.4% of employment in
+low-income countries against 5.5% in high-income; augmentation 10.4% to 13.4%)
+and of the clerical task-exposure shares (24% highly exposed, 58% medium, 1-4%
+for every other broad group). *Limits:* Predates current model generations;
+superseded on exposure figures by S1. S1 abandoned the automation/augmentation
+split entirely and carries no equivalent figures, so these belong to S3 only.
 
 **S4. Employment and Social Trends 2026** (2026).
 <https://www.ilo.org/publications/flagship-reports/employment-and-social-trends-2026>
@@ -57,10 +66,13 @@ reported for the groups the brief names; finer country-level breakdowns were not
 retrieved.
 
 **S6. The Algorithmic Management of work and its implications in different
-contexts** ILO working paper.
+contexts** Baiocco, Fernandez-Macias, Rani & Pesole, EU-ILO Background Paper
+No. 9 (June 2022).
 <https://www.ilo.org/sites/default/files/wcmsp5/groups/public/%40ed_emp/documents/publication/wcms_849220.pdf>
 *Authority:* Algorithmic management and workplace monitoring as a labour issue.
-Underpins the Safety section's surveillance and oversight material.
+Underpins the Safety section's surveillance and oversight material. *Limits:* A
+JRC co-publication in the EU-ILO background paper series, **not an ILO Employment
+Working Paper.** Its tracking figure covers freelance platform workers only.
 
 **S7. Algorithmic management in the workplace** Topic resource (2024).
 <https://www.ilo.org/algorithmic-management-workplace>
@@ -75,12 +87,14 @@ an ILO instrument comparable in force to the EU AI Act exists.
 scenario sets, not forecasts. A methodological model for AETHER's scenario
 framing.
 
-**S9. Using foresight to think and act upon an uncertain future world of work**
-Peels & Ponce del Castillo, ILO Working Paper 118 (2024).
+**S9. Using foresight to think and act upon an uncertain future world of work:
+Trade unions' experiences** Peels & Ponce del Castillo, ILO Working Paper 118
+(2024).
 <https://www.ilo.org/sites/default/files/2024-07/118_web.pdf>
 *Authority:* The discipline of labour-market foresight, and why point predictions
 about the distant future are not credible. Directly supports AETHER's refusal to
-forecast 2045.
+forecast 2045. *Limits:* Carries no institutional forecast-horizon figure; the
+2034 outer bound is BLS's (S19), not this paper's.
 
 ---
 
@@ -119,37 +133,55 @@ IMF position.
 
 ## OECD
 
-**S12. OECD Employment Outlook 2025** (2025).
+**S12. OECD Employment Outlook 2025: Can We Get Through the Demographic Crunch?**
+(2025).
 <https://www.oecd.org/en/publications/2025/07/oecd-employment-outlook-2025_5345f034.html>
 Executive summary: <https://www.oecd.org/en/publications/oecd-employment-outlook-2025_194a947b-en/full-report/executive-summary_642932a9.html>
-*Authority:* OECD flagship labour analysis. AI adoption and effects across member
-economies. *Limits:* OECD-country focused; does not generalise to low-income
-economies.
+*Authority:* OECD flagship labour analysis, this edition on demographic ageing and
+labour supply. *Limits:* **Contains no AI chapter** — do not source AI
+skill-demand claims to it. Its demographic estimates are historical, covering
+2000-2019. OECD-country focused; does not generalise to low-income economies.
+
+**S12a. OECD Employment Outlook 2023: Artificial Intelligence and the Labour
+Market** (2023), DOI 10.1787/08785bba-en.
+<https://doi.org/10.1787/08785bba-en>
+*Authority:* The OECD Employment Outlook edition actually devoted to AI and the
+labour market, published 11 July 2023, and the authority for AI-driven
+skill-demand shifts. *Limits:* OECD-country focused.
 
 **S13. Recommendation of the Council on Artificial Intelligence**
-OECD/LEGAL/0449, adopted 2019, revised 2024.
+OECD/LEGAL/0449, adopted 22 May 2019, amended 3 May 2024.
 <https://legalinstruments.oecd.org/en/instruments/oecd-legal-0449>
 Principles: <https://oecd.ai/en/ai-principles>
 *Authority:* The OECD AI Principles, the most widely adopted intergovernmental AI
-governance instrument. *Limits:* A recommendation. Not legally binding.
+governance instrument. Adopted 22 May 2019; the 3 May 2024 amendment is the
+current text. *Limits:* A recommendation. Not legally binding.
 
 ---
 
 ## European Union
 
-**S14. Regulation (EU) 2024/1689 (the AI Act)** (2024).
+**S14. Regulation (EU) 2024/1689 (the AI Act)** (2024), as amended by Regulation
+(EU) 2026/1744 (the Digital Omnibus on AI, in force 27 July 2026).
 Annex III (high-risk classification): <https://ai-act-service-desk.ec.europa.eu/en/ai-act/annex-3>
 Article 14 (human oversight): <https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-14>
 Article 26 (deployer obligations): <https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-26>
 *Authority:* Binding law, and the strongest verified legal requirement in this
 evidence base. Classifies employment and worker-management AI as high-risk, and
 mandates human oversight. Cite the article, not a summary of it. *Limits:* EU
-jurisdiction; phased application dates.
+jurisdiction. **The Digital Omnibus delayed application: Annex III high-risk
+obligations, including the employment category and Articles 14 and 26 as applied
+to it, apply from 2 December 2027, and Annex I embedded high-risk from 2 August
+2028.** The duties are enacted but not yet applicable, so employers are not
+currently bound by them. The article numbers themselves are confirmed correct.
 
-**S15. AI Act Service Desk, employment use cases** European Commission guidance
-(accessed August 2026).
+**S15. AI Act Service Desk, employment and worker-management use cases** European
+Commission guidance (accessed August 2026).
 <https://ai-act-service-desk.ec.europa.eu/en/employment-0>
-*Authority:* Official guidance on how the AI Act applies to employment contexts.
+*Authority:* Official guidance on how Annex III point 4 applies to workplace
+systems, and the source of the hollow-oversight pay-setting example — which comes
+from this guidance, not from the Regulation text. *Limits:* Guidance, not
+independently binding.
 
 ---
 
@@ -171,9 +203,11 @@ all UNESCO member states. Supports the human-oversight and inclusion material.
 Internet use: <https://www.itu.int/itu-d/reports/statistics/2025/10/15/ff25-internet-use/>
 Press release: <https://www.itu.int/en/mediacentre/Pages/PR-2025-11-17-Facts-and-Figures.aspx>
 *Authority:* The authoritative source for global connectivity and the digital
-divide, which is the precondition for any digital-inclusion claim. *Limits:* **ITU
-revises its historical estimates substantially between editions.** Never compare
-figures across editions without using the revised series.
+divide, which is the precondition for any digital-inclusion claim. Regional use is
+reported as a **band of 88-93% across CIS, Europe and the Americas**, not as a
+single leading region at 93%. *Limits:* **ITU revises its historical estimates
+substantially between editions.** Never compare figures across editions without
+using the revised series.
 
 **S18. Global Connectivity Report / Statistics Update December 2025**.
 <https://itu.int/en/ITU-D/Statistics/Pages/StatisticsUpdate/December2025.aspx>
@@ -199,15 +233,18 @@ error.
 ## Peer-reviewed and academic
 
 **S20. When combinations of humans and AI are useful: a systematic review and
-meta-analysis** Vaccaro, Almaatouq & Malone, *Nature Human Behaviour* 8,
-pp. 2293-2303 (2024).
-<https://www.nature.com/articles/s41562-024-02024-1>
+meta-analysis** Vaccaro, Almaatouq & Malone, *Nature Human Behaviour* 8(12),
+pp. 2293-2303 (2024), DOI 10.1038/s41562-024-02024-1.
+<https://doi.org/10.1038/s41562-024-02024-1>
 Preprint: <https://arxiv.org/abs/2405.06087>
 *Authority:* The key peer-reviewed evidence on human-AI collaboration, and
 notable for finding that human-AI combinations often *underperform* the better of
 the two alone. Directly relevant to AETHER's collaboration framing, and a useful
 corrective to optimistic assumptions. *Limits:* Covers studies from January 2020
-to June 2023, predating current model generations.
+to June 2023, predating current model generations. Task type is one of five
+significant moderators, alongside data type, relative human/AI performance, AI
+type and publication year; explanations, AI confidence displays, participant type
+and division of labour were the non-significant ones.
 
 **S21. The simple macroeconomics of AI** Daron Acemoglu, *Economic Policy* vol.
 40(121), pp. 13-58 (2025); earlier as NBER Working Paper 32487 (2024).
@@ -215,16 +252,25 @@ to June 2023, predating current model generations.
 *Authority:* The most rigorous published sceptical estimate of AI's
 macroeconomic effect, and a deliberate counterweight to institutional optimism.
 Included so the Economy section represents genuine expert disagreement rather
-than a single consensus. *Limits:* One model with contested assumptions; other
-economists estimate substantially larger effects.
+than a single consensus. Published figures: TFP no more than 0.66% over ten years,
+0.53% adjusted for hard-to-learn tasks; GDP 0.93-1.16% baseline, rising to
+1.4-1.56% with an investment response. There is no combined "0.9-1.6%" GDP range
+in the paper. *Limits:* One model with contested assumptions; other economists
+estimate substantially larger effects.
 
 **S22. Generative AI at Work** Brynjolfsson, Li & Raymond, *Quarterly Journal of
-Economics* 140(2) (2025); NBER Working Paper 31161 (2023).
-<https://www.nber.org/papers/w31161>
+Economics* 140(2), pp. 889-942 (2025), DOI 10.1093/qje/qjae044; earlier as NBER
+Working Paper 31161 (2023).
+<https://doi.org/10.1093/qje/qjae044>
 *Authority:* Among the best-identified field evidence on AI's productivity effect
 on real workers, and the source of the finding that gains concentrate among less
-experienced workers. *Limits:* **One firm, one occupation, one tool, pre-2024
-model.** Do not extrapolate to the economy.
+experienced workers: +15% on average and +30% for novice and low-skilled workers
+across 5,172 agents, with 36% for the lowest skill quintile. *Limits:* **One firm,
+one occupation, one tool, pre-2024 model.** Do not extrapolate to the economy.
+Cite the published figures, which differ from the withdrawn NBER working paper's
+14%/34% across 5,179 agents. For the most-skilled workers the published version
+reports small speed gains alongside small but statistically significant declines in
+resolution rate and customer satisfaction, not merely a minimal effect.
 
 ---
 

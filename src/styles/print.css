@@ -22,12 +22,25 @@
     margin: 18mm 16mm 20mm;
   }
 
+  /* The screen theme is dark. Paper is not, so the whole palette inverts back
+     here. This is the reason nothing in the components hard-codes a colour: the
+     flip is a token override, and every component follows.
+
+     Anything that only makes sense on a dark ground is neutralised rather than
+     translated — the milled metal plate, the light bloom, the inset bevels. */
   :root {
-    /* Paper is white; the ivory surface would waste ink and grey the plate.
-       Ink darkens slightly because toner spreads on paper. */
+    color-scheme: light;
+
     --surface: #ffffff;
     --surface-raised: #ffffff;
     --surface-sunken: #f4f2ec;
+
+    /* The ivory plate was the one LIGHT plane on screen. On paper everything is
+       that plane, so it becomes white and its text becomes black. */
+    --surface-ink: #ffffff;
+    --surface-ink-2: #f4f2ec;
+    --ink-on-dark: #000000;
+
     --ink: #000000;
     --ink-secondary: #1f2020;
     --ink-muted: #45463f;
@@ -35,11 +48,90 @@
     --rule-soft: #d6d1c4;
     --rule-strong: #6b6558;
 
+    /* The metal treatment is a dark-ground effect. Flattened to nothing so a
+       page does not print a grey wash or a grain over the type. */
+    --metal-plate: none;
+    --metal-grain: none;
+    --metal-sheen: none;
+    --metal-bevel: none;
+    --metal-tint-cool: #ffffff;
+    --metal-tint-warm: #ffffff;
+    --metal-edge-light: transparent;
+    --metal-edge-dark: transparent;
+
+    /* On screen the accent is a bright mint that reads against black. On white
+       it would be illegible, so it returns to the mineral green the print
+       palette was built around. */
+    --accent: #2f5c47;
+    --accent-deep: #1f3f30;
+    --accent-wash: #eef2ef;
+    --accent-wash-strong: #e2eae5;
+    --accent-live: #2f5c47;
+    --accent-live-deep: #1f3f30;
+    --accent-live-wash: #eef2ef;
+    --accent-live-glow: transparent;
+
+    /* The sequential ramp INVERTS. On screen the brightest step means the
+       largest value, because bright advances on black. On paper the darkest step
+       means the largest value, because dark advances on white. Reversing the
+       assignment rather than the meaning keeps seq-100 as "near zero" in both. */
+    --seq-100: #e4ece7;
+    --seq-200: #c5d6cc;
+    --seq-300: #a3bcaf;
+    --seq-400: #7f9d8b;
+    --seq-500: #5d7d69;
+    --seq-600: #3e5b4a;
+    --seq-700: #22392c;
+
+    --mute-mark: #8a8271;
+    --mute-mark-soft: #d6d1c4;
+
+    /* Risk tones darkened for toner, which lightens saturated colour on paper. */
+    --risk-low: #4a7150;
+    --risk-moderate: #8a6a12;
+    --risk-elevated: #a8502a;
+    --risk-high: #96331c;
+    --risk-low-wash: #eef3ef;
+    --risk-moderate-wash: #f7f1e0;
+    --risk-elevated-wash: #f9ece6;
+    --risk-high-wash: #f9e9e4;
+
+    --basis-measured: #1f3f30;
+    --basis-projection: #3e5b4a;
+    --basis-scenario: #8a6a12;
+    --basis-assumption: #45463f;
+
+    /* Section colours darkened to stay legible as text on white. */
+    --sec-skills: #2f5c47;
+    --sec-careers: #1d5b63;
+    --sec-safety: #a8502a;
+    --sec-learning: #8a6a12;
+    --sec-economy: #6d3b7a;
+    --sec-ai: #35427e;
+    --sec-skills-wash: #eef2ef;
+    --sec-careers-wash: #e8f1f2;
+    --sec-safety-wash: #f9ece6;
+    --sec-learning-wash: #f7f1e0;
+    --sec-economy-wash: #f3ebf5;
+    --sec-ai-wash: #ebedf7;
+
+    /* Elevation is a screen device. Paper has rules instead. */
+    --shadow-1: none;
+    --shadow-2: none;
+    --shadow-3: none;
+    --glow-mint: none;
+
     /* All motion off. */
     --dur-1: 0ms;
     --dur-2: 0ms;
     --dur-3: 0ms;
     --dur-4: 0ms;
+  }
+
+  /* The fixed grain overlay would tile a texture across every printed page. */
+  body::before,
+  .masthead::after {
+    display: none !important;
   }
 
   html {

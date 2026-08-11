@@ -34,35 +34,76 @@ function oklchToHex(L, C, h) {
   return '#' + rgb.map((v) => v.toString(16).padStart(2, '0').toUpperCase()).join('');
 }
 
-const ACCENT = '#496957';
+/* Two grounds, two directions. On paper the near-zero step is the PALEST and
+   magnitude grows by darkening; on the dark theme that inverts, because on an
+   ink-black ground the thing that recedes is the dark step and magnitude grows
+   by brightening. seq-100 always means "near zero" either way.
+
+     node tools/gen-ramp.mjs          light ground (print)
+     node tools/gen-ramp.mjs --dark   dark ground (screen, the shipped theme) */
+const DARK = process.argv.includes('--dark');
+
+const ACCENT = DARK ? '#34D399' : '#496957';
 const { h: HUE, C: ACCENT_C } = hexToOklch(ACCENT);
 
-// 7 steps, evenly spaced in L. Light end sits just off the ivory surface so a
-// near-zero heatmap cell reads as "almost nothing" without vanishing; dark end
-// stays short of black so text can still sit on it.
+// 7 steps, evenly spaced in L. The near-zero end sits just off the ground so a
+// near-zero cell reads as "almost nothing" without vanishing; the peak end
+// stays short of the extreme so text can still sit on it.
 const STEPS = 7;
-const L_LIGHT = 0.868;
-const L_DARK = 0.312;
+const L_START = DARK ? 0.28 : 0.868; // seq-100, near zero
+const L_END = DARK ? 0.87 : 0.312; // seq-700, peak magnitude
 
-// Chroma tapers toward both ends (pale tints and deep shades both hold less
-// chroma naturally); peak sits near the accent's own step.
-const chromaAt = (t) => ACCENT_C * (0.55 + 0.45 * Math.sin(Math.PI * (0.15 + 0.85 * t)));
+/* Chroma. On paper it tapers at both ends, because pale tints and deep shades
+   both hold less chroma naturally and the peak sits near the accent's own step.
+   On dark it rises monotonically instead: the sRGB green gamut runs out at
+   mid-lightness, so a mid-ramp chroma peak clips to the gamut wall and three
+   adjacent steps collapse onto the same colour. Rising chroma keeps every step
+   inside the gamut, and it stacks with lightness so magnitude reads twice. */
+const chromaAt = (t) =>
+  DARK ? ACCENT_C * (0.3 + 0.7 * t) : ACCENT_C * (0.55 + 0.45 * Math.sin(Math.PI * (0.15 + 0.85 * t)));
+
+// A step outside sRGB would silently clip and flatten the ramp, so it is an error.
+const inGamut = (L, C, h) => {
+  const A = C * Math.cos(h);
+  const B = C * Math.sin(h);
+  const l = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3;
+  const m = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3;
+  const q = (L - 0.0894841775 * A - 1.291485548 * B) ** 3;
+  return [
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * q,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * q,
+    -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * q,
+  ]
+    .map(linearToSrgb)
+    .every((v) => v >= -0.002 && v <= 1.002);
+};
 
 const out = [];
+let clipped = 0;
 for (let i = 0; i < STEPS; i++) {
   const t = i / (STEPS - 1);
-  const L = L_LIGHT + (L_DARK - L_LIGHT) * t;
-  out.push([`seq-${(i + 1) * 100}`, oklchToHex(L, chromaAt(t), HUE), L]);
+  const L = L_START + (L_END - L_START) * t;
+  const C = chromaAt(t);
+  if (!inGamut(L, C, HUE)) clipped++;
+  out.push([`seq-${(i + 1) * 100}`, oklchToHex(L, C, HUE), L, inGamut(L, C, HUE)]);
 }
 
-console.log(`accent ${ACCENT}  hue ${((HUE * 180) / Math.PI).toFixed(1)}deg  C ${ACCENT_C.toFixed(4)}\n`);
+console.log(
+  `${DARK ? 'DARK ground' : 'LIGHT ground'}  accent ${ACCENT}  ` +
+    `hue ${((HUE * 180) / Math.PI).toFixed(1)}deg  C ${ACCENT_C.toFixed(4)}\n`
+);
 let prev = null;
-for (const [name, hex, L] of out) {
-  const d = prev === null ? '' : `dL ${(prev - L).toFixed(3)}`;
-  console.log(`  ${name.padEnd(9)} ${hex}   L ${L.toFixed(3)}   ${d}`);
+for (const [name, hex, L, ok] of out) {
+  const d = prev === null ? '' : `dL ${Math.abs(prev - L).toFixed(3)}`;
+  console.log(`  ${name.padEnd(9)} ${hex}   L ${L.toFixed(3)}   ${d.padEnd(10)}${ok ? '' : 'CLIPPED'}`);
   prev = L;
 }
 console.log('\nCSS:');
 for (const [name, hex] of out) console.log(`  --${name}: ${hex};`);
 console.log('\nJS array:');
 console.log(out.map(([n, hex]) => `  ['${n}', '${hex}'],`).join('\n'));
+
+if (clipped) {
+  console.error(`\n${clipped} step(s) fall outside sRGB and would clip. Lower the chroma curve.`);
+  process.exit(1);
+}

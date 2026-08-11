@@ -95,6 +95,63 @@ export function Safety() {
           </div>
         </div>
       </Section>
+
+      {/* Four of the risks above describe systems that profile and rank people.
+          AETHER is one of those systems, so the same list is turned on it here.
+          Listing risks in other people's software while exempting your own is the
+          failure this section exists to avoid. */}
+      <Section divided title="These risks apply to AETHER too">
+        <p className="lead">
+          This product scores a person out of 100 and ranks careers by a match percentage. Four risks
+          on this page describe exactly that kind of system, so here is where each one lands.
+        </p>
+        <ul className="rows">
+          <li className="row">
+            <div className="row__body">
+              <div>
+                <p className="row__label">Hiring and evaluation bias</p>
+                <p className="row__text">
+                  A readiness score invites being read as a verdict on a person. Every score here is
+                  labelled a design assumption rather than a measurement, and the match percentages
+                  are illustrative. What is not illustrative is the growing or emerging label: that
+                  one is tied to whether a projection names the role.
+                </p>
+              </div>
+              <div>
+                <p className="row__label">Information asymmetry</p>
+                <p className="row__text">
+                  Being ranked by logic you cannot see is the risk. Every figure states its basis and
+                  names its source, the scoring weights are in the open, and the assistant shows the
+                  retrieval steps behind each answer.
+                </p>
+              </div>
+              <div>
+                <p className="row__label">Hollow oversight</p>
+                <p className="row__text">
+                  A tool that cannot be argued with has no real oversight. Nothing here decides
+                  anything about anyone. It has no authority over a real application, no employer
+                  sees it, and disagreeing with a ranking costs the reader nothing.
+                </p>
+              </div>
+              <div>
+                <p className="row__label">Over-reliance on AI output</p>
+                <p className="row__text">
+                  The evidence on this page says human-AI pairs often do worse than the better of the
+                  two alone, and worst on decision tasks. Choosing a career is a decision task, which
+                  is why this is written to inform a choice rather than make one.
+                </p>
+              </div>
+              <div>
+                <p className="row__label">What it never collects</p>
+                <p className="row__text">
+                  No account, no login, no analytics, no network requests. The profile is composite
+                  and fictional. Nothing is stored, because there is nothing to store.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </Section>
     </>
   );
 }

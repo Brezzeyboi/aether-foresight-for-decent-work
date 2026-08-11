@@ -71,7 +71,13 @@ export const HORIZONS: readonly Horizon[] = [
    Rendered as small multiples, one panel each. Identity comes from panel
    position, a direct label, and texture angle, never from hue: this is what
    keeps the product clear of the categorical colour gate that the mineral
-   accent cannot pass. See docs/03-design-system.md. */
+   accent cannot pass. See docs/03-design-system.md.
+
+   Eight dimensions, and the last two are deliberate. Productivity and job counts
+   are what this field usually measures; whether a worker can question a decision
+   about them, and see the reasoning behind it, is what decides whether the work
+   is dignified. Both are anchored to cited claims, so dignity is compared across
+   pathways on evidence rather than asserted as a value. */
 
 export interface ScenarioDimension {
   name: string;
@@ -139,6 +145,16 @@ export const SCENARIOS: readonly Scenario[] = [
         direction: 'Better on transparency and recourse',
         anchor: 'CLAIM-GOV-02',
       },
+      {
+        name: 'Voice and recourse',
+        direction: 'Override and appeal change outcomes, because compliance is enforced',
+        anchor: 'CLAIM-GOV-02',
+      },
+      {
+        name: 'Legibility of decisions',
+        direction: 'A worker can inspect the logic that ranked them',
+        anchor: 'CLAIM-GOV-06',
+      },
     ],
     indicators: [
       'High-risk AI requirements adopted in jurisdictions beyond the EU',
@@ -187,6 +203,16 @@ export const SCENARIOS: readonly Scenario[] = [
       {
         name: 'Workplace conditions',
         direction: 'Worst of the three. Algorithmic management extends beyond platforms',
+        anchor: 'CLAIM-GOV-09',
+      },
+      {
+        name: 'Voice and recourse',
+        direction: 'Weakest. Oversight exists on paper while the system effectively decides',
+        anchor: 'CLAIM-GOV-04',
+      },
+      {
+        name: 'Legibility of decisions',
+        direction: 'Lowest. A worker cannot contest what they cannot inspect',
         anchor: 'CLAIM-GOV-09',
       },
     ],
@@ -239,11 +265,21 @@ export const SCENARIOS: readonly Scenario[] = [
         direction: 'Better only if governance is substantive. Not automatic',
         anchor: 'CLAIM-GOV-09',
       },
+      {
+        name: 'Voice and recourse',
+        direction: 'Depends entirely on governance. The technology does not decide this',
+        anchor: 'CLAIM-GOV-04',
+      },
+      {
+        name: 'Legibility of decisions',
+        direction: 'Better where work is designed around complementarity, not substitution',
+        anchor: 'CLAIM-GOV-06',
+      },
     ],
     indicators: [
       'Replication of the synergy findings against post-2023 models, the most informative indicator',
       'Delegation studies moving the effect to a confidence interval excluding zero',
-      'The +14% and +34% productivity findings replicating outside single-firm settings',
+      'The +15% and +30% productivity findings replicating outside single-firm settings',
       'Interaction-design roles appearing by name in a WEF or BLS ranked list',
       'Whether the decision-task penalty persists',
     ],
@@ -267,7 +303,7 @@ export const DIMENSIONS: readonly DimensionTrace[] = [
     question: 'Which tasks get done by machines?',
     near: 'Clerical work: 24% of clerical tasks highly exposed, against 1-4% elsewhere.',
     mid: 'Would extend into digitised professional and technical roles.',
-    far: 'Could reach context-dependent judgement, or stall there. The ILO says this cannot be predicted.',
+    far: 'Could reach context-dependent judgement, or stall there. The ILO offers its estimates as a static snapshot, not a trajectory.',
   },
   {
     dimension: 'Augmentation',

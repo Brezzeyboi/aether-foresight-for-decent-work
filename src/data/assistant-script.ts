@@ -14,7 +14,7 @@
        -> learning path -> AI exposure -> safety considerations
    ============================================================================ */
 
-import type { Basis, SourceId } from './evidence.ts';
+import { citeShort, type Basis, type SourceId } from './evidence.ts';
 import type { Route } from '../router.ts';
 
 /** A block inside a response. The variety is what keeps it from reading as chat. */
@@ -47,11 +47,11 @@ export interface Prompt {
 }
 
 export const OPENING: Response = {
-  working: 'Loading demonstration profile',
+  working: 'Loading profile',
   blocks: [
     {
       kind: 'text',
-      text: 'I work from one profile at a time. This session uses a demonstration profile, so nothing here is a real person.',
+      text: 'I work from one profile at a time. This session uses a composite student profile, so nothing here is a real person.',
     },
     {
       kind: 'figures',
@@ -314,12 +314,12 @@ export const PROMPTS: readonly Prompt[] = [
           items: [
             { value: 'Assistance leads', label: 'Augmentation potential exceeds automation potential in every income group', basis: 'projection', source: 'ilo-wp140' },
             { value: '+78M', label: 'Net job change in the most-cited projection to 2030', basis: 'projection', source: 'wef-fojr-2025' },
-            { value: '2034', label: 'The furthest any credible projection reaches', basis: 'measured', source: 'ilo-wp118' },
+            { value: '2034', label: 'The furthest any credible projection reaches', basis: 'measured', source: 'bls-ep-2034' },
           ],
         },
         {
           kind: 'note',
-          text: 'Nobody credible forecasts 2045, including me. The ILO says capability cannot be predicted, and that outcomes are not predetermined.',
+          text: 'Nobody credible forecasts 2045, including me. The ILO calls its own exposure estimates a static snapshot, and says outcomes are not predetermined.',
         },
         { kind: 'link', route: 'research', label: 'Read the evidence behind this' },
       ],
@@ -328,30 +328,136 @@ export const PROMPTS: readonly Prompt[] = [
   },
 ];
 
+const KEYS: Record<string, string[]> = {
+  careers: ['career', 'job', 'role', 'fit', 'match', 'work as'],
+  gaps: ['missing', 'gap', 'need to learn', 'lack'],
+  path: ['learning path', 'how do i', 'study', 'plan', 'roadmap', 'prepare'],
+  exposure: ['exposure', 'exposed', 'automat', 'replace'],
+  risks: ['risk', 'danger', 'safety', 'harm', 'bias'],
+  weakest: ['weakest', 'behind', 'worst', 'lowest skill'],
+  'field-risk': ['at risk', 'my field', 'will i lose', 'safe'],
+  'why-top': ['why', 'top match', 'best match'],
+};
+
+/** What the matcher actually did, so the interface can show it rather than mime it. */
+export interface MatchResult {
+  prompt: Prompt | null;
+  /** Word count of the query, before matching. */
+  tokens: number;
+  /** How many question patterns were tested. */
+  patterns: number;
+  /** Number of keywords that hit, or -1 for an exact-text match. */
+  score: number;
+  /** The keywords that actually matched, for display. */
+  matchedOn: readonly string[];
+}
+
 /** Matches free text against the script. Deliberately simple keyword overlap. */
-export function findPrompt(input: string): Prompt | null {
+export function matchPrompt(input: string): MatchResult {
   const q = input.toLowerCase().trim();
-  if (!q) return null;
+  const tokens = q ? q.split(/\s+/).length : 0;
+  const patterns = Object.keys(KEYS).length;
+  const none: MatchResult = { prompt: null, tokens, patterns, score: 0, matchedOn: [] };
+  if (!q) return none;
 
   const exact = PROMPTS.find((p) => p.text.toLowerCase() === q);
-  if (exact) return exact;
+  if (exact) return { prompt: exact, tokens, patterns, score: -1, matchedOn: [] };
 
-  const KEYS: Record<string, string[]> = {
-    careers: ['career', 'job', 'role', 'fit', 'match', 'work as'],
-    gaps: ['missing', 'gap', 'need to learn', 'lack'],
-    path: ['learning path', 'how do i', 'study', 'plan', 'roadmap', 'prepare'],
-    exposure: ['exposure', 'exposed', 'automat', 'replace'],
-    risks: ['risk', 'danger', 'safety', 'harm', 'bias'],
-    weakest: ['weakest', 'behind', 'worst', 'lowest skill'],
-    'field-risk': ['at risk', 'my field', 'will i lose', 'safe'],
-    'why-top': ['why', 'top match', 'best match'],
+  let best: { id: string; hits: string[] } | null = null;
+  for (const [id, keys] of Object.entries(KEYS)) {
+    const hits = keys.filter((k) => q.includes(k));
+    if (hits.length > 0 && (!best || hits.length > best.hits.length)) best = { id, hits };
+  }
+  if (!best) return none;
+
+  return {
+    prompt: PROMPTS.find((p) => p.id === best.id) ?? null,
+    tokens,
+    patterns,
+    score: best.hits.length,
+    matchedOn: best.hits,
+  };
+}
+
+/** Kept for callers that only need the match. */
+export function findPrompt(input: string): Prompt | null {
+  return matchPrompt(input).prompt;
+}
+
+/* --- Reasoning pipeline --------------------------------------------------
+   Four phases, each reporting a real quantity taken from the match and the
+   response: how the question was parsed, which corpus entries were retrieved,
+   how the evidence was checked, and what was composed. */
+
+export type PhaseKind = 'parse' | 'retrieve' | 'verify' | 'compose';
+
+export interface Phase {
+  kind: PhaseKind;
+  label: string;
+  detail: string;
+  /** Named items found during this phase, shown as they stream in. */
+  hits?: readonly string[];
+}
+
+export function pipelineFor(m: MatchResult): readonly Phase[] {
+  const r = m.prompt?.response;
+
+  const parse: Phase = {
+    kind: 'parse',
+    label: 'Parsing the question',
+    detail:
+      m.score === -1
+        ? `${m.tokens} terms, matched a known question`
+        : m.matchedOn.length
+          ? `${m.tokens} terms, intent from "${m.matchedOn.join('", "')}"`
+          : `${m.tokens} terms, no intent recognised`,
   };
 
-  let best: { id: string; score: number } | null = null;
-  for (const [id, keys] of Object.entries(KEYS)) {
-    const score = keys.filter((k) => q.includes(k)).length;
-    if (score > 0 && (!best || score > best.score)) best = { id, score };
+  if (!r) {
+    return [
+      parse,
+      {
+        kind: 'retrieve',
+        label: 'Searching the evidence base',
+        detail: `${m.patterns} topics scanned, no match`,
+      },
+      {
+        kind: 'verify',
+        label: 'Refusing to answer',
+        detail: 'nothing on file supports an answer',
+      },
+    ];
   }
 
-  return best ? (PROMPTS.find((p) => p.id === best.id) ?? null) : null;
+  const figures = r.blocks.flatMap((b) => (b.kind === 'figures' ? b.items : []));
+  const sources = [...new Set(figures.map((f) => f.source))];
+  const bases = [...new Set(figures.map((f) => f.basis))];
+
+  const phases: Phase[] = [parse];
+
+  phases.push({
+    kind: 'retrieve',
+    label: 'Searching the evidence base',
+    detail: sources.length
+      ? `${figures.length} figures across ${sources.length} ${sources.length === 1 ? 'source' : 'sources'}`
+      : `${r.blocks.length} entries, no cited figures needed`,
+    hits: sources.map(citeShort),
+  });
+
+  phases.push({
+    kind: 'verify',
+    label: 'Checking how each figure is known',
+    detail: bases.length
+      ? bases.join(', ')
+      : 'no figures to classify',
+  });
+
+  phases.push({
+    kind: 'compose',
+    label: 'Composing the answer',
+    detail: `${r.blocks.length} sections`,
+  });
+
+  return phases;
 }
+

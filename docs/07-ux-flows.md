@@ -186,7 +186,7 @@ Full operation without a mouse:
 | Range | Behaviour |
 |---|---|
 | ≥ 1240px | full layout, grouped nav on one line, asymmetric grids |
-| 1000-1240px | nav group labels drop, demo-flag detail drops |
+| 1000-1240px | nav group labels drop, status detail line drops |
 | 640-1000px | nav moves to its own row and scrolls horizontally |
 | < 640px | single column throughout, charts reflow to taller aspects, matrices become stacked lists |
 

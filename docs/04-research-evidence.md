@@ -16,6 +16,21 @@ Each claim carries a `Basis` classification:
 
 **Critical rule for the build team:** do not invent, round up, or recombine these figures. If a number you want is not here, check the "Numbers we could NOT verify" section at the end before using it. Several widely-circulated figures in this space are wrong or come from sources that do not exist.
 
+## Documented here but not implemented in code
+
+This file documents 100 claims. `src/data/claims.ts` implements 84. The 16 below
+are documented but carry no entry in the code, so no interface surface resolves
+them and they are not available to render:
+
+CLAIM-EMP-07, CLAIM-JOB-05, CLAIM-JOB-06, CLAIM-DIV-05, CLAIM-DIV-06,
+CLAIM-DIV-08, CLAIM-DIV-11, CLAIM-ECON-05, CLAIM-ECON-08, CLAIM-ECON-11,
+CLAIM-SCEN-03, CLAIM-SCEN-06, CLAIM-SCEN-09, CLAIM-SCEN-10, CLAIM-SCEN-13,
+CLAIM-SCEN-14.
+
+Their research entries below stand as verified research and remain citable in
+prose. A claim id referenced from application code must exist in
+`src/data/claims.ts`; the ids above do not.
+
 ---
 
 ## Topic 1 — AI and employment overall
@@ -127,7 +142,7 @@ Each claim carries a `Basis` classification:
 - **Figure:** 24% of clerical tasks highly exposed, plus 58% at medium exposure. For all other occupational groups, highly exposed tasks range between 1% and 4%, and medium-exposed tasks do not exceed 25%.
 - **Display:** 24% of clerical tasks
 - **Basis:** projection
-- **Source:** International Labour Organization, *ILO Working Paper 96* (2023)
+- **Source:** International Labour Organization, *ILO Working Paper 96* (2023). These figures belong to WP96 and have no equivalent in WP140, which abandoned the automation/augmentation split.
 - **URL:** https://webapps.ilo.org/static/english/intserv/working-papers/wp096/index.html
 - **Supporting text:** "only the broad occupation of clerical work is highly exposed to the technology with 24 per cent of clerical tasks considered highly exposed and an additional 58 percent with medium-level exposure. For the other occupational groups, the greatest share of highly exposed tasks oscillates between 1 and 4 per cent, and medium exposed tasks do not exceed 25 per cent."
 - **Notes:** Scores produced by prompting GPT-4 on ISCO-08 4-digit task descriptions. The authors note GPT is "likely to reflect techno-optimism and overstate some task-level scores," and that the analysis ignores adoption constraints (electricity, internet, relative labour cost, digital literacy, finance).
@@ -139,7 +154,7 @@ Each claim carries a `Basis` classification:
 - **Source:** International Labour Organization, *ILO Working Paper 96* (2023)
 - **URL:** https://webapps.ilo.org/static/english/intserv/working-papers/wp096/index.html
 - **Supporting text:** "In low-income countries, only 0.4 per cent of total employment is potentially exposed to automation effects, whereas in high-income countries the share rises to 5.5 percent... The greater impact is from augmentation, which has the potential to affect 10.4 percent of employment in low-income countries and 13.4 percent of employment in high-income countries."
-- **Notes:** The paper's own interpretation: "wealthier countries are likely to face both more disruptive effects in the technological transition and higher net gains from the process." It also warns these figures ignore infrastructure constraints, which "will impede the possibility for use in lower-income countries and likely increase the productivity gap."
+- **Notes:** The paper's own interpretation: "wealthier countries are likely to face both more disruptive effects in the technological transition and higher net gains from the process." It also warns these figures ignore infrastructure constraints, which "will impede the possibility for use in lower-income countries and likely increase the productivity gap." These automation/augmentation split figures belong to WP96 (2023) only: WP140 abandoned the split entirely and carries no equivalent numbers.
 
 #### CLAIM-AUG-04: ILO's 2025 refined index — one in four workers globally has some GenAI exposure
 - **Figure:** About one quarter of global employment falls into one of four exposure gradients; 3.3% of global employment is in the highest exposure gradient
@@ -186,14 +201,14 @@ Each claim carries a `Basis` classification:
 - **Supporting text:** "Clerical occupations continue to have the highest exposure levels. Additionally, some strongly digitized occupations have increased exposure, highlighting the expanding abilities of GenAI regarding specialized tasks in professional and technical roles."
 - **Notes:** Counters the assumption that only low-skill or clerical work is affected. No specific employment share was published for this expansion in the material retrieved, so do not attach a number to it.
 
-#### CLAIM-AUG-09: Workers themselves mostly expect no or slight impact on their own jobs
+#### CLAIM-AUG-09: Workers themselves mostly expect no or slight impact on jobs in their industry
 - **Figure:** 26.5% of surveyed workers expect no impact and 30.2% expect only a slight impact from GenAI on jobs in their industry
 - **Display:** 57% expect little/no impact
 - **Basis:** measured (worker survey)
 - **Source:** International Labour Organization, *ILO Working Paper 140* (2025)
 - **URL:** https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html
 - **Supporting text:** "When considering the potential impact of GenAI on jobs within their industries, most respondents expect either no impact (26.5%) or only a slight impact (30.2%)... relatively few respondents predict a complete transformation of their occupations, with the highest share of such responses among service and sales workers (5.1%) and clerical support workers (4.2%)."
-- **Notes:** The Display value 57% is the arithmetic sum of two published figures (26.5 + 30.2 = 56.7, rounded). If you prefer to avoid derived numbers, display "26.5% no impact / 30.2% slight impact" instead. Sample is 1,640 workers, drawn from Poland — **not globally representative**. Also note this survey asked about *industry* impact, and the paper notes clerical workers and managers were over-represented relative to national labour market patterns.
+- **Notes:** The Display value 57% is the arithmetic sum of two published figures (26.5 + 30.2 = 56.7, rounded). If you prefer to avoid derived numbers, display "26.5% no impact / 30.2% slight impact" instead. Sample is 1,640 workers, drawn from Poland — **not globally representative**. This survey asked about impact on jobs in the respondent's *industry*, **not on their own job**, and the two must not be conflated. The paper notes managers (ISCO group 1) plus groups 8 and 9 were over-represented relative to national labour market patterns, while professionals (group 2) were the most under-represented.
 
 ---
 
@@ -274,17 +289,17 @@ Each claim carries a `Basis` classification:
 #### CLAIM-SKILL-09: AI shifts skill demand toward management, business and digital skills, away from some cognitive and clerical tasks
 - **Figure:** Qualitative finding on direction of skill demand shift
 - **Display:** Toward management & digital
-- **Basis:** measured (research synthesis by OECD, citing Green 2024)
-- **Source:** OECD, *OECD Employment Outlook 2025* (2025)
-- **URL:** https://www.oecd.org/en/publications/oecd-employment-outlook-2025_194a947b-en/full-report/component-7.html
-- **Supporting text:** "AI is shifting the demand for skills in the labour market by increasing the need for management, business, and digital skills while reducing demand for some cognitive and clerical tasks (Green, 2024). The impact of AI on older workers varies significantly based on their occupation and level of education; highly educated older workers in professions requiring cognitive, non-routine skills are more exposed to AI compared to occupations based on manual skills."
-- **Notes:** Note the important asymmetry OECD draws in the same passage: AI exposure is higher for highly educated cognitive workers, but *automation* risk from all technologies is higher for more routine occupations (citing Lane 2024). Exposure and automation risk point at different groups.
+- **Basis:** measured (research synthesis by OECD)
+- **Source:** OECD, *OECD Employment Outlook 2023: Artificial Intelligence and the Labour Market* (2023), DOI 10.1787/08785bba-en
+- **URL:** https://doi.org/10.1787/08785bba-en
+- **Supporting text:** AI is shifting the demand for skills in the labour market by increasing the need for management, business, and digital skills while reducing demand for some cognitive and clerical tasks.
+- **Notes:** This is the OECD Employment Outlook edition devoted to AI and the labour market, published 11 July 2023 — **the 2025 edition contains no AI chapter**, so it cannot carry this claim. Note the important asymmetry OECD draws: AI exposure is higher for highly educated cognitive workers, but *automation* risk from all technologies is higher for more routine occupations. Exposure and automation risk point at different groups. OECD countries only.
 
 #### CLAIM-SKILL-10: Training participation collapses with age
 - **Figure:** Only about one third of adults aged 60-65 participated in training in 2023, compared with over half of those aged 25-44
 - **Display:** 1/3 vs 1/2
 - **Basis:** measured
-- **Source:** OECD, *OECD Employment Outlook 2025* (2025)
+- **Source:** OECD, *OECD Employment Outlook 2025: Can We Get Through the Demographic Crunch?* (2025)
 - **URL:** https://www.oecd.org/en/publications/2025/07/oecd-employment-outlook-2025_5345f034.html
 - **Supporting text:** "adults aged 60-65 years old have significantly lower literacy and adaptive problem-solving skills than younger workers. And only a third of adults aged 60-65 years participated in training in 2023, compared to over half of those aged 25-44. There is therefore an urgent need to boost the skills of older workers and promote their participation in well-targeted training."
 - **Notes:** OECD countries only — not global. Strong evidence that the reskilling burden falls unevenly by age, and that the group most likely to need retraining is least likely to receive it. OECD notes part of the skills gap reflects cohort differences in educational attainment, but also that skill levels declined with age *within* cohorts over the past decade.
@@ -393,28 +408,28 @@ Each claim carries a `Basis` classification:
 - **Figure:** Annex III point 4 covers recruitment/selection AI and AI making decisions on terms of work, promotion, termination, task allocation, and performance/behaviour monitoring
 - **Display:** High-risk (Annex III.4)
 - **Basis:** measured (legal instrument text)
-- **Source:** European Union, *Regulation (EU) 2024/1689 (AI Act)*, Annex III (2024)
+- **Source:** European Union, *Regulation (EU) 2024/1689 (AI Act)*, Annex III (2024), as amended by Regulation (EU) 2026/1744
 - **URL:** https://ai-act-service-desk.ec.europa.eu/en/ai-act/annex-3
 - **Supporting text:** "4. Employment, workers' management and access to self-employment: (a) AI systems intended to be used for the recruitment or selection of natural persons, in particular to place targeted job advertisements, to analyse and filter job applications, and to evaluate candidates; (b) AI systems intended to be used to make decisions affecting terms of work-related relationships, the promotion or termination of work-related contractual relationships, to allocate tasks based on individual behaviour or personal traits or characteristics or to monitor and evaluate the performance and behaviour of persons in such relationships."
-- **Notes:** This is binding EU law, not guidance — the strongest governance claim available. Scope is EU-linked deployment. High-risk classification triggers the Section 2 requirements (risk management, data governance, technical documentation, record-keeping, transparency, human oversight, accuracy/robustness/cybersecurity), not a ban. Note Article 6(3) contains narrow exceptions, e.g. purely retrospective anonymised bias-auditing of completed human decisions.
+- **Notes:** This is binding EU law, not guidance — the strongest governance claim available. Scope is EU-linked deployment. High-risk classification triggers the Section 2 requirements (risk management, data governance, technical documentation, record-keeping, transparency, human oversight, accuracy/robustness/cybersecurity), not a ban. Note Article 6(3) contains narrow exceptions, e.g. purely retrospective anonymised bias-auditing of completed human decisions. **Timing:** Regulation (EU) 2026/1744 (the Digital Omnibus on AI, in force 27 July 2026) delayed application. The Annex III high-risk obligations, including the employment category, **apply from 2 December 2027**, not 2 August 2026; Annex I embedded high-risk applies from 2 August 2028. The duties are enacted but not yet applicable, so employers are **not currently bound** by them.
 
-#### CLAIM-GOV-02: The AI Act requires human oversight with genuine override and stop capability
+#### CLAIM-GOV-02: The AI Act will require human oversight with genuine override and stop capability
 - **Figure:** Article 14 — oversight persons must be able to understand capabilities/limitations, remain aware of automation bias, correctly interpret output, decide not to use or to disregard/override/reverse output, and intervene or halt the system
 - **Display:** Article 14
 - **Basis:** measured (legal instrument text)
 - **Source:** European Union, *Regulation (EU) 2024/1689 (AI Act)*, Article 14 (2024)
 - **URL:** https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-14
 - **Supporting text:** "(b) to remain aware of the possible tendency of automatically relying or over-relying on the output produced by a high-risk AI system (automation bias)... (d) to decide, in any particular situation, not to use the high-risk AI system or to otherwise disregard, override or reverse the output of the high-risk AI system; (e) to intervene in the operation of the high-risk AI system or interrupt the system through a 'stop' button or a similar procedure that allows the system to come to a halt in a safe state."
-- **Notes:** **Automation bias is named explicitly in binding law.** That is a strong, specific, verifiable detail for any "human in the loop" design narrative. For remote biometric identification under Annex III point 1(a), Article 14(5) additionally requires separate verification by at least two competent persons (with exceptions for law enforcement, migration, border control, asylum).
+- **Notes:** **Automation bias is named explicitly in binding law.** That is a strong, specific, verifiable detail for any "human in the loop" design narrative. For remote biometric identification under Annex III point 1(a), Article 14(5) additionally requires separate verification by at least two competent persons (with exceptions for law enforcement, migration, border control, asylum). The article numbers are confirmed correct; as applied to the Annex III employment category, Article 14 **applies from 2 December 2027** following the Regulation (EU) 2026/1744 delay. Write this in the future tense: employers are not yet bound.
 
-#### CLAIM-GOV-03: Employers must inform workers and their representatives before deploying high-risk AI in the workplace
+#### CLAIM-GOV-03: Employers will have to inform workers and their representatives before deploying high-risk AI in the workplace
 - **Figure:** Article 26(7) — prior information duty to workers' representatives and affected workers; Article 26(2) requires competent, trained, authorised human oversight; logs kept at least six months; Article 26(11) requires informing individuals subject to AI-assisted decisions
 - **Display:** Notify workers first
 - **Basis:** measured (legal instrument text)
 - **Source:** European Union, *Regulation (EU) 2024/1689 (AI Act)*, Article 26 (2024)
 - **URL:** https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-26
 - **Supporting text:** "7. Before putting into service or using a high-risk AI system at the workplace, deployers who are employers shall inform workers' representatives and the affected workers that they will be subject to the use of the high-risk AI system." And: "2. Deployers shall assign human oversight to natural persons who have the necessary competence, training and authority, as well as the necessary support."
-- **Notes:** A concrete, checkable worker right: notification must come *before* deployment. Note the qualifier that oversight persons need competence, training **and authority** — nominal oversight by someone without power to override does not satisfy the Article.
+- **Notes:** A concrete, checkable worker right: notification must come *before* deployment. Note the qualifier that oversight persons need competence, training **and authority** — nominal oversight by someone without power to override does not satisfy the Article. The article numbers are confirmed correct; as applied to the Annex III employment category, Article 26 **applies from 2 December 2027** following the Regulation (EU) 2026/1744 delay, so this is a duty employers will acquire rather than one they currently carry.
 
 #### CLAIM-GOV-04: EU guidance recognises that formal human oversight can be substantively hollow
 - **Figure:** Worked example — algorithmic pay-setting where "Human oversight exists formally, but in practice pay levels are determined exclusively by the algorithm and appeals rarely alter outcomes"
@@ -444,10 +459,10 @@ Each claim carries a `Basis` classification:
 - **Notes:** The document also suggests an independent AI Ethics Officer role and certification mechanisms as soft governance. Note it explicitly cautions such mechanisms "should not hinder innovation or disadvantage small and medium enterprises or start-ups."
 
 #### CLAIM-GOV-07: OECD AI Principles are the first intergovernmental AI standard, with 47 adherents
-- **Figure:** Adopted May 2019, updated May 2024; five values-based principles plus five recommendations; 47 adherents including the EU
+- **Figure:** Adopted 22 May 2019, amended 3 May 2024; five values-based principles plus five recommendations; 47 adherents including the EU
 - **Display:** 47 adherents
 - **Basis:** measured
-- **Source:** OECD, *Recommendation of the Council on Artificial Intelligence* / OECD AI Principles (2019, revised 2024)
+- **Source:** OECD, *Recommendation of the Council on Artificial Intelligence* / OECD AI Principles (OECD/LEGAL/0449), adopted 22 May 2019, amended 3 May 2024
 - **URL:** https://oecd.ai/en/ai-principles
 - **Supporting text:** "The OECD Recommendation on AI is the first intergovernmental standard on AI. Today, there are 47 adherents to the Principles." The five values-based principles: "Inclusive growth, sustainable development and well-being"; "Human rights and democratic values, including fairness and privacy"; "Transparency and explainability"; "Robustness, security and safety"; and accountability.
 - **Notes:** Two revisions matter: November 2023 (updated the definition of "AI system") and May 2024 (generative AI, safety, privacy, IP, information integrity). Adherent count is as displayed on OECD.AI at time of retrieval and may change.
@@ -456,7 +471,7 @@ Each claim carries a `Basis` classification:
 - **Figure:** Principle 1.2 requires safeguards including capacity for human agency and oversight; Principle 1.5 (Accountability) names harmful bias and labour rights among risks requiring systematic risk management
 - **Display:** Labour rights named
 - **Basis:** measured (instrument text)
-- **Source:** OECD, *Recommendation of the Council on Artificial Intelligence* (OECD/LEGAL/0449) (2024 revision)
+- **Source:** OECD, *Recommendation of the Council on Artificial Intelligence* (OECD/LEGAL/0449), adopted 22 May 2019, amended 3 May 2024 (the 2024 text is current)
 - **URL:** https://legalinstruments.oecd.org/en/instruments/oecd-legal-0449
 - **Supporting text:** "AI actors should implement mechanisms and safeguards, such as capacity for human agency and oversight, including to address risks arising from uses outside of intended purpose, intentional misuse, or unintentional misuse." And: "Risks include those related to harmful bias, human rights including safety, security, and privacy, as well as labour and intellectual property rights."
 - **Notes:** The explicit mention of "internationally recognised labour rights" and traceability across the AI lifecycle makes this directly relevant to workplace AI, though the instrument is non-binding on adherents.
@@ -474,16 +489,16 @@ Each claim carries a `Basis` classification:
 - **Figure:** More than 40% of workers on freelance platforms reported regularly being tracked for working hours, submitting screenshots of their work, and being required to be available at specified times
 - **Display:** 40%+
 - **Basis:** measured (worker survey)
-- **Source:** International Labour Organization, *The Algorithmic Management of work and its implications in different contexts* (ILO working paper), citing ILO 2021 survey
+- **Source:** Baiocco, Fernandez-Macias, Rani & Pesole, *The Algorithmic Management of work and its implications in different contexts*, EU-ILO Background Paper No. 9 (June 2022), citing ILO 2021 survey
 - **URL:** https://www.ilo.org/sites/default/files/wcmsp5/groups/public/%40ed_emp/documents/publication/wcms_849220.pdf
 - **Supporting text:** "The ILO survey of workers on freelance platforms shows that more than 40 per cent of the workers reported regularly being tracked for working hours, submitting screenshots of their work and being available at a specified time (ILO, 2021). The degree of monitoring using digital tools and the control that the platforms exercise over the workers often resembles [an employment relationship rather than the self-employment under which they are] typically classified."
-- **Notes:** Freelance platform workers specifically — not the general workforce. Do not generalise this to all employees. The paper also documents self-disciplining behaviour among monitored workers, GPS-based behavioural tracking of drivers, and pressure on delivery workers from real-time client tracking.
+- **Notes:** Freelance platform workers specifically — not the general workforce. Do not generalise this to all employees. Note the source type: this is a JRC co-publication in the EU-ILO background paper series, **not an ILO Employment Working Paper**. The paper also documents self-disciplining behaviour among monitored workers, GPS-based behavioural tracking of drivers, and pressure on delivery workers from real-time client tracking.
 
 #### CLAIM-GOV-11: Algorithmic management concentrates knowledge and control, creating information asymmetry
 - **Figure:** Qualitative mechanism — centralisation of knowledge and control, power imbalance from opacity
 - **Display:** Information asymmetry
 - **Basis:** measured (research analysis)
-- **Source:** International Labour Organization, *The Algorithmic Management of work and its implications in different contexts*
+- **Source:** Baiocco, Fernandez-Macias, Rani & Pesole, *The Algorithmic Management of work and its implications in different contexts*, EU-ILO Background Paper No. 9 (June 2022)
 - **URL:** https://www.ilo.org/sites/default/files/wcmsp5/groups/public/%40ed_emp/documents/publication/wcms_849220.pdf
 - **Supporting text:** "pervasive monitoring and surveillance in algorithmic management leads to information asymmetries where knowledge, and thus control, over production is concentrated at the management level... management can assess performance based on real-time data and complex algorithmic processing, while workers may be unaware of these criteria, the results and the implications of these evaluations."
 - **Notes:** Explains *why* transparency requirements (EU AI Act Art. 26, OECD explainability) matter concretely. Analytical argument grounded in case studies, not a quantified finding.
@@ -528,14 +543,14 @@ Each claim carries a `Basis` classification:
 - **Supporting text:** "77 per cent of men are online compared to 71 per cent of women; 85 per cent in urban areas are online versus 58 per cent in rural areas; 82 per cent of 15–24-year-olds use the Internet, compared with 72 per cent of the rest of the population."
 - **Notes:** The urban-rural gap (27 points) is much larger than the global gender gap (6 points) — worth noting because the gender digital divide gets more attention. ITU says gender and urban-rural divides "continue to narrow but endure."
 
-#### CLAIM-DIV-04: Regional internet use ranges from 36% in Africa to 93% in the highest regions
+#### CLAIM-DIV-04: Regional internet use ranges from 36% in Africa to a band of 88-93% across CIS, Europe and the Americas
 - **Figure:** CIS, Europe and the Americas: 88-93%. Asia-Pacific 77%, Arab States 70%. Africa 36%. Least developed countries 34%; landlocked developing countries 38%.
 - **Display:** Africa 36%
 - **Basis:** measured
 - **Source:** International Telecommunication Union, *Facts and Figures 2025 — Internet use* (2025)
 - **URL:** https://www.itu.int/itu-d/reports/statistics/2025/10/15/ff25-internet-use/
 - **Supporting text:** "in the Commonwealth of Independent States (CIS), Europe, and the Americas, between 88 and 93 per cent of the population use the Internet... By contrast, the average figure for Internet use for Africa is just 36 per cent... Universal connectivity also remains a distant prospect in the least developed countries (LDCs) and landlocked developing countries (LLDCs), where only 34 and 38 per cent of the population are online."
-- **Notes:** ITU explicitly states that although LDC/LLDC growth rates (7.4% and 5.5% annually) exceed other groups, "the connectivity gap is not expected to close anytime soon." That is a credible institution declining to project convergence — directly relevant to our scenario framing.
+- **Notes:** ITU reports the leading regions as a **band of 88-93% across CIS, Europe and the Americas**, not as a single highest region at 93%. ITU explicitly states that although LDC/LLDC growth rates (7.4% and 5.5% annually) exceed other groups, "the connectivity gap is not expected to close anytime soon." That is a credible institution declining to project convergence — directly relevant to our scenario framing.
 
 #### CLAIM-DIV-05: 5G reaches over half the global population but is concentrated in high-income countries
 - **Figure:** 5G reaches more than half the global population and accounts for more than one third of all mobile broadband subscriptions; mobile broadband coverage is nearly universal
@@ -633,14 +648,14 @@ Each claim carries a `Basis` classification:
 - **Supporting text:** "predicted TFP gains over the next 10 years are even more modest and are predicted to be less than 0.53%." And: "I suppose that productivity gains in hard tasks will be approximately one-quarter of the easy ones. This leads to an updated, more modest increase in TFP and GDP in the next 10 years that can be upper bounded by 0.53% and 0.90%, respectively."
 - **Notes:** The reasoning is important and quotable: early productivity evidence comes from easy-to-learn tasks, whereas future effects must come from hard-to-learn tasks "where there are many context-dependent factors affecting decision-making and no objective outcome measures from which to learn successful performance." Acemoglu describes the hard-task assumptions as "speculative."
 
-#### CLAIM-ECON-03: Acemoglu's GDP estimates range from about 0.9% to 1.6% over ten years
+#### CLAIM-ECON-03: Acemoglu estimates a ten-year GDP effect of 0.93-1.16%, rising to 1.4-1.56% with an investment response
 - **Figure:** GDP growth of 0.93-1.16% over ten years; upper bound rises to about 1.4-1.56% if investment responses match earlier automation technologies (working paper version: ~1.1%, upper bound 1.6-1.8%)
-- **Display:** 0.9-1.6% GDP
+- **Display:** 0.93-1.16% GDP
 - **Basis:** projection
 - **Source:** Daron Acemoglu, *The simple macroeconomics of AI* (2025)
 - **URL:** https://economics.mit.edu/sites/default/files/2024-10/The%20Simple%20Macroeconomics%20of%20AI.pdf
 - **Supporting text:** "GDP is also estimated to grow by 0.93–1.16% over the next 10 years. When I assume that the investment response will be similar to those for earlier automation technologies and use the full framework from Acemoglu and Restrepo (2022) to estimate the increase in the capital stock, the upper bound on GDP effects rises to around 1.4–1.56%."
-- **Notes:** Acemoglu adds a subtle but important point: "what is relevant for consumer welfare is TFP, rather than GDP, since the additional investment comes out of consumption." Report the range, never a single point estimate. Again, note the working-paper/published version differences.
+- **Notes:** Acemoglu adds a subtle but important point: "what is relevant for consumer welfare is TFP, rather than GDP, since the additional investment comes out of consumption." Report the published ranges as the paper states them — 0.93-1.16% baseline and 1.4-1.56% with an investment response — never a single point estimate, and **never as a combined "0.9-1.6%" range, which appears nowhere in the paper** and silently merges two different scenarios. Again, note the working-paper/published version differences.
 
 #### CLAIM-ECON-04: Acemoglu finds no evidence AI will reduce labour income inequality, and predicts a widening capital-labour gap
 - **Figure:** Qualitative findings — AI unlikely to increase inequality as much as previous automation technologies, but no evidence it reduces labour income inequality; capital-labour gap predicted to widen; some groups (notably low-education white, native-born women) predicted to see small real wage declines
@@ -696,20 +711,20 @@ Each claim carries a `Basis` classification:
 - **Supporting text:** Key messages include "Productivity growth is too weak and uneven to drive convergence" and "Labour market outcomes are diverging across income groups." From the news release: "Employment growth in 2026 is projected at 0.5 per cent in upper middle income countries, 1.8 per cent in lower middle income economies, and 3.1 per cent in low income ones."
 - **Notes:** Important reality check against AI-productivity-boom narratives: as of the ILO's January 2026 flagship, aggregate productivity growth is weak, not surging. ILO also notes rising AI adoption alongside trade policy uncertainty and low FDI makes improvements in working conditions harder to achieve.
 
-#### CLAIM-ECON-10: OECD finds demographic ageing has already reduced wage and productivity growth
+#### CLAIM-ECON-10: OECD finds demographic ageing already reduced wage and productivity growth over 2000-2019, through reduced job-to-job mobility
 - **Figure:** Demographic ageing reduced annual wage growth by 0.10 percentage points and productivity growth by 0.13 percentage points between 2000 and 2019
 - **Display:** −0.13pp
 - **Basis:** measured
-- **Source:** OECD, *OECD Employment Outlook 2025* (2025)
+- **Source:** OECD, *OECD Employment Outlook 2025: Can We Get Through the Demographic Crunch?* (2025)
 - **URL:** https://www.oecd.org/en/publications/oecd-employment-outlook-2025_194a947b-en/full-report/executive-summary_642932a9.html
 - **Supporting text:** "demographic ageing has reduced wage and productivity annual growth rates by respectively 0.10 and 0.13 percentage points between 2000 and 2019." The mechanism: "unlike involuntary employment transitions, voluntary job-to-job mobility significantly contributes to wage and productivity growth by reallocating workers to better jobs in better firms. However, this process declines sharply with age."
-- **Notes:** Valuable for scale comparison: measured demographic drag on productivity growth (0.13pp/year) is of a similar order to Acemoglu's projected AI *gain* (~0.064pp/year). Demography is not a smaller force than AI in these numbers. OECD countries, 2000-2019.
+- **Notes:** Valuable for scale comparison: measured demographic drag on productivity growth (0.13pp/year) is of a similar order to Acemoglu's projected AI *gain* (~0.064pp/year). Demography is not a smaller force than AI in these numbers. **This is a historical estimate for 2000-2019, not a forward projection, and the mechanism is specifically reduced voluntary job-to-job mobility, which declines sharply with age — not a general ageing drag.** OECD countries only.
 
 #### CLAIM-ECON-11: OECD records record-high employment alongside signs of weakening
 - **Figure:** OECD unemployment 4.9% in May 2025; average employment rate 72.1%; participation rate reached a high (reported as 74.6% in retrieved text)
 - **Display:** 4.9% / 72.1%
 - **Basis:** measured
-- **Source:** OECD, *OECD Employment Outlook 2025* (2025)
+- **Source:** OECD, *OECD Employment Outlook 2025: Can We Get Through the Demographic Crunch?* (2025)
 - **URL:** https://www.oecd.org/en/publications/2025/07/oecd-employment-outlook-2025_5345f034.html
 - **Supporting text:** "Employment and labour force participation have reached record highs, while unemployment remains historically low. The OECD unemployment rate remains at 4.9% in May 2025, the average employment rate in the OECD rose to 72.1%... However, there are signs of weakening labour markets, with employment growth decelerating and labour market tightness in many countries and sectors falling back to the historically high pre COVID 19 levels."
 - **Notes:** The participation rate figure appeared partially truncated in retrieval ("the average participation rate reached ... .6%"); treat the 74.6% reading as unconfirmed and verify before display. Unemployment and employment rate figures are clear. OECD attributes expected further slowdown to geopolitical uncertainty and tariff hikes — not to AI.
@@ -718,7 +733,7 @@ Each claim carries a `Basis` classification:
 - **Figure:** Qualitative policy finding
 - **Display:** Depends on use
 - **Basis:** measured (institutional assessment)
-- **Source:** OECD, *OECD Employment Outlook 2025* (2025)
+- **Source:** OECD, *OECD Employment Outlook 2025: Can We Get Through the Demographic Crunch?* (2025)
 - **URL:** https://www.oecd.org/en/publications/2025/07/oecd-employment-outlook-2025_5345f034.html
 - **Supporting text:** "While structural reforms can help improve productivity, promoting the adoption and good use of AI can also help. Yet support and guidance are needed, as much depends on how AI is used, and there are many loopholes and gaps in existing regulation that leave workers vulnerable to the risks of AI."
 - **Notes:** OECD explicitly stating that existing regulation has gaps leaving workers vulnerable — useful alongside the EU AI Act claims, which cover only EU-linked deployment. Outcomes are treated as contingent on deployment choices, not technologically determined.
@@ -736,20 +751,20 @@ Each claim carries a `Basis` classification:
 - **Supporting text:** "Upskilling the workforce emerges as the most common workforce strategy in response to macrotrends, over the 2025-2030 period, with 85% of surveyed employers anticipating adopting this approach... 70% of organizations surveyed plan to hire new staff with emerging in-demand skills, 51% intend to transition staff from declining to growing roles internally, while 41% foresee staff reductions due to skills obsolescence."
 - **Notes:** Upskilling is a top-3 priority across all geographies and income levels (high-income 87%, upper-middle 84%, lower-middle 82%). **These are stated intentions, not actions taken** — the gap between intent and delivery is exactly where the 11-in-100 who miss out (CLAIM-SKILL-02) come from. Note the WEF press release cites 40% for staff reductions while the report body says 41%; use 41%.
 
-#### CLAIM-RESK-02: Generative AI raised customer support productivity 14% on average, 34% for novices
-- **Figure:** 14% increase in issues resolved per hour on average; 34% improvement for novice and low-skilled workers; minimal impact on experienced and highly skilled workers. 5,179 agents studied.
-- **Display:** +14% / +34%
+#### CLAIM-RESK-02: Generative AI raised customer support productivity 15% on average, 30% for novices
+- **Figure:** 15% increase in issues resolved per hour on average; 30% improvement for novice and low-skilled workers, and 36% for the lowest skill quintile; for the most-skilled workers, small speed gains alongside small but statistically significant declines in resolution rate and customer satisfaction. 5,172 agents studied.
+- **Display:** +15% / +30%
 - **Basis:** measured (field experiment, staggered rollout)
-- **Source:** Erik Brynjolfsson, Danielle Li & Lindsey R. Raymond, *Generative AI at Work*, Quarterly Journal of Economics 140(2), pp. 889-... (2025); NBER Working Paper 31161 (2023)
-- **URL:** https://www.nber.org/papers/w31161
-- **Supporting text:** "Access to the tool increases productivity, as measured by issues resolved per hour, by 14% on average, including a 34% improvement for novice and low-skilled workers but with minimal impact on experienced and highly skilled workers. We provide suggestive evidence that the AI model disseminates the best practices of more able workers and helps newer workers move down the experience curve."
-- **Notes:** Peer-reviewed in QJE — among the strongest single pieces of causal evidence available. **Single firm (a Fortune 500 business process software company), single occupation, one AI tool, pre-2024 GPT model.** Do not generalise the 14% to the economy; note that Acemoglu's macro estimate (CLAIM-ECON-01) explicitly incorporates task-level findings like this one and still yields sub-1% aggregate TFP effects. Additional findings: improved customer sentiment, increased employee retention, reduced requests for managerial intervention, and treated agents with two months' tenure performing like untreated agents with over six months.
+- **Source:** Erik Brynjolfsson, Danielle Li & Lindsey R. Raymond, *Generative AI at Work*, Quarterly Journal of Economics 140(2), pp. 889-942 (2025), DOI 10.1093/qje/qjae044; earlier as NBER Working Paper 31161 (2023)
+- **URL:** https://doi.org/10.1093/qje/qjae044
+- **Supporting text:** "Access to AI assistance increases the number of issues resolved per hour by 15% on average, with substantial heterogeneity across workers... access to AI assistance increases the productivity of novice and low-skilled workers by 30%, with the lowest skill quintile seeing a 36% improvement. In contrast, we find that the most experienced and highest-skilled workers see small gains in the speed with which they resolve issues, alongside small but statistically significant declines in their resolution rate and customer satisfaction."
+- **Notes:** Peer-reviewed in QJE — among the strongest single pieces of causal evidence available. **Single firm (a Fortune 500 business process software company), single occupation, one AI tool, pre-2024 GPT model.** Do not generalise the 15% to the economy; note that Acemoglu's macro estimate (CLAIM-ECON-01) explicitly incorporates task-level findings like this one and still yields sub-1% aggregate TFP effects. The effect on the most-skilled workers is **not merely "minimal"** — the published version reports small but statistically significant declines in resolution rate and customer satisfaction for that group, which is a stronger and less comfortable finding. Figures here are the published version's; the withdrawn NBER working paper gave 14%/34% across 5,179 agents and described the high-skill effect as minimal. Do not mix the two versions. Additional findings: improved customer sentiment, increased employee retention, reduced requests for managerial intervention, and treated agents with two months' tenure performing like untreated agents with over six months.
 
 #### CLAIM-RESK-03: On average, human-AI combinations performed WORSE than the better of human or AI alone
 - **Figure:** Pooled effect for human-AI synergy: Hedges' g = −0.23 (95% CI −0.39 to −0.07), across 106 experiments and 370 effect sizes
 - **Display:** g = −0.23
 - **Basis:** measured (preregistered systematic review and meta-analysis)
-- **Source:** Michelle Vaccaro, Abdullah Almaatouq & Thomas W. Malone, *When combinations of humans and AI are useful: a systematic review and meta-analysis*, Nature Human Behaviour 8, pp. 2293-2303 (2024)
+- **Source:** Michelle Vaccaro, Abdullah Almaatouq & Thomas W. Malone, *When combinations of humans and AI are useful: a systematic review and meta-analysis*, Nature Human Behaviour 8(12), pp. 2293-2303 (2024), DOI 10.1038/s41562-024-02024-1
 - **URL:** https://www.nature.com/articles/s41562-024-02024-1
 - **Supporting text:** "we found that, on average, human–AI combinations performed significantly worse than the best of humans or AI alone (Hedges' g = −0.23; 95% confidence interval, −0.39 to −0.07)."
 - **Notes:** **The most important corrective in the entire evidence base.** "Human + AI beats either alone" is widely asserted and this preregistered meta-analysis of 106 experiments finds the opposite on average. Studies published Jan 2020 - Jun 2023, so they predate the most recent model generation. The authors are careful: they do not conclude combining is a bad idea, but that "future work needs to focus more specifically on finding effective processes that integrate humans and AI."
@@ -770,7 +785,7 @@ Each claim carries a `Basis` classification:
 - **Source:** Vaccaro, Almaatouq & Malone, *Nature Human Behaviour* (2024)
 - **URL:** https://www.nature.com/articles/s41562-024-02024-1
 - **Supporting text:** "Among decision tasks—those in which participants decided between a finite set of options—the pooled effect size for human–AI synergy was significantly negative (g = −0.27...). In contrast, among creation tasks—those in which participants created some sort of open-response content—the pooled effect size for human–AI synergy was positive (g = 0.19...). Even though the average performance gains for creation tasks were not significantly different from 0 (presumably because of the relatively small sample size of n = 34), the difference between losses for decision tasks and gains for creation tasks was statistically significant."
-- **Notes:** Report the creation-task gain honestly as **not individually statistically significant**; what is significant is the difference between the two task types. This is the closest thing to an actionable design rule in the literature: pair AI with humans for generative/creative work, be far more cautious for discrete decisions.
+- **Notes:** Report the creation-task gain honestly as **not individually statistically significant**; what is significant is the difference between the two task types. Task type is **not the only significant moderator** — data type, relative human/AI performance, AI type and publication year were also significant. This is the closest thing to an actionable design rule in the literature: pair AI with humans for generative/creative work, be far more cautious for discrete decisions.
 
 #### CLAIM-RESK-06: Whether the human or the AI is better alone determines whether the combination helps
 - **Figure:** When humans outperformed AI alone: synergy g = +0.46 (95% CI 0.28 to 0.66). When AI outperformed humans alone: g = −0.54 (95% CI −0.71 to −0.37).
@@ -782,7 +797,7 @@ Each claim carries a `Basis` classification:
 - **Notes:** The authors' explanation: over 95% of studied systems had humans making the final decision, and humans who are better than the AI overall are also better at judging when to trust it. Where the AI is stronger, human override destroys value. This creates real tension with mandated human oversight (CLAIM-GOV-02) — a genuine, defensible point of friction between the safety literature and the performance literature that our product can surface.
 
 #### CLAIM-RESK-07: Explanations and AI confidence displays did NOT moderate human-AI performance
-- **Figure:** Presence of explanation, inclusion of AI confidence, and participant type were all insignificant moderators across 370+ effect sizes
+- **Figure:** Presence of explanation, inclusion of AI confidence, participant type and division of labour were all insignificant moderators across 370+ effect sizes
 - **Display:** No effect
 - **Basis:** measured (meta-analysis)
 - **Source:** Vaccaro, Almaatouq & Malone, *When combinations of humans and AI are useful* (arXiv preprint version) (2024)
@@ -821,7 +836,7 @@ Each claim carries a `Basis` classification:
 - **Figure:** Qualitative policy conclusion, supported by CLAIM-SKILL-10 training participation data and CLAIM-ECON-10 mobility findings
 - **Display:** Lifelong learning
 - **Basis:** measured (institutional recommendation grounded in cited data)
-- **Source:** OECD, *OECD Employment Outlook 2025* (2025)
+- **Source:** OECD, *OECD Employment Outlook 2025: Can We Get Through the Demographic Crunch?* (2025)
 - **URL:** https://www.oecd.org/en/publications/oecd-employment-outlook-2025_194a947b-en/full-report/executive-summary_642932a9.html
 - **Supporting text:** "there is an urgent need to avoid skill declines and foster a culture of continuous learning, shifting to a career model where learning at work takes place throughout life. Stronger action to expand access to career guidance and lifelong learning should be considered, especially for mid-career and older workers."
 - **Notes:** A recommendation, not evidence of effectiveness. OECD also documents structural barriers: low-skilled workers "face more barriers to reskilling and switching sectors," and employer bias treats older workers as less adaptable. Note the honest gap here — the evidence base establishes that reskilling is *needed* far more firmly than it establishes *which programmes work*. See the "could NOT verify" section.
@@ -833,22 +848,22 @@ Each claim carries a `Basis` classification:
 **Headline finding for the product: no credible institution in this evidence base makes confident specific predictions about 2045.** The longest horizons found were 2030 (WEF), 2034 (BLS) and ten-year windows (Acemoglu). Every source consulted hedges explicitly. AETHER must not present 2045 figures as forecasts. The claims below document precisely how the institutions themselves hedge, so we can borrow their honesty rather than inventing false confidence.
 
 #### CLAIM-SCEN-01: Institutional forecast horizons top out at about a decade — nothing reaches 2045
-- **Figure:** WEF Future of Jobs 2025 covers 2025-2030; BLS Employment Projections cover 2024-2034; Acemoglu estimates a 10-year window; ILO Employment and Social Trends 2026 covers the year ahead
-- **Display:** 2030-2034 max
+- **Figure:** The furthest horizon any institutional projection in this base reaches is 2034 (BLS Employment Projections, 2024-2034). WEF Future of Jobs 2025 reaches 2030; Acemoglu estimates a 10-year window; ILO Employment and Social Trends 2026 covers the year ahead.
+- **Display:** 2034
 - **Basis:** measured (documented scope of the sources)
-- **Source:** Multiple — World Economic Forum (2025); US Bureau of Labor Statistics (2025); Acemoglu (2025); ILO (2026)
-- **URL:** https://www.weforum.org/publications/the-future-of-jobs-report-2025/
-- **Supporting text:** WEF: "examine how these macrotrends impact jobs and skills, and the workforce transformation strategies employers plan to embark on in response, across the 2025 to 2030 timeframe." BLS: "The U.S. economy is projected to add 5.2 million jobs from 2024 to 2034."
-- **Notes:** Verified by checking the actual scope statements of each source. **Any 2045 figure in this project is either an extrapolation we invented or a fabrication — there is no institutional source for one.** Treat this constraint as a design feature: the product's credibility comes from being explicit that 2045 is beyond the forecast horizon.
+- **Source:** US Bureau of Labor Statistics, *Employment Projections, 2024-2034* (2025)
+- **URL:** https://www.bls.gov/news.release/ecopro.nr0.htm
+- **Supporting text:** BLS: "The U.S. economy is projected to add 5.2 million jobs from 2024 to 2034."
+- **Notes:** Sourced to the BLS projections, which set the outer bound. **This horizon claim is not made by ILO Working Paper 118 and must not be attributed to it.** Verified by checking the actual scope statements of each source. **Any 2045 figure in this project is either an extrapolation we invented or a fabrication — there is no institutional source for one.** Treat this constraint as a design feature: the product's credibility comes from being explicit that 2045 is beyond the forecast horizon.
 
-#### CLAIM-SCEN-02: ILO states explicitly that generative AI's development cannot be predicted
-- **Figure:** Direct statement of unpredictability
-- **Display:** "Impossible to predict"
+#### CLAIM-SCEN-02: ILO describes its own exposure estimates as illustrative and a static snapshot
+- **Figure:** Explicit statement on the standing of the ILO's own classifications
+- **Display:** A static snapshot
 - **Basis:** measured (institutional statement)
-- **Source:** International Labour Organization, *ILO Working Paper 96* (2023)
-- **URL:** https://webapps.ilo.org/static/english/intserv/working-papers/wp096/index.html
-- **Supporting text:** "While it is impossible to predict how generative AI will further develop, the current capabilities and future potential of this technology are central to discussions of its impact on jobs."
-- **Notes:** Quotable in exactly these words, from a UN agency. The paper surveys the range of expert opinion from "stochastic parrots" sceptics to those expecting a general-purpose technology, without adjudicating between them.
+- **Source:** International Labour Organization, *ILO Working Paper 140* (2025)
+- **URL:** https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html
+- **Supporting text:** The ILO states that its classifications are "only illustrative, since any type of task scoring system carries a degree of subjectivity, and since the abilities of GenAI and derivative technologies evolve rapidly," and that its estimates represent a "static snapshot" of exposure.
+- **Notes:** This is the ILO's actual framing and it is what should be quoted: illustrative classifications, an acknowledged degree of subjectivity, and a static snapshot whose boundary moves with capability. **Do not overstate it as the ILO saying the generative-AI trajectory "cannot be predicted."** The weaker, accurate version still carries the point that no skill can be named as valuable in 2045.
 
 #### CLAIM-SCEN-03: ILO frames its own numbers as directional, not predictive
 - **Figure:** Explicit methodological disclaimer
@@ -899,7 +914,7 @@ Each claim carries a `Basis` classification:
 - **Figure:** Methodological distinction — foresight explores multiple plausible pathways; forecasting extrapolates historical data
 - **Display:** Foresight ≠ forecast
 - **Basis:** measured (methodological description)
-- **Source:** Rafael Peels & Aida Ponce del Castillo, *Using foresight to think and act upon an uncertain future world of work*, ILO Working Paper 118 (2024)
+- **Source:** Rafael Peels & Aida Ponce del Castillo, *Using foresight to think and act upon an uncertain future world of work: Trade unions' experiences*, ILO Working Paper 118 (2024)
 - **URL:** https://www.ilo.org/sites/default/files/2024-07/118_web.pdf
 - **Supporting text:** "Strategic foresight puts emphasis on seeking to explore multiple, plausible and contingent pathways that can shape and work upon an uncertain future. It differs from forecasting, which uses historical data to estimate or predict the direction of future trends." And: "It is not predictive and encourages 'all plausible options, alternatives or pathways to be treated as more or less equal given the complexity of future realities, and consequences and risks of adhering to simple predictions'."
 - **Notes:** The clearest available articulation of the epistemic stance AETHER should adopt, from an ILO working paper. Also documents union foresight exercises reaching 2040 — the longest horizon located in this research — and notably those are *roadmaps and scenarios*, not predictions. Quoting Pezzulo and Rigoli, the paper notes "the role of strategic foresight is not to anticipate the future as 'it exactly will be', but to prepare the organization to think about future challenges."
@@ -1012,8 +1027,8 @@ Widely circulated figures such as McKinsey's "375 million workers may need to sw
 
 - **Exposure is not job loss.** IMF's 40% and ILO's "one in four" measure occupational task exposure, not predicted unemployment. This is the most common misreading of both sources.
 - **WEF figures are employer survey extrapolations,** covering 1.2 billion **formal** jobs from just over 1,000 employers in 55 economies — not a global census, and largely excluding informal work, which accounts for a projected 2.1 billion workers (CLAIM-EMP-09).
-- **ILO WP140's worker survey is Polish** (1,640 respondents), not global, and the ILO notes clerical workers and managers were over-represented relative to national labour market patterns. CLAIM-AUG-09 should not be presented as a global worker sentiment finding.
-- **The Brynjolfsson et al. 14% result is one firm, one occupation, one tool, pre-2024 model.** Do not extrapolate to the economy.
+- **ILO WP140's worker survey is Polish** (1,640 respondents), not global, and the ILO notes managers (group 1) plus groups 8 and 9 were over-represented relative to national labour market patterns, with professionals (group 2) the most under-represented. It asks about jobs in the respondent's *industry*, not their own job. CLAIM-AUG-09 should not be presented as a global worker sentiment finding.
+- **The Brynjolfsson et al. 15% result is one firm, one occupation, one tool, pre-2024 model.** Do not extrapolate to the economy.
 - **The Vaccaro et al. meta-analysis covers studies from Jan 2020 to Jun 2023,** predating current model generations. Its findings may not hold for newer systems.
 - **BLS projections are US-only** and model-based; they do not transfer to other economies.
 - **ITU revises historical estimates substantially between editions.** Never compare figures across editions without the revised series.

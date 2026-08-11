@@ -11,7 +11,7 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/motion.css';
 import './styles/print.css';
-import { App } from './app.tsx';
+import { App } from './App.tsx';
 
 const rootEl = document.getElementById('root');
 if (!rootEl) throw new Error('Root element #root not found in index.html');

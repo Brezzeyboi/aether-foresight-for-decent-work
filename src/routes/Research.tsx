@@ -37,6 +37,13 @@ import '../viz/small.css';
 // so it is emitted as a hashed local asset. Nothing is fetched at runtime.
 import openingImage from '../assets/opening-workbench.webp';
 
+/* Counted from the registry rather than typed in, so the figure quoted in the
+   contents and in section 12 can never drift from the list actually rendered
+   below. `internal` is excluded here and in that list: it marks our own
+   assumptions, not a published source. */
+const SOURCE_IDS = (Object.keys(SOURCES) as SourceId[]).filter((id) => id !== 'internal');
+const SOURCE_COUNT = SOURCE_IDS.length;
+
 /* Contents doubles as an expectation-setter. Each entry says what the section
    answers and how long it is, so a reader can choose a path instead of being
    confronted with thirteen pages and no map. */
@@ -52,7 +59,7 @@ const CONTENTS = [
   ['09', 'Three ways 2045 could go', 'scenarios', 'Conditions, not predictions'],
   ['10', 'What should be done', 'recommendations', 'Six, each tied to an evidence gap'],
   ['11', 'What it comes to', 'conclusion', 'A narrower claim than either side makes'],
-  ['12', 'Where it all came from', 'sources', '21 sources, and what each cannot show'],
+  ['12', 'Where it all came from', 'sources', `${SOURCE_COUNT} sources, and what each cannot show`],
 ] as const;
 
 export function Research() {
@@ -61,7 +68,7 @@ export function Research() {
       {/* Print-only running head. Paper needs orientation that the sticky
           masthead provides on screen. */}
       <div className="print-masthead">
-        <span>AETHER · Workforce Intelligence</span>
+        <span>AETHER · Foresight for Decent Work</span>
         <span>Future Workforce Research Board · 2026</span>
       </div>
 
@@ -124,9 +131,10 @@ export function Research() {
         </p>
       </section>
 
-      {/* SDG alignment. The competition brief names Goal 8 specifically, and the
-          alignment is substantive rather than decorative: the report's own
-          findings map onto three of Goal 8's targets, so those are named. */}
+      {/* SDG alignment. Five targets, each quoted from the UN text rather than
+          re-titled, and each paired with the official indicator where this report
+          already reports the quantity that indicator measures. Naming the
+          indicator is what makes the alignment checkable instead of asserted. */}
       <section className="sdg" aria-labelledby="sdg-title">
         <div className="sdg__mark" aria-hidden="true">
           <span className="sdg__number">8</span>
@@ -141,30 +149,63 @@ export function Research() {
             Aligned with Sustainable Development Goal 8
           </h2>
           <p className="sdg__text">
-            Goal 8 asks for full and productive employment and decent work for all. Three of its
-            targets are where this research lands, and each is a place the evidence shows a gap
-            rather than progress.
+            Goal 8 asks for sustained, inclusive and sustainable economic growth, full and productive
+            employment, and decent work for all. Both halves matter here: this report argues about
+            productivity as much as about jobs. Five targets are where it lands, and each is a place
+            the evidence shows a gap rather than progress.
           </p>
           <dl className="sdg__targets">
             <div>
-              <dt>8.5 Full employment and equal pay</dt>
+              <dt>
+                8.2 <span className="sdg__quote">Higher levels of economic productivity through
+                technological upgrading and innovation</span>
+              </dt>
               <dd>
-                Exposure falls unevenly: female-dominated occupations are almost twice as exposed as
-                male-dominated ones. Section 07.
+                Indicator 8.2.1 is output per worker, and that is exactly the quantity credible
+                estimates disagree about by an order of magnitude. Section 08.
               </dd>
             </div>
             <div>
-              <dt>8.6 Youth in employment, education or training</dt>
+              <dt>
+                8.3 <span className="sdg__quote">Encourage the formalization and growth of
+                enterprises</span>
+              </dt>
               <dd>
-                The ILO flags AI as a risk factor for educated first-job seekers, and 11 in every 100
-                workers are projected to need training and not receive it. Sections 01 and 10.
+                Indicator 8.3.1 is the informal share of employment. 2.1 billion people work
+                informally and sit outside every projection in this report. Sections 01 and 10.
               </dd>
             </div>
             <div>
-              <dt>8.8 Safe and secure working environments</dt>
+              <dt>
+                8.5 <span className="sdg__quote">Full and productive employment and decent work for
+                all women and men, and equal pay for work of equal value</span>
+              </dt>
               <dd>
-                Algorithmic management is spreading beyond platform work, and formal oversight can be
-                substantively hollow. Section 06.
+                Indicator 8.5.2 is the unemployment rate. Exposure also falls unevenly by sex:
+                female-dominated occupations are almost twice as exposed. Section 07.
+              </dd>
+            </div>
+            <div>
+              <dt>
+                8.6 <span className="sdg__quote">Substantially reduce the proportion of youth NOT in
+                employment, education or training</span>
+              </dt>
+              <dd>
+                The only target here with a deadline already passed, 2020, and the share has since
+                risen. The ILO flags AI as a risk factor for educated first-job seekers, and 11 in
+                every 100 workers are projected to need training and not receive it. Sections 01
+                and 10.
+              </dd>
+            </div>
+            <div>
+              <dt>
+                8.8 <span className="sdg__quote">Protect labour rights and promote safe and secure
+                working environments for all workers</span>
+              </dt>
+              <dd>
+                Indicator 8.8.2 measures labour-rights compliance. Algorithmic management is
+                spreading beyond platform work, and formal oversight can be substantively hollow.
+                Section 06.
               </dd>
             </div>
           </dl>
@@ -223,9 +264,10 @@ export function Research() {
           <p>
             Fourth, and most consequentially for a product about 2045:{' '}
             <strong>no institutional projection in this evidence base reaches past 2034</strong>{' '}
-            <Cite id="CLAIM-SCEN-01" />. The ILO states directly that generative AI's development
-            cannot be predicted <Cite id="CLAIM-SCEN-02" />, and that the outcomes of the transition
-            are not predetermined because humans decide how to incorporate these technologies{' '}
+            <Cite id="CLAIM-SCEN-01" />. The ILO describes its own exposure classifications as only
+            illustrative and as a static snapshot <Cite id="CLAIM-SCEN-02" />, and states that the
+            outcomes of the transition are not predetermined because humans decide how to incorporate
+            these technologies{' '}
             <Cite id="CLAIM-SCEN-04" />.
           </p>
         </Prose>
@@ -459,8 +501,8 @@ export function Research() {
             The 39% is a share of skill <em>sets</em>, not of jobs. No measurement of AI literacy
             exists for any population, so nothing here supports a claim about population-level
             attainment. And no specific skill can be named as valuable in 2045: the boundary between
-            complemented and substituted tasks moves with capability, which the ILO states cannot be
-            predicted <Cite id="CLAIM-SCEN-02" />.
+            complemented and substituted tasks moves with capability, and the ILO presents its own
+            estimates of that boundary as a static snapshot <Cite id="CLAIM-SCEN-02" />.
           </p>
         </Caveat>
       </ReportSection>
@@ -908,7 +950,7 @@ export function Research() {
         variant="figure"
         title="What it does to the economy"
         standfirst="Credible estimates disagree by an order of magnitude."
-        takeaway="The most rigorous sceptical estimate puts AI’s ten-year productivity gain at under 0.7%. Measured demographic ageing is already twice that, in the opposite direction."
+        takeaway="The most rigorous sceptical estimate puts AI’s ten-year productivity gain at 0.66%. Ageing already measured twice that between 2000 and 2019, in the opposite direction."
       >
         {/* The two competing estimates, side by side. They are not contradictory,
             they measure different things, and showing them adjacent makes that
@@ -922,20 +964,20 @@ export function Research() {
             gapLabel="different scopes"
             left={{
               label: 'Economy-wide, modelled',
-              heading: 'Under 0.7% over ten years',
+              heading: '0.66% over ten years',
               items: [
                 '0.66% total factor productivity, framed by its author as an upper bound',
-                'Under 0.53% once hard-to-learn tasks are counted',
-                'GDP effect roughly 0.9% to 1.6%',
+                '0.53% once hard-to-learn tasks are counted',
+                'GDP effect 0.93% to 1.16%, or 1.4% to 1.56% if investment responds',
                 'Rests partly on assumptions the author labels speculative',
               ],
             }}
             right={{
               label: 'One occupation, measured',
-              heading: '+14%, and +34% for novices',
+              heading: '+15%, and +30% for the least experienced',
               items: [
-                'Customer support agents, one firm',
-                'Minimal effect on experienced workers',
+                '5,172 customer support agents, one firm',
+                'Small significant declines in quality for the most skilled',
                 'A pre-2024 model and a single tool',
                 'Strong identification, narrow scope',
               ],
@@ -962,10 +1004,10 @@ export function Research() {
                   'Acemoglu: 0.66% total factor productivity over ten years, framed by the author as an upper bound.',
               },
               {
-                label: 'Demographic ageing, measured',
+                label: 'Demographic ageing, measured 2000-2019',
                 value: -0.13,
                 detail:
-                  'OECD measured effect on wage and productivity growth. Twice the projected AI gain, in the opposite direction.',
+                  'OECD estimate of the historical effect on productivity growth through reduced job-to-job mobility. Wages fell 0.10pp on the same estimate. Twice the projected AI gain, in the opposite direction.',
               },
             ]}
           />
@@ -1112,7 +1154,7 @@ export function Research() {
             },
             {
               title: 'Treat oversight as a competence question',
-              body: 'The AI Act already requires oversight by persons with competence, training and authority. EU guidance documents what happens without it: formal review while the algorithm decides. Audit whether override actually changes outcomes, not whether a review step exists.',
+              body: 'From December 2027 the AI Act will require oversight by persons with competence, training and authority. Commission guidance already documents what happens without it: formal review while the algorithm decides. Audit whether override actually changes outcomes, not whether a review step exists.',
             },
             {
               title: 'Publish exposure as gradient, never as verdict',
@@ -1155,7 +1197,7 @@ export function Research() {
             are being eliminated, that augmentation is the larger category in every income group, and
             that the effects are concentrated rather than general. What it does not establish is
             anything about 2045. The furthest institutional projection reviewed here reaches 2034, and
-            the ILO states plainly that generative AI's development cannot be predicted.
+            the ILO presents its own exposure estimates as a static snapshot rather than a trajectory.
           </p>
           <p>
             That combination is not a failure of the research. It is the finding. The outcomes of this
@@ -1164,11 +1206,22 @@ export function Research() {
             question worth putting to a person deciding what to learn is not what the future holds,
             but which tasks in their work are changing and what judgement they are building.
           </p>
+          <p>
+            There is a second reading of that. If the outcome is decided by people rather than by the
+            technology, then the thing to measure is not only how much work gets done but whether the
+            person doing it can still question a decision made about them. The evidence says that is
+            where the pathways actually diverge: oversight can exist on paper while the system decides{' '}
+            <Cite id="CLAIM-GOV-04" />, and a worker cannot contest what they cannot inspect{' '}
+            <Cite id="CLAIM-GOV-09" />. Productivity is the easier thing to count. Dignity is the
+            thing that has to be designed in, and it is the part no projection will deliver on its
+            own.
+          </p>
         </Prose>
 
         <Finding>
           Every confident claim about the workforce of 2045 is either a scenario wearing a forecast's
-          clothes, or an invention.
+          clothes, or an invention. What is not a scenario is the choice: whether the systems built
+          between now and then leave the people inside them able to be heard.
         </Finding>
       </ReportSection>
 
@@ -1179,7 +1232,7 @@ export function Research() {
         variant="quiet"
         title="Where it all came from"
         standfirst="Every figure resolves to an entry below."
-        takeaway="21 sources, chosen for institutional authority and retrieved directly. Each entry states what it is good for and where it stops."
+        takeaway={`${SOURCE_COUNT} sources, chosen for institutional authority and retrieved directly. Each entry states what it is good for and where it stops.`}
       >
         <Prose>
           <p>
@@ -1197,8 +1250,7 @@ export function Research() {
         </Prose>
 
         <ul className="source-list">
-          {(Object.keys(SOURCES) as SourceId[])
-            .filter((id) => id !== 'internal')
+          {SOURCE_IDS
             .map((id) => {
               const s = SOURCES[id];
               return (

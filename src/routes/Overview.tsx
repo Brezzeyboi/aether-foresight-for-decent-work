@@ -87,11 +87,14 @@ export function Overview() {
         standfirst="AETHER connects published workforce research to one person's position, and states the basis for every figure."
         aside={
           <div className="overview__aside">
-            <p className="overview__aside-label">Demonstration profile</p>
+            <p className="overview__aside-label">
+              Enters work {PROFILE.entersWork} &middot; mid-career {PROFILE.midCareerBy}
+            </p>
             <p className="overview__aside-name">{PROFILE.name}</p>
             <p className="overview__aside-context">
               {PROFILE.position}. {PROFILE.context}.
             </p>
+            <p className="overview__aside-framing">{PROFILE.framing}</p>
             <Basis basis="assumption" source="internal" />
           </div>
         }

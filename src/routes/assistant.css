@@ -1,17 +1,59 @@
 /* ============================================================================
    AETHER AI.
 
-   Deliberately not a chat app. No bubbles, no avatars, no alternating alignment.
+   Deliberately not a chat app, and deliberately not the rest of the site
+   either. Every other screen is a publication: editorial measure, serif prose,
+   drawn rules, content sitting directly on the page. This is an instrument
+   console, and it differs on purpose so a reader knows they have moved from
+   reading a document to operating a tool.
+
+   What makes it different:
+     an enclosed, inset console rather than open page
+     mono type for structure, with prose confined to the answers
+     a hard indigo accent instead of the page's mint
+     a fine grid ruled into the console floor
+     the thread reads top-down as a log, not as a column of prose
+
    A question is a labelled line; an answer is a stack of structured blocks. The
    profile sits permanently in view so the reader always knows what the assistant
    is reasoning about.
    ============================================================================ */
 
+/* The console. Inset into the page with its own darker floor and a bevelled lip,
+   so it reads as a recessed panel rather than as more page. */
 .ai {
   display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-  gap: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 0.75rem + 2vw, 2.5rem);
   align-items: start;
+  margin-bottom: var(--s-8);
+  padding: clamp(1rem, 0.5rem + 1.5vw, 1.75rem);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--sec);
+  border-radius: var(--r-2);
+  background:
+    /* The ruled grid: a console floor, not a page. Two hairline sets at 40px,
+       faint enough to read as machined rather than as graph paper. */
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--sec) 8%, transparent) 0 1px,
+      transparent 1px 40px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in oklab, var(--sec) 6%, transparent) 0 1px,
+      transparent 1px 40px
+    ),
+    linear-gradient(180deg, var(--sec-wash), transparent 30%), var(--surface-sunken);
+  box-shadow:
+    inset 0 1px 0 var(--metal-edge-light),
+    inset 0 -20px 40px -30px var(--sec);
+}
+
+/* The console sits INSIDE the page gutter rather than replacing it, so its
+   border never reaches the viewport edge on a narrow screen. The .page wrapper
+   supplies the gutter; the console supplies its own padding. */
+.ai-frame {
   padding-bottom: var(--s-8);
 }
 
@@ -25,17 +67,36 @@
   flex-direction: column;
   gap: var(--s-2);
   padding: var(--s-4);
-  background: var(--surface-raised);
+  /* A milled instrument panel: the section colour bleeds into the plate at the
+     top edge, so the accent belongs to the surface rather than sitting on it. */
+  background:
+    linear-gradient(180deg, var(--sec-wash), transparent 42%),
+    linear-gradient(160deg, var(--surface-raised), var(--surface-sunken));
   border: 1px solid var(--rule);
   border-top: 3px solid var(--sec);
+  box-shadow: var(--metal-bevel), var(--shadow-2);
 }
 
+/* The label reads as a console field name, with a live marker: this panel is
+   what the assistant currently has loaded. */
 .ai__profile-label {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
   font-family: var(--font-mono);
   font-size: var(--t-micro);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--sec);
+}
+
+.ai__profile-label::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sec);
+  box-shadow: 0 0 6px var(--sec);
 }
 
 .ai__profile-name {
@@ -127,13 +188,28 @@
   color: var(--sec);
 }
 
-/* A question is a quoted line, not a bubble. */
+/* A question is an entered command, not a bubble: a prompt caret, mono framing,
+   sitting on the console floor. */
 .turn__question {
-  padding-left: var(--s-4);
-  border-left: 2px solid var(--rule-strong);
+  position: relative;
+  padding: var(--s-3) var(--s-4) var(--s-3) 2rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--sec);
+  border-radius: var(--r-1);
+  background: color-mix(in oklab, var(--surface) 60%, transparent);
   font-size: var(--t-lead);
   line-height: 1.35;
   color: var(--ink);
+}
+
+/* The caret. Set in mono at the console's accent, so the line reads as typed. */
+.turn__question::before {
+  content: '>';
+  position: absolute;
+  inset-inline-start: var(--s-4);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--sec);
 }
 
 .turn__answer {
@@ -144,53 +220,187 @@
   border-top: 2px solid var(--sec);
 }
 
-/* --- Working state -----------------------------------------------------
-   A scripted pause, and the copy says what it is doing rather than showing
-   three dancing dots. */
+/* --- Retrieval pipeline -------------------------------------------------
+   Four phases, each carrying a figure taken from the match and the response.
+   Runs live, then collapses to a summary that can be reopened. */
 
-.turn__working {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
+.pipe {
   font-family: var(--font-mono);
   font-size: var(--t-meta);
-  color: var(--ink-muted);
 }
 
-.turn__working-bar {
+.pipe__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* A vertical spine with a node per phase. The connector is drawn on the item
+   rather than as a separate element, so a phase carries its own segment of the
+   line and the spine ends exactly at the last node. */
+.pipe__step {
   position: relative;
-  width: 3rem;
-  height: 2px;
-  background: var(--rule);
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: var(--s-3);
+  padding-inline-start: 0;
+  padding-block: 0.34rem;
+  animation: pipe-in var(--dur-2) var(--ease-out) both;
 }
 
-.turn__working-bar::after {
+.pipe__step:not(:last-child)::before {
   content: '';
   position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: 40%;
-  background: var(--sec);
-  animation: ai-sweep 900ms var(--ease-inout) infinite;
+  inset-inline-start: 3px;
+  top: 1.05rem;
+  bottom: -0.34rem;
+  width: 1px;
+  background: var(--rule);
 }
 
-@keyframes ai-sweep {
+@keyframes pipe-in {
   from {
-    transform: translateX(-100%);
+    opacity: 0;
+    transform: translateY(-3px);
   }
   to {
-    transform: translateX(250%);
+    opacity: 1;
+    transform: none;
   }
 }
 
-/* The one looping animation in the product. It communicates "working", which is
-   a real state, and it stops the moment the response lands. Under reduced
-   motion it becomes a static filled bar. */
+/* The node. A ring while waiting, filled once the phase has run, and pulsing
+   while it is the active one, so the state is carried by shape as well as by
+   colour. */
+.pipe__mark {
+  grid-row: 1;
+  width: 7px;
+  height: 7px;
+  margin-top: 0.42rem;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+}
+
+.pipe__step[data-state='done'] .pipe__mark {
+  border-color: var(--sec);
+  background: var(--sec);
+}
+
+.pipe__step[data-state='active'] .pipe__mark {
+  border-color: var(--sec);
+  background: var(--sec);
+  animation: pipe-pulse 1s var(--ease-inout) infinite;
+}
+
+@keyframes pipe-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-live-glow);
+  }
+  60% {
+    box-shadow: 0 0 0 4px transparent;
+  }
+}
+
+.pipe__label {
+  grid-row: 1;
+  color: var(--ink-secondary);
+}
+
+.pipe__step[data-state='active'] .pipe__label {
+  color: var(--ink);
+}
+
+/* Tabular figures so counts do not jitter the column as phases arrive. */
+.pipe__detail {
+  grid-column: 2;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The sources actually hit, as chips. This is the line that makes retrieval
+   legible: it names the institutions the answer came from. */
+.pipe__hits {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.pipe__hit {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--sec);
+  border-radius: var(--r-1);
+  background: var(--sec-wash);
+  color: var(--sec);
+  font-size: var(--t-micro);
+  letter-spacing: 0.02em;
+  animation: pipe-in var(--dur-2) var(--ease-out) both;
+}
+
+.pipe__summary {
+  cursor: pointer;
+  color: var(--ink-muted);
+  letter-spacing: 0.02em;
+  transition: color var(--dur-1) var(--ease);
+}
+
+.pipe__summary:hover {
+  color: var(--ink-secondary);
+}
+
+.pipe__summary-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-3);
+}
+
+.pipe__count {
+  color: var(--sec);
+}
+
+.pipe[open] .pipe__summary {
+  margin-bottom: var(--s-3);
+}
+
+/* --- Streaming caret ---------------------------------------------------
+   Marks the position text is arriving at. Inline-block with a fixed size so it
+   occupies the same space whether or not it is blinking, which stops the line
+   from reflowing on the final character. */
+.ai-caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-inline-start: 0.08em;
+  translate: 0 0.12em;
+  background: var(--sec);
+  animation: ai-caret 0.9s steps(2, jump-none) infinite;
+}
+
+@keyframes ai-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .turn__working-bar::after {
+  .pipe__step,
+  .pipe__hit {
     animation: none;
-    width: 100%;
+  }
+  .pipe__step[data-state='active'] .pipe__mark {
+    animation: none;
+  }
+  .ai-caret {
+    animation: none;
   }
 }
 

@@ -383,7 +383,8 @@
 
 /* --- SDG 8 alignment ----------------------------------------------------
    The competition brief names Goal 8, so the alignment is stated. It earns its
-   place by naming three specific targets and pointing at the sections where the
+   place by quoting five specific targets, naming the official indicator where the
+   report already reports that quantity, and pointing at the sections where the
    evidence bears on them, rather than displaying a badge. The mark is set in the
    project's own type and palette: no imported UN logo, nothing to load. */
 
@@ -450,10 +451,19 @@
   border-top: 1px solid var(--rule);
 }
 
+/* The target number leads in the accent, so the five read as a numbered set. */
 .sdg__targets dt {
   font-size: var(--t-small);
   font-weight: 550;
   line-height: 1.3;
+  color: var(--accent-deep);
+}
+
+/* The target text itself, quoted from the UN wording rather than re-titled. Set
+   in the reading colour and at normal weight so the quotation is distinct from
+   the number that introduces it. */
+.sdg__quote {
+  font-weight: 450;
   color: var(--ink);
 }
 

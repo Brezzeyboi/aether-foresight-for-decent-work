@@ -11,6 +11,7 @@
 
 import { useId, useState, type ReactNode } from 'react';
 import { Basis } from '../../components/Basis.tsx';
+import { Tip } from '../../components/Tip.tsx';
 import { CLAIMS, type ClaimId } from '../../data/claims.ts';
 import { citeFull, citeShort } from '../../data/evidence.ts';
 import './research.css';
@@ -193,10 +194,11 @@ export function EvidenceRow({ ids }: { ids: readonly ClaimId[] }) {
  */
 export function Cite({ id }: { id: ClaimId }) {
   const c = CLAIMS[id];
+  const explain = c.note ? `${c.statement}. ${c.note}` : `${c.statement}.`;
   return (
-    <span className="cite" title={`${c.statement}. ${c.note ?? ''}`}>
-      {citeShort(c.source)}
-    </span>
+    <Tip text={explain}>
+      <span className="cite">{citeShort(c.source)}</span>
+    </Tip>
   );
 }
 

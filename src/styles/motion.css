@@ -125,18 +125,86 @@
   }
 
   /* --- Route change ---------------------------------------------------
-     A short settle so a new screen reads as a new place rather than a repaint.
-     Deliberately brief: a judge clicking through seven screens should not wait
-     seven times.
+     Navigation has a direction, so the motion has one. Moving further along the
+     nav order sends the old screen out to the left and brings the new one in
+     from the right; moving back reverses both.
 
-     Scoped to :not([data-reveal]) because an animation with `both` fill pins
-     opacity and transform for the element's whole life, which silently defeated
-     the reveal transition on every section. One element, one motion owner. */
-  .main > *:not([data-reveal]):not([data-reveal-stagger]) {
-    animation: route-in 340ms var(--ease-out) both;
+     The whole main element moves as one plane, which is the point: the screen
+     travels rather than its parts arriving separately. Only transform and
+     opacity are animated, so this stays on the compositor.
+
+     Durations are matched to OUT_MS and IN_MS in App.tsx. If one changes, the
+     other must: the swap is timed to land exactly when the exit finishes. */
+  .main[data-phase='out'] {
+    animation: route-out 260ms var(--ease) both;
+  }
+
+  .main[data-phase='in'] {
+    animation: route-in 420ms var(--ease-out) both;
+  }
+
+  /* Backward navigation mirrors both halves. */
+  .main[data-phase='out'][data-dir='back'] {
+    animation-name: route-out-back;
+  }
+
+  .main[data-phase='in'][data-dir='back'] {
+    animation-name: route-in-back;
+  }
+
+  @keyframes route-out {
+    from {
+      opacity: 1;
+      transform: none;
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-3.5%);
+    }
   }
 
   @keyframes route-in {
+    from {
+      opacity: 0;
+      transform: translateX(5%);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes route-out-back {
+    from {
+      opacity: 1;
+      transform: none;
+    }
+    to {
+      opacity: 0;
+      transform: translateX(3.5%);
+    }
+  }
+
+  @keyframes route-in-back {
+    from {
+      opacity: 0;
+      transform: translateX(-5%);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* The sections inside a screen still get their own settle on arrival, scoped
+     to :not([data-reveal]) because an animation with `both` fill pins opacity
+     and transform for the element's whole life, which silently defeated the
+     reveal transition on every section. One element, one motion owner. */
+  .main[data-phase='in'] > *:not([data-reveal]):not([data-reveal-stagger]) {
+    animation: settle-in 340ms var(--ease-out) both;
+  }
+
+  @keyframes settle-in {
     from {
       opacity: 0;
       transform: translateY(8px);

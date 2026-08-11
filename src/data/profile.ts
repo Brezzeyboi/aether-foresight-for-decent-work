@@ -26,14 +26,23 @@ export interface DemoProfile {
   name: string;
   position: string;
   context: string;
+  /** One line naming what this profile IS, shown wherever it is introduced. */
+  framing: string;
+  /** The year this person enters the workforce, and the year they reach mid-career. */
+  entersWork: number;
+  midCareerBy: number;
   readiness: number;
   dimensions: readonly ReadinessDimension[];
 }
 
 export const PROFILE: DemoProfile = {
-  name: 'Amara Okonjo-Lindqvist',
-  position: 'Third-year undergraduate, information systems',
-  context: 'Two internships, one in public-sector service design',
+  name: 'Student A',
+  position: 'Final-year student, information systems',
+  context: 'Two work placements, one in public-sector service design',
+  framing:
+    'A composite student profile, not a real person. Built to test the dashboard against someone entering work now and reaching mid-career in 2045.',
+  entersWork: 2026,
+  midCareerBy: 2045,
   readiness: 78,
   dimensions: [
     {
@@ -122,7 +131,7 @@ export const SKILLS: readonly Skill[] = [
     level: 71,
     relevance: 'rising',
     relevanceBasis: 'CLAIM-GOV-03',
-    why: 'The EU AI Act requires oversight by people with competence, training and authority. A legal demand for judgement, not paperwork.',
+    why: 'From December 2027 the EU AI Act will require oversight by people with competence, training and authority. A legal demand for judgement, not paperwork.',
     improve:
       'Read Article 14 of the AI Act and identify one system you have used that would fall under it.',
   },
@@ -132,7 +141,7 @@ export const SKILLS: readonly Skill[] = [
     level: 76,
     relevance: 'high',
     relevanceBasis: 'CLAIM-RESK-05',
-    why: 'The one significant moderator in collaboration research: teams gain on creation tasks and lose on decision tasks.',
+    why: 'Task type is a significant moderator in collaboration research: teams gain on creation tasks and lose on decision tasks.',
     improve: 'Take a project where you used AI for a decision and redo it using AI for generation instead.',
   },
   {

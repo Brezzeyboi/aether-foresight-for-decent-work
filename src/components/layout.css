@@ -4,6 +4,7 @@
    Asymmetric: text takes the wide column, the aside a narrow one. The rule
    underneath separates orientation from content without a card. */
 .screen-head {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
@@ -12,6 +13,21 @@
   padding-bottom: var(--s-5);
   margin-bottom: var(--s-6);
   border-bottom: 1px solid var(--rule);
+}
+
+/* A wash of the section colour bleeding down from the top of every screen. It
+   is what makes each area feel like a different place rather than the same page
+   with a different heading, and it costs one gradient. Sits behind the text and
+   ignores pointer events so it can never affect layout or interaction. */
+.screen-head::before {
+  content: '';
+  position: absolute;
+  inset-inline: calc(var(--gutter) * -1);
+  top: 0;
+  height: 60%;
+  background: linear-gradient(180deg, var(--sec-wash, transparent), transparent);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .screen-head__text {

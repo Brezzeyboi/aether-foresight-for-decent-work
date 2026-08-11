@@ -98,7 +98,7 @@ export function Economy() {
       <Section divided title="Why there are no numbers on this screen">
         <div className="figs" data-reveal-stagger>
           <div className="fig">
-            <p className="fig__value">Under 0.7%</p>
+            <p className="fig__value">0.66%</p>
             <p className="fig__statement">
               The most rigorous sceptical estimate of AI productivity gain over ten years, framed by
               its author as an upper bound.
@@ -108,8 +108,8 @@ export function Economy() {
           <div className="fig">
             <p className="fig__value">−0.13pp</p>
             <p className="fig__statement">
-              Measured annual drag on OECD productivity from ageing. Twice the projected AI gain, in
-              the opposite direction.
+              Annual drag on OECD productivity from ageing, measured over 2000 to 2019 through
+              reduced job mobility. Twice the projected AI gain, in the opposite direction.
             </p>
             <Basis basis="measured" source="oecd-eo-2025" />
           </div>

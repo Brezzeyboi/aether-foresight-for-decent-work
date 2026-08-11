@@ -100,7 +100,7 @@ export const SOURCES = {
     url: 'https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html',
     kind: 'intergovernmental',
     scope:
-      'The methodological backbone for occupational exposure. Builds a graded exposure index rather than a binary automatable/safe split. Exposure measures task overlap with model capability, not employment outcomes. Its worker survey is Polish (1,640 respondents), not global.',
+      'The methodological backbone for occupational exposure. Builds a graded exposure index rather than a binary automatable/safe split, and abandons the automation/augmentation split of WP96. Its own classifications are described as only illustrative, carrying a degree of subjectivity, and as a static snapshot. Exposure measures task overlap with model capability, not employment outcomes. Its worker survey is Polish (1,640 respondents) and asks about the respondent\'s industry, not their own job; managers and groups 8 and 9 are over-represented, professionals most under-represented.',
   },
   'ilo-brief-2025': {
     id: 'ilo-brief-2025',
@@ -120,7 +120,7 @@ export const SOURCES = {
     url: 'https://www.ilo.org/sites/default/files/2024-07/WP96_web.pdf',
     kind: 'intergovernmental',
     scope:
-      'The earlier global exposure analysis and origin of the augmentation-exceeds-automation finding. Predates current model generations; superseded on exposure figures by WP140.',
+      'The earlier global exposure analysis, and the source of the automation/augmentation split figures and the clerical task-exposure shares. Predates current model generations. WP140 replaced its binary automation/augmentation split with graded exposure and carries no equivalent split figures.',
   },
   'ilo-est-2026': {
     id: 'ilo-est-2026',
@@ -144,12 +144,14 @@ export const SOURCES = {
   },
   'ilo-algo-mgmt': {
     id: 'ilo-algo-mgmt',
-    org: 'International Labour Organization',
-    title: 'The Algorithmic Management of work and its implications in different contexts',
+    org: 'Baiocco, Fernandez-Macias, Rani & Pesole',
+    title:
+      'The Algorithmic Management of work and its implications in different contexts (EU-ILO Background Paper No. 9)',
     year: 2022,
     url: 'https://www.ilo.org/sites/default/files/wcmsp5/groups/public/%40ed_emp/documents/publication/wcms_849220.pdf',
     kind: 'intergovernmental',
-    scope: 'Algorithmic management and workplace monitoring as a labour issue.',
+    scope:
+      'Algorithmic management and workplace monitoring as a labour issue. June 2022, a JRC co-publication in the EU-ILO background paper series, not an ILO Employment Working Paper. Its tracking figure covers freelance platform workers only.',
   },
   'ilo-algo-topic': {
     id: 'ilo-algo-topic',
@@ -174,7 +176,8 @@ export const SOURCES = {
   'ilo-wp118': {
     id: 'ilo-wp118',
     org: 'International Labour Organization',
-    title: 'Using foresight to think and act upon an uncertain future world of work (Working Paper 118)',
+    title:
+      "Using foresight to think and act upon an uncertain future world of work: Trade unions' experiences (Working Paper 118)",
     year: 2024,
     url: 'https://www.ilo.org/sites/default/files/2024-07/118_web.pdf',
     kind: 'intergovernmental',
@@ -210,34 +213,54 @@ export const SOURCES = {
   'oecd-eo-2025': {
     id: 'oecd-eo-2025',
     org: 'OECD',
-    title: 'OECD Employment Outlook 2025',
+    title: 'OECD Employment Outlook 2025: Can We Get Through the Demographic Crunch?',
     year: 2025,
     url: 'https://www.oecd.org/en/publications/2025/07/oecd-employment-outlook-2025_5345f034.html',
     kind: 'intergovernmental',
     scope:
-      'OECD flagship labour analysis: AI adoption and effects across member economies. OECD-country focused; does not generalise to low-income economies.',
+      'OECD flagship labour analysis, this edition on demographic ageing and labour supply. Contains no AI chapter: its demographic estimates are historical, covering 2000-2019. OECD-country focused; does not generalise to low-income economies.',
+  },
+  'oecd-eo-2023': {
+    id: 'oecd-eo-2023',
+    org: 'OECD',
+    title: 'OECD Employment Outlook 2023: Artificial Intelligence and the Labour Market',
+    year: 2023,
+    url: 'https://doi.org/10.1787/08785bba-en',
+    kind: 'intergovernmental',
+    scope:
+      'The OECD edition that actually covers AI and the labour market, published 11 July 2023. The authority for AI-driven skill-demand shifts. OECD-country focused.',
   },
   'oecd-ai-principles': {
     id: 'oecd-ai-principles',
     org: 'OECD',
     title: 'Recommendation of the Council on Artificial Intelligence (OECD/LEGAL/0449)',
-    year: 2024,
+    year: 2019,
     url: 'https://legalinstruments.oecd.org/en/instruments/oecd-legal-0449',
     kind: 'regulatory',
     scope:
-      'The OECD AI Principles, the most widely adopted intergovernmental AI governance instrument. A recommendation, not legally binding.',
+      'The OECD AI Principles, the most widely adopted intergovernmental AI governance instrument. Adopted 22 May 2019 and amended 3 May 2024; the 2024 revision is the current text. A recommendation, not legally binding.',
   },
 
   /* --- European Union -------------------------------------------------- */
   'eu-ai-act': {
     id: 'eu-ai-act',
     org: 'European Union',
-    title: 'Regulation (EU) 2024/1689 (AI Act)',
+    title: 'Regulation (EU) 2024/1689 (AI Act), as amended by Regulation (EU) 2026/1744',
     year: 2024,
     url: 'https://ai-act-service-desk.ec.europa.eu/en/ai-act/annex-3',
     kind: 'regulatory',
     scope:
-      'Binding law, and the strongest verified legal requirement in this evidence base. Annex III classifies employment and worker-management AI as high-risk; Article 14 mandates human oversight; Article 26 sets deployer obligations. EU jurisdiction, phased application.',
+      'Binding law, and the strongest verified legal requirement in this evidence base. Annex III classifies employment and worker-management AI as high-risk; Article 14 mandates human oversight; Article 26 sets deployer obligations. EU jurisdiction. The Digital Omnibus on AI (Regulation (EU) 2026/1744, in force 27 July 2026) delayed application: Annex III high-risk obligations apply from 2 December 2027, Annex I embedded high-risk from 2 August 2028. The duties are enacted but not yet applicable.',
+  },
+  'eu-ai-act-employment-guidance': {
+    id: 'eu-ai-act-employment-guidance',
+    org: 'European Commission',
+    title: 'AI Act Service Desk: employment and worker-management use cases',
+    year: 2026,
+    url: 'https://ai-act-service-desk.ec.europa.eu/en/ai-act/annex-3',
+    kind: 'regulatory',
+    scope:
+      'Commission guidance interpreting how Annex III point 4 applies to workplace systems, including a pay-setting case where human oversight existed formally while the algorithm decided. Guidance, not the Regulation itself, and not independently binding.',
   },
 
   /* --- UNESCO ---------------------------------------------------------- */
@@ -261,7 +284,7 @@ export const SOURCES = {
     url: 'https://www.itu.int/itu-d/reports/statistics/facts-figures-2025/',
     kind: 'intergovernmental',
     scope:
-      'The authoritative source for global connectivity and the digital divide. ITU revises historical estimates substantially between editions; never compare across editions without the revised series.',
+      'The authoritative source for global connectivity and the digital divide. Regional use is reported as a band of 88-93% across CIS, Europe and the Americas, not as a single leading region. ITU revises historical estimates substantially between editions; never compare across editions without the revised series.',
   },
 
   /* --- US Bureau of Labor Statistics ----------------------------------- */
@@ -281,9 +304,9 @@ export const SOURCES = {
     id: 'vaccaro-2024',
     org: 'Vaccaro, Almaatouq & Malone',
     title:
-      'When combinations of humans and AI are useful: a systematic review and meta-analysis (Nature Human Behaviour 8)',
+      'When combinations of humans and AI are useful: a systematic review and meta-analysis (Nature Human Behaviour 8(12), 2293-2303, DOI 10.1038/s41562-024-02024-1)',
     year: 2024,
-    url: 'https://www.nature.com/articles/s41562-024-02024-1',
+    url: 'https://doi.org/10.1038/s41562-024-02024-1',
     kind: 'academic',
     scope:
       'The key peer-reviewed evidence on human-AI collaboration, notable for finding that human-AI combinations often underperform the better of the two alone. Covers studies from January 2020 to June 2023, predating current model generations.',
@@ -301,12 +324,13 @@ export const SOURCES = {
   'brynjolfsson-2025': {
     id: 'brynjolfsson-2025',
     org: 'Brynjolfsson, Li & Raymond',
-    title: 'Generative AI at Work (Quarterly Journal of Economics 140(2))',
+    title:
+      'Generative AI at Work (Quarterly Journal of Economics 140(2), 889-942, DOI 10.1093/qje/qjae044)',
     year: 2025,
-    url: 'https://www.nber.org/papers/w31161',
+    url: 'https://doi.org/10.1093/qje/qjae044',
     kind: 'academic',
     scope:
-      "Among the best-identified field evidence on AI's productivity effect on real workers, and the source of the finding that gains concentrate among less experienced workers. One firm, one occupation, one tool, pre-2024 model. Do not extrapolate.",
+      "Among the best-identified field evidence on AI's productivity effect on real workers, and the source of the finding that gains concentrate among less experienced workers. Figures here are the published version's, which differ from the withdrawn NBER working paper. One firm, one occupation, one tool, pre-2024 model. Do not extrapolate.",
   },
 
   /* --- Journalism ------------------------------------------------------ */

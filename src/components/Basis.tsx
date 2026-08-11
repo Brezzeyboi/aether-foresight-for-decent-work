@@ -11,6 +11,7 @@
    ============================================================================ */
 
 import { BASIS_META, type Basis as BasisKind, type SourceId, citeShort } from '../data/evidence.ts';
+import { Tip } from './Tip.tsx';
 import './basis.css';
 
 /* Marks are geometric rather than iconographic: a filled square reads as
@@ -36,25 +37,24 @@ export function Basis({ basis, source, compact = false }: BasisProps) {
   const cite = source ? citeShort(source) : null;
 
   // The tooltip carries the full definition; the visible chip stays short.
-  const title = cite ? `${meta.label}. ${meta.definition} Source: ${cite}` : `${meta.label}. ${meta.definition}`;
+  const explain = cite
+    ? `${meta.label}. ${meta.definition} Source: ${cite}`
+    : `${meta.label}. ${meta.definition}`;
 
   return (
-    <span className="basis" data-basis={basis} title={title}>
-      <span className="basis__glyph" aria-hidden="true">
-        {GLYPH[basis]}
+    <Tip text={explain}>
+      <span className="basis" data-basis={basis}>
+        <span className="basis__glyph" aria-hidden="true">
+          {GLYPH[basis]}
+        </span>
+        {/* Compact drops the basis word but KEEPS the citation. An earlier version
+            hid both, which left a bare glyph that nobody could read: the chip's
+            entire job is telling a reader where a number came from, so the source
+            is the last thing that may be dropped. */}
+        {!compact && <span className="basis__label">{meta.label}</span>}
+        {cite && <span className="basis__cite">{cite}</span>}
       </span>
-      {/* Compact drops the basis word but KEEPS the citation. An earlier version
-          hid both, which left a bare glyph that nobody could read: the chip's
-          entire job is telling a reader where a number came from, so the source
-          is the last thing that may be dropped. */}
-      {!compact && <span className="basis__label">{meta.label}</span>}
-      {cite && <span className="basis__cite">{cite}</span>}
-      {/* Screen readers get the unabbreviated statement regardless of compact. */}
-      <span className="sr-only">
-        {compact ? `${meta.label}.` : ''} {meta.definition}
-        {cite ? ` Source: ${cite}.` : ''}
-      </span>
-    </span>
+    </Tip>
   );
 }
 
