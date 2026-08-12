@@ -204,6 +204,21 @@ export function Shell({ route, phase = 'idle', dir = 'forward', children }: Shel
               pathways that show what could follow if stated conditions hold.
             </p>
           </div>
+          {/* Credits, because the entry rules require them for any media used and
+              because "original and student-created" is worth being able to
+              substantiate line by line rather than asserting. Everything listed
+              here is either made for this project or openly licensed, and
+              nothing is hotlinked: the whole build runs with no network. */}
+          <div className="colophon__block">
+            <p className="label">Credits and tooling</p>
+            <p className="colophon__text">
+              Photography generated with an AI image model for this prototype, then graded to one
+              palette; no stock or third-party photographs are used. Type is Geist, Geist Mono and
+              Newsreader, all under the SIL Open Font License and self-hosted. Charts, icons and the
+              AETHER mark were drawn for this project in SVG, with no charting or icon library. Data
+              comes from the {SOURCE_COUNT} published sources listed in full in the research board.
+            </p>
+          </div>
           {/* The alignment claim, on every screen rather than only in the
               research board. It links to the section that substantiates it. */}
           <div className="colophon__sdg">
