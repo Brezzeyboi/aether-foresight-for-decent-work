@@ -1,8 +1,0 @@
-AETHER — Foresight for Decent Work 2045
-AI Workforce Lab
-
-Live website:
-https://aether-foresight.vercel.app
-
-Source code (GitHub):
-https://github.com/Brezzeyboi/aether-foresight-for-decent-work
