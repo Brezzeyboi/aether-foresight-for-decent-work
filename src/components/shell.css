@@ -47,8 +47,14 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: var(--s-6);
+  gap: var(--s-5);
   min-height: 64px;
+
+  /* Wider than --max-page, which caps the CONTENT. That cap exists to hold prose
+     to a readable measure, and the masthead is not prose: it is eight fixed
+     destinations plus a status readout. Sharing the content cap left the nav a
+     795px budget for 847px of links, so it either scrolled or overlapped. */
+  max-width: 1560px;
 }
 
 /* --- Wordmark -------------------------------------------------------------
@@ -84,47 +90,66 @@
 
 /* --- Navigation ----------------------------------------------------------
    Grouped so the product's three layers are visible in the chrome itself.
-   Single line at desktop; the group labels are what make the grouping readable
-   without adding a second row. */
+   Eight destinations on one line, and the space for them does NOT grow with the
+   window: the page is capped at --max-page, so above that cap this column has a
+   fixed width. The nav has to fit a fixed budget.
+
+   Two rules follow, and both were learned from the same bug. Nothing in here may
+   shrink below its own text, because `min-width: 0` plus `white-space: nowrap`
+   let flex compress the links past their labels and silently drew "Economy" on
+   top of "AETHER AI" rather than clipping. And the group labels are the first
+   thing dropped when the budget is tight, because losing the word "Analyse" is a
+   smaller loss than a masthead that scrolls sideways. */
 .nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--s-5);
+  gap: var(--s-4);
   min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
 }
 
 .nav__group {
   display: flex;
   align-items: center;
-  gap: var(--s-3);
-  min-width: 0;
+  gap: var(--s-2);
+  /* No min-width: 0 here. A group is allowed to be as wide as its links need;
+     shrinking it is what caused the overlap. */
+  flex: none;
 }
 
 /* Divider between groups, drawn with a border so it needs no extra element. */
 .nav__group + .nav__group {
-  padding-left: var(--s-5);
+  padding-left: var(--s-4);
   border-left: 1px solid var(--rule);
 }
 
 .nav__group-label {
   font-size: 0.625rem;
   color: var(--rule-strong);
+  flex: none;
 }
 
 .nav__list {
   display: flex;
   align-items: center;
   gap: var(--s-1);
-  min-width: 0;
+  flex: none;
 }
 
 .nav__link {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.34rem;
-  padding: 0.4rem 0.55rem;
+  gap: 0.3rem;
+  /* Never shrink below the label. Overlapping text is worse than scrolling. */
+  flex: none;
+  padding: 0.4rem 0.5rem;
   border-radius: var(--r-1);
   font-size: var(--t-small);
   font-weight: 450;
@@ -295,10 +320,18 @@
    Below 1240px the nav group labels go first, then the status detail line, then
    the nav wraps to its own row. The order is deliberate: navigation labels and
    the disclosure that this is demonstration data survive longest. */
+/* The group labels are the first thing to go. Even at the widest viewport the
+   nav budget is fixed, and measured, the labels cost 124px against a 52px
+   shortfall — so they are dropped everywhere rather than at a breakpoint. The
+   grouping survives without them: the dividers still separate the three layers.
+
+   Kept in the DOM and hidden, not deleted, because they are aria-hidden
+   decoration for sighted grouping and the markup documents the structure. */
+.nav__group-label {
+  display: none;
+}
+
 @media (max-width: 1240px) {
-  .nav__group-label {
-    display: none;
-  }
   .nav__group + .nav__group {
     padding-left: var(--s-3);
   }
@@ -307,7 +340,15 @@
   }
 }
 
-@media (max-width: 1000px) {
+/* Measured, not guessed: the eight links need ~860px, and the wordmark plus the
+   status readout take a further ~460px of the same row, so one line needs about
+   1500px of masthead. Below that the nav takes its own row instead of scrolling
+   sideways inside a column too small for it.
+
+   The masthead caps at 1560px, so the single-row layout is reached only on wide
+   displays. That is the correct trade: a hidden horizontal scroll in a navigation
+   bar is worse than a second row. */
+@media (max-width: 1520px) {
   .masthead__inner {
     grid-template-columns: 1fr auto;
     grid-template-areas:

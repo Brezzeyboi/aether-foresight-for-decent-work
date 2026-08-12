@@ -14,8 +14,12 @@
        -> learning path -> AI exposure -> safety considerations
    ============================================================================ */
 
+import { CLAIMS } from './claims.ts';
 import { citeShort, type Basis, type SourceId } from './evidence.ts';
 import type { Route } from '../router.ts';
+
+/** Counted from the registry so the search readout cannot quote a stale figure. */
+const CLAIM_TOTAL = Object.keys(CLAIMS).length;
 
 /** A block inside a response. The variety is what keeps it from reading as chat. */
 export type Block =
@@ -389,7 +393,7 @@ export function findPrompt(input: string): Prompt | null {
    response: how the question was parsed, which corpus entries were retrieved,
    how the evidence was checked, and what was composed. */
 
-export type PhaseKind = 'parse' | 'retrieve' | 'verify' | 'compose';
+export type PhaseKind = 'parse' | 'search' | 'retrieve' | 'verify' | 'compose';
 
 export interface Phase {
   kind: PhaseKind;
@@ -404,10 +408,10 @@ export function pipelineFor(m: MatchResult): readonly Phase[] {
 
   const parse: Phase = {
     kind: 'parse',
-    label: 'Parsing the question',
+    label: 'Reading the question',
     detail:
       m.score === -1
-        ? `${m.tokens} terms, matched a known question`
+        ? `${m.tokens} terms, recognised question`
         : m.matchedOn.length
           ? `${m.tokens} terms, intent from "${m.matchedOn.join('", "')}"`
           : `${m.tokens} terms, no intent recognised`,
@@ -417,14 +421,19 @@ export function pipelineFor(m: MatchResult): readonly Phase[] {
     return [
       parse,
       {
-        kind: 'retrieve',
+        kind: 'search',
         label: 'Searching the evidence base',
-        detail: `${m.patterns} topics scanned, no match`,
+        detail: `${m.patterns} topics scanned`,
+      },
+      {
+        kind: 'retrieve',
+        label: 'Nothing matched',
+        detail: 'no source on file addresses this',
       },
       {
         kind: 'verify',
-        label: 'Refusing to answer',
-        detail: 'nothing on file supports an answer',
+        label: 'Declining to answer',
+        detail: 'an answer here would have to be invented',
       },
     ];
   }
@@ -433,31 +442,34 @@ export function pipelineFor(m: MatchResult): readonly Phase[] {
   const sources = [...new Set(figures.map((f) => f.source))];
   const bases = [...new Set(figures.map((f) => f.basis))];
 
-  const phases: Phase[] = [parse];
-
-  phases.push({
-    kind: 'retrieve',
-    label: 'Searching the evidence base',
-    detail: sources.length
-      ? `${figures.length} figures across ${sources.length} ${sources.length === 1 ? 'source' : 'sources'}`
-      : `${r.blocks.length} entries, no cited figures needed`,
-    hits: sources.map(citeShort),
-  });
-
-  phases.push({
-    kind: 'verify',
-    label: 'Checking how each figure is known',
-    detail: bases.length
-      ? bases.join(', ')
-      : 'no figures to classify',
-  });
-
-  phases.push({
-    kind: 'compose',
-    label: 'Composing the answer',
-    detail: `${r.blocks.length} sections`,
-  });
-
-  return phases;
+  return [
+    parse,
+    {
+      kind: 'search',
+      label: 'Searching the evidence base',
+      detail: `${m.patterns} topics scanned, ${CLAIM_TOTAL} claims indexed`,
+    },
+    /* The retrieval step names the documents it opened. This is the phase that
+       makes the work legible: a reader sees WHICH institutions the answer is
+       coming from before the answer arrives. */
+    {
+      kind: 'retrieve',
+      label: sources.length ? 'Fetching the cited pages' : 'Reading the topic entry',
+      detail: sources.length
+        ? `${figures.length} figures across ${sources.length} ${sources.length === 1 ? 'source' : 'sources'}`
+        : 'no cited figures needed for this answer',
+      hits: sources.map(citeShort),
+    },
+    {
+      kind: 'verify',
+      label: 'Checking how each figure is known',
+      detail: bases.length ? bases.join(', ') : 'no figures to classify',
+    },
+    {
+      kind: 'compose',
+      label: 'Writing the answer',
+      detail: `${r.blocks.length} sections`,
+    },
+  ];
 }
 

@@ -115,7 +115,11 @@ export function Research() {
                 <p className="headline__index" aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
                 </p>
-                <p className="headline__value">{c.value}</p>
+                {/* Numbers keep the full display scale; worded values step down
+                    so a long single word cannot outgrow its column. */}
+                <p className="headline__value" data-numeric={/\d/.test(c.value) || undefined}>
+                  {c.value}
+                </p>
                 <p className="headline__claim">
                   <strong>{headline}</strong> {tail}
                 </p>

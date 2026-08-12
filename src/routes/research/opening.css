@@ -104,6 +104,20 @@
      numeric ones. */
   max-width: 18ch;
   text-wrap: balance;
+
+  /* Some values are words, not numbers, and "Augmentation" alone is wider than
+     its own grid column at display size. A single word cannot wrap, so without
+     this it drew straight over the next figure. Breaking mid-word is ugly; a
+     value that fits is not, so the type steps down instead. */
+  min-width: 0;
+  overflow-wrap: break-word;
+  font-size: clamp(1.5rem, 1rem + 1.6vw, 2.35rem);
+}
+
+/* Numeric values keep the full display scale: they are short enough to fit and
+   they are the thing a reader is meant to see first. */
+.headline__value[data-numeric] {
+  font-size: var(--t-figure-lg);
 }
 
 .headline__claim {

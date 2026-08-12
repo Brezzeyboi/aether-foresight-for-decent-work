@@ -50,8 +50,8 @@ let nextId = 1;
    streams in at a steady character rate. Total lands between 2 and 5 seconds
    depending on answer length, which is long enough to feel like work is being
    done and short enough that nobody clicking through has to wait on it. */
-const PHASE_MS = 520;
-const STREAM_CPS = 240;
+const PHASE_MS = 700;
+const STREAM_CPS = 220;
 const FRAME_MS = 32;
 
 export function Assistant() {

@@ -189,12 +189,13 @@
 }
 
 /* A question is an entered command, not a bubble: a prompt caret, mono framing,
-   sitting on the console floor. */
+   sitting on the console floor. The caret alone carries the "typed" reading, so
+   there is no accent border — a thick coloured edge on one side of a card is the
+   generic AI-interface tell this product is built to avoid. */
 .turn__question {
   position: relative;
   padding: var(--s-3) var(--s-4) var(--s-3) 2rem;
   border: 1px solid var(--rule);
-  border-left: 2px solid var(--sec);
   border-radius: var(--r-1);
   background: color-mix(in oklab, var(--surface) 60%, transparent);
   font-size: var(--t-lead);
