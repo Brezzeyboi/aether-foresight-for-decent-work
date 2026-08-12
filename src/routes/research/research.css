@@ -584,7 +584,7 @@
    Three panels, one per scenario. Identity comes from panel POSITION, a direct
    label, and the number, never from hue. This is the design decision that lets
    the product show three things at once without needing three categorical
-   colours the mineral accent cannot supply. See docs/03-design-system.md. */
+   colours the mineral accent cannot supply. */
 
 .scenario-grid {
   display: grid;

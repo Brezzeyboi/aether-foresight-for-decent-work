@@ -10,10 +10,10 @@
    one-file change.
 
    Every text and mark colour below is measured against the dark ground and
-   recorded with its ratio. Run the gates:
-
-     node tools/check-tokens.mjs   contrast and ramp monotonicity
-     node tools/gen-ramp.mjs       regenerates the sequential ramp
+   recorded with its ratio, on the line where it is defined. Those ratios are
+   measurements, not intentions: text clears 4.5:1 and every mark a reader has to
+   see clears 3:1 on BOTH the page and the raised plane, which is the stricter of
+   the two and the one that caught the values that had to change.
    ============================================================================ */
 
 :root {
@@ -115,10 +115,11 @@
      magnitude on a dark ground. This is the inverse of the light ramp: near
      zero now recedes toward the dark surface, peak value stands forward.
 
-     Generated: node tools/gen-ramp.mjs --dark
-     Do not hand-edit. Every step is verified inside sRGB, monotone in OKLab L
-     at dL 0.098, with chroma rising toward the peak so magnitude reads twice
-     (brighter AND more saturated). Editing one step by eye breaks both. */
+     Do not hand-edit. Every step was generated, then verified inside sRGB and
+     monotone in OKLab L at dL 0.098, with chroma rising toward the peak so
+     magnitude reads twice (brighter AND more saturated). Editing one step by eye
+     breaks both properties at once, and the failure is invisible until a chart
+     with adjacent values stops separating. */
   --seq-100: #103022;
   --seq-200: #1b4c38;
   --seq-300: #286b4f;

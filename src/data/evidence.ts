@@ -61,12 +61,7 @@ export const BASIS_META: Record<Basis, BasisMeta> = {
 
 /** Institutional authority, used to order and group the reference list. */
 export type SourceKind =
-  | 'intergovernmental'
-  | 'statistical-office'
-  | 'academic'
-  | 'regulatory'
-  | 'industry'
-  | 'prototype';
+  'intergovernmental' | 'statistical-office' | 'academic' | 'regulatory' | 'industry' | 'prototype';
 
 export interface Source {
   readonly id: string;
@@ -82,9 +77,10 @@ export interface Source {
 /* ---------------------------------------------------------------------------
    SOURCE REGISTRY
 
-   Populated from docs/04-research-evidence.md and docs/05-sources.md, which are
-   produced by the research workstream against primary sources only. Every entry
-   here was retrieved and verified; nothing is added from memory.
+   Every entry was retrieved from the publication itself and verified against it;
+   nothing here is added from memory. Consultancy projections widely circulated in
+   this field were excluded in favour of intergovernmental, statistical-office and
+   peer-reviewed material.
 
    `internal` is the single permitted non-external source. It exists so that
    demo-profile values and illustrative model parameters must still declare
@@ -95,12 +91,13 @@ export const SOURCES = {
   'ilo-wp140': {
     id: 'ilo-wp140',
     org: 'International Labour Organization',
-    title: 'Generative AI and jobs: A Refined Global Index of Occupational Exposure (Working Paper 140)',
+    title:
+      'Generative AI and jobs: A Refined Global Index of Occupational Exposure (Working Paper 140)',
     year: 2025,
     url: 'https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html',
     kind: 'intergovernmental',
     scope:
-      'The methodological backbone for occupational exposure. Builds a graded exposure index rather than a binary automatable/safe split, and abandons the automation/augmentation split of WP96. Its own classifications are described as only illustrative, carrying a degree of subjectivity, and as a static snapshot. Exposure measures task overlap with model capability, not employment outcomes. Its worker survey is Polish (1,640 respondents) and asks about the respondent\'s industry, not their own job; managers and groups 8 and 9 are over-represented, professionals most under-represented.',
+      "The methodological backbone for occupational exposure. Builds a graded exposure index rather than a binary automatable/safe split, and abandons the automation/augmentation split of WP96. Its own classifications are described as only illustrative, carrying a degree of subjectivity, and as a static snapshot. Exposure measures task overlap with model capability, not employment outcomes. Its worker survey is Polish (1,640 respondents) and asks about the respondent's industry, not their own job; managers and groups 8 and 9 are over-represented, professionals most under-represented.",
   },
   'ilo-brief-2025': {
     id: 'ilo-brief-2025',
@@ -201,7 +198,8 @@ export const SOURCES = {
   'imf-genai-2024': {
     id: 'imf-genai-2024',
     org: 'International Monetary Fund',
-    title: 'Gen-AI: Artificial Intelligence and the Future of Work (Staff Discussion Note SDN/2024/001)',
+    title:
+      'Gen-AI: Artificial Intelligence and the Future of Work (Staff Discussion Note SDN/2024/001)',
     year: 2024,
     url: 'https://www.imf.org/-/media/files/publications/sdn/2024/english/sdnea2024001.pdf',
     kind: 'intergovernmental',
@@ -361,7 +359,7 @@ export const SOURCES = {
 export type SourceId = keyof typeof SOURCES;
 
 export interface Claim {
-  /** Stable id matching docs/04-research-evidence.md, e.g. 'CLAIM-SKILL-03'. */
+  /** Stable id, grouped by topic, e.g. 'CLAIM-SKILL-03'. */
   readonly id: string;
   /** The figure as it should be displayed, pre-formatted. */
   readonly value: string;

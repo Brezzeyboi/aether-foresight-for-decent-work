@@ -1,9 +1,9 @@
 /* ============================================================================
    The claims the interface displays.
 
-   Every entry traces to docs/04-research-evidence.md by its `id`, and to a real
-   publication through `source`. The types make an unsourced figure impossible to
-   add: `source` must be a key of the SOURCES registry, and `basis` is required.
+   Every entry carries a stable `id` and traces to a real publication through
+   `source`. The types make an unsourced figure impossible to add: `source` must
+   be a key of the SOURCES registry, and `basis` is required.
 
    Figures are transcribed exactly as the source states them, to the source's own
    precision. Where a source revised its own estimate between editions, the
@@ -531,8 +531,7 @@ const RAW_CLAIMS = {
   'CLAIM-ECON-10': {
     id: 'CLAIM-ECON-10',
     value: '−0.13pp',
-    statement:
-      'Annual drag on OECD productivity growth from ageing, estimated over 2000-2019',
+    statement: 'Annual drag on OECD productivity growth from ageing, estimated over 2000-2019',
     basis: 'measured',
     source: 'oecd-eo-2025',
     note: 'Wages fell by 0.10pp on the same estimate. The mechanism is reduced voluntary job-to-job mobility, which declines sharply with age, not a general ageing drag. A historical estimate, not a forward projection. Set beside the projected AI gain of about +0.064pp a year.',
@@ -558,7 +557,8 @@ const RAW_CLAIMS = {
   'CLAIM-RESK-02': {
     id: 'CLAIM-RESK-02',
     value: '+15% / +30%',
-    statement: 'Productivity gain from generative AI: average, and for the least experienced workers',
+    statement:
+      'Productivity gain from generative AI: average, and for the least experienced workers',
     basis: 'measured',
     source: 'brynjolfsson-2025',
     note: 'Issues resolved per hour across 5,172 agents. The lowest skill quintile gains 36%. The most skilled see small speed gains alongside small but statistically significant declines in resolution rate and customer satisfaction. One firm, one occupation, one pre-2024 model. Do not extrapolate to the economy.',

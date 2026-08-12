@@ -19,7 +19,7 @@ export interface LinearScale {
 
 export function linearScale(
   domain: readonly [number, number],
-  range: readonly [number, number]
+  range: readonly [number, number],
 ): LinearScale {
   const [d0, d1] = domain;
   const [r0, r1] = range;
@@ -27,8 +27,7 @@ export function linearScale(
 
   // A zero-width domain would divide by zero; collapse to the range start so a
   // single-value dataset renders at the baseline instead of producing NaN paths.
-  const scale = ((value: number) =>
-    span === 0 ? r0 : r0 + ((value - d0) / span) * (r1 - r0)) as {
+  const scale = ((value: number) => (span === 0 ? r0 : r0 + ((value - d0) / span) * (r1 - r0))) as {
     (value: number): number;
     domain: readonly [number, number];
     range: readonly [number, number];
@@ -55,7 +54,7 @@ export interface BandScale {
 export function bandScale(
   count: number,
   range: readonly [number, number],
-  paddingRatio = 0.28
+  paddingRatio = 0.28,
 ): BandScale {
   const [r0, r1] = range;
   const total = r1 - r0;
@@ -100,7 +99,7 @@ export function niceTicks(min: number, max: number, target = 5): number[] {
 /** Domain padded to the next nice tick, so bars never touch the frame edge. */
 export function niceDomain(
   values: readonly number[],
-  { includeZero = true, target = 5 } = {}
+  { includeZero = true, target = 5 } = {},
 ): [number, number] {
   const finite = values.filter((v) => Number.isFinite(v));
   if (finite.length === 0) return [0, 1];
@@ -115,7 +114,10 @@ export function niceDomain(
 
   const ticks = niceTicks(min, max, target);
   const step = ticks.length > 1 ? ticks[1] - ticks[0] : (max - min) / target;
-  return [Math.min(min, ticks[0]), Math.max(max, ticks[ticks.length - 1] + (max > ticks[ticks.length - 1] ? step : 0))];
+  return [
+    Math.min(min, ticks[0]),
+    Math.max(max, ticks[ticks.length - 1] + (max > ticks[ticks.length - 1] ? step : 0)),
+  ];
 }
 
 /* --- Paths --------------------------------------------------------------- */
@@ -131,9 +133,16 @@ export function barPath(
   width: number,
   height: number,
   radius: number,
-  orientation: 'up' | 'right' = 'up'
+  orientation: 'up' | 'right' = 'up',
 ): string {
-  const r = Math.max(0, Math.min(radius, orientation === 'up' ? height : width, (orientation === 'up' ? width : height) / 2));
+  const r = Math.max(
+    0,
+    Math.min(
+      radius,
+      orientation === 'up' ? height : width,
+      (orientation === 'up' ? width : height) / 2,
+    ),
+  );
 
   if (r === 0) return `M${x},${y}h${width}v${height}h${-width}Z`;
 
@@ -165,7 +174,9 @@ export function barPath(
 /** Straight-segment polyline through points. */
 export function linePath(points: readonly (readonly [number, number])[]): string {
   if (points.length === 0) return '';
-  return points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(2)},${y.toFixed(2)}`).join(' ');
+  return points
+    .map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(2)},${y.toFixed(2)}`)
+    .join(' ');
 }
 
 /**
@@ -182,7 +193,7 @@ export function smoothPath(points: readonly (readonly [number, number])[]): stri
     const [x1, y1] = points[i + 1];
     const dx = (x1 - x0) * 0.38;
     segments.push(
-      `C${(x0 + dx).toFixed(2)},${y0.toFixed(2)} ${(x1 - dx).toFixed(2)},${y1.toFixed(2)} ${x1.toFixed(2)},${y1.toFixed(2)}`
+      `C${(x0 + dx).toFixed(2)},${y0.toFixed(2)} ${(x1 - dx).toFixed(2)},${y1.toFixed(2)} ${x1.toFixed(2)},${y1.toFixed(2)}`,
     );
   }
   return segments.join(' ');
@@ -192,7 +203,7 @@ export function smoothPath(points: readonly (readonly [number, number])[]): stri
 export function areaPath(
   points: readonly (readonly [number, number])[],
   baselineY: number,
-  smooth = false
+  smooth = false,
 ): string {
   if (points.length === 0) return '';
   const top = smooth ? smoothPath(points) : linePath(points);
@@ -207,7 +218,7 @@ export function polar(
   cy: number,
   radius: number,
   angleIndex: number,
-  angleCount: number
+  angleCount: number,
 ): [number, number] {
   const angle = (angleIndex / angleCount) * Math.PI * 2 - Math.PI / 2;
   return [cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius];
@@ -221,7 +232,7 @@ export function radarPath(points: readonly (readonly [number, number])[]): strin
 
 /* --- Sequential encoding ------------------------------------------------- */
 
-/** The generated ramp, light to dark. See tools/gen-ramp.mjs. */
+/** The sequential ramp, light to dark. Every step is defined in tokens.css. */
 export const SEQ_RAMP = [
   'var(--seq-100)',
   'var(--seq-200)',

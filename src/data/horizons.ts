@@ -1,9 +1,8 @@
 /* ============================================================================
    The 2026 to 2045 transformation model.
 
-   Derived from docs/06-workforce-model.md. The structure encodes the project's
-   central discipline: certainty degrades with distance, and the verb register
-   changes with it.
+   The structure encodes the project's central discipline: certainty degrades with
+   distance, and the verb register changes with it.
 
      2026  measured        is, has
      2030  projection      is projected to
@@ -53,8 +52,7 @@ export const HORIZONS: readonly Horizon[] = [
     spread: 0.82,
     canSay:
       'Which pathway is unfolding could be identified from leading indicators observable before 2035.',
-    cannotSay:
-      'Which pathway will occur, or that any named occupation will or will not exist.',
+    cannotSay: 'Which pathway will occur, or that any named occupation will or will not exist.',
   },
   {
     year: 2045,
@@ -71,7 +69,7 @@ export const HORIZONS: readonly Horizon[] = [
    Rendered as small multiples, one panel each. Identity comes from panel
    position, a direct label, and texture angle, never from hue: this is what
    keeps the product clear of the categorical colour gate that the mineral
-   accent cannot pass. See docs/03-design-system.md.
+   accent cannot pass.
 
    Eight dimensions, and the last two are deliberate. Productivity and job counts
    are what this field usually measures; whether a worker can question a decision
@@ -109,7 +107,8 @@ export const SCENARIOS: readonly Scenario[] = [
     id: 'responsible',
     number: '01',
     name: 'Responsible AI Adoption',
-    premise: 'Adoption is deliberate and governed, and reskilling reaches the people currently excluded.',
+    premise:
+      'Adoption is deliberate and governed, and reskilling reaches the people currently excluded.',
     conditions:
       'High-risk rules spread beyond the EU. Oversight is substantive. Training reaches the 11 in 100 projected to miss out. Connectivity improves.',
     unsupported:
@@ -169,7 +168,8 @@ export const SCENARIOS: readonly Scenario[] = [
     id: 'automation',
     number: '02',
     name: 'High Automation',
-    premise: 'Capability advances into hard-to-learn tasks, and deployment optimises for substitution.',
+    premise:
+      'Capability advances into hard-to-learn tasks, and deployment optimises for substitution.',
     conditions:
       'Capability generalises to context-dependent tasks. Deployment targets the 33% that is high-exposure, low-complementarity. Governance stays gapped.',
     unsupported:

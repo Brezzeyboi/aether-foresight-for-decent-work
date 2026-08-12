@@ -3,7 +3,7 @@
 
    Both encode magnitude, so both use the sequential ramp or a single emphasis
    hue. Neither carries series identity, which is what keeps them clear of the
-   categorical CVD gate. See docs/03-design-system.md.
+   categorical CVD gate.
    ============================================================================ */
 
 import {
@@ -318,7 +318,9 @@ export function DivergingBars({
                 className="mark"
                 data-active={hover?.index === i || undefined}
                 data-interactive
-                onPointerEnter={() => show(i, positive ? centre + barW : centre - barW, y + band.bandwidth / 2)}
+                onPointerEnter={() =>
+                  show(i, positive ? centre + barW : centre - barW, y + band.bandwidth / 2)
+                }
                 onPointerLeave={hide}
               >
                 <rect
@@ -346,11 +348,7 @@ export function DivergingBars({
                 </text>
                 <text
                   className="mark-label mark-label--muted"
-                  x={
-                    positive
-                      ? frame.width - GUTTER + VALUE_PAD
-                      : GUTTER - VALUE_PAD
-                  }
+                  x={positive ? frame.width - GUTTER + VALUE_PAD : GUTTER - VALUE_PAD}
                   y={y + band.bandwidth / 2}
                   dy="0.32em"
                   textAnchor={positive ? 'start' : 'end'}
@@ -459,12 +457,7 @@ export function ShareBar({
                   enough to hold text. Narrow segments rely on the tooltip and
                   the table rather than overlapping labels. */}
               {s.width > 54 && (
-                <text
-                  className="mark-label"
-                  x={s.x + s.width / 2}
-                  y={y0 - 10}
-                  textAnchor="middle"
-                >
+                <text className="mark-label" x={s.x + s.width / 2} y={y0 - 10} textAnchor="middle">
                   {s.value}
                   {unit}
                 </text>
@@ -486,7 +479,7 @@ export function ShareBar({
               >
                 {s.label}
               </text>
-            ) : null
+            ) : null,
           )}
         </g>
       </svg>

@@ -217,8 +217,8 @@ p {
   letter-spacing: 0.045em;
 }
 
-/* The one uppercase label treatment. Rationed by the eyebrow rule - see
-   docs/03-design-system.md. Used for structural labels, not decoration. */
+/* The one uppercase label treatment. Rationed by the eyebrow rule: one per
+   section. Used for structural labels, not decoration. */
 .label {
   font-family: var(--font-mono);
   font-size: var(--t-micro);

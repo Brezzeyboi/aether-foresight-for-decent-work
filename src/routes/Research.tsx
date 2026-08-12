@@ -1448,13 +1448,15 @@ export function Research() {
         </ul>
 
         <div className="method-note">
-          <h3 className="subhead">What is kept alongside this list</h3>
+          <h3 className="subhead">What is not in this list</h3>
           <p className="method-note__text">
-            The full evidence base, including supporting quotations, methodological caveats, and the
-            list of figures that could <strong>not</strong> be verified, is maintained alongside
-            this publication. That unverified list is load-bearing: it records what this project is
-            not allowed to claim. Sources are cited in the form {citeShort('ilo-wp140')}, and the
-            four basis labels are set out at the top of this publication.
+            Figures that could not be verified against the publication itself were left out rather
+            than shown with a hedge, which is why some numbers a reader might expect are absent. The
+            registry behind this report cannot render a figure without a source and a basis, so an
+            unsourced number is not something this interface is able to display. Hover any citation
+            for what its source actually states, including the caveat that limits it. Sources are
+            cited in the form {citeShort('ilo-wp140')}, and the four basis labels are set out at the
+            top of this publication.
           </p>
         </div>
       </ReportSection>
