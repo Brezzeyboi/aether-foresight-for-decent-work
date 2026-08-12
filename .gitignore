@@ -2,3 +2,5 @@ node_modules/
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+
+.vercel
