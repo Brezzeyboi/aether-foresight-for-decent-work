@@ -4,10 +4,14 @@
 
 import { useState } from 'react';
 import { Basis } from '../components/Basis.tsx';
-import { ScreenHeader, Section } from '../components/Layout.tsx';
+import { Section } from '../components/Layout.tsx';
+import { RouteHero } from '../components/RouteHero.tsx';
 import { CAREERS } from '../data/profile.ts';
 import { routeHref } from '../router.ts';
 import './dash.css';
+
+// Generated at development time and bundled locally; never fetched at runtime.
+import heroImage from '../assets/hero-careers.webp';
 
 export function Careers() {
   const [open, setOpen] = useState<string | null>(CAREERS[1].key);
@@ -16,7 +20,9 @@ export function Careers() {
 
   return (
     <>
-      <ScreenHeader
+      <RouteHero
+        src={heroImage}
+        focus="34%"
         title="Which roles could actually fit me?"
         standfirst="Labelled by how strongly published projections support each one. Match scores are illustrative; the evidence labels are not."
         aside={

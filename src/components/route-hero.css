@@ -1,0 +1,134 @@
+/* Route hero: banded image with the heading set over it. */
+
+.rhero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(20rem, 16rem + 18vw, 30rem);
+  margin-bottom: var(--s-6);
+  /* Full bleed, cancelling the page gutter the route sits inside. */
+  margin-inline: calc(50% - 50vw);
+  padding-block: var(--s-7) var(--s-6);
+  overflow: hidden;
+  border-bottom: 2px solid var(--sec);
+}
+
+.rhero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.rhero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Held back so the type leads, but not flattened: the photographs already
+     carry their own duotone and most of the mood is in them. */
+  filter: contrast(1.04) brightness(0.7);
+}
+
+/* A touch of the section colour, so the photograph belongs to the route it
+   opens. Deliberately light: at higher opacity `color` blending replaces the
+   image's own tones entirely and every hero turns into a flat monochrome wash,
+   which loses the photograph. `soft-light` tints without discarding luminance. */
+.rhero__tint {
+  position: absolute;
+  inset: 0;
+  background: var(--sec);
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
+}
+
+/* The scrim. This is what makes the heading's contrast a property of the layout
+   rather than a property of whichever pixels sit behind it: it floors the
+   luminance under the text regardless of the image. Heavier at the bottom, where
+   the type is, and it fades to nothing at the top so the picture still reads. */
+.rhero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--surface) 0%,
+    color-mix(in oklab, var(--surface) 88%, transparent) 26%,
+    color-mix(in oklab, var(--surface) 52%, transparent) 58%,
+    color-mix(in oklab, var(--surface) 22%, transparent) 100%
+  );
+}
+
+.rhero__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--s-6);
+  width: 100%;
+}
+
+.rhero__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-width: 34ch;
+}
+
+.rhero__title {
+  font-size: var(--t-title);
+  font-weight: 500;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-title);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.rhero__standfirst {
+  font-size: var(--t-lead);
+  line-height: 1.45;
+  color: var(--ink-secondary);
+  max-width: 46ch;
+}
+
+.rhero__aside {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-6);
+}
+
+/* The screen header that used to follow now duplicates this, so a hero replaces
+   it entirely and the first section pays only its own padding. */
+.rhero + .section {
+  padding-top: 0;
+}
+
+@media (max-width: 860px) {
+  .rhero__body {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .rhero__aside {
+    flex-wrap: wrap;
+  }
+}
+
+/* Paper: the photograph is a screen device. It would print as a heavy grey block
+   behind the heading and cost a page of toner, so the band collapses to a plain
+   header and the image is dropped. */
+@media print {
+  .rhero {
+    min-height: 0;
+    margin-inline: 0;
+    padding-block: 0 var(--s-4);
+    border-bottom: 1pt solid #000000;
+  }
+  .rhero__media {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rhero__img {
+    /* No motion here to disable; kept explicit so a future parallax cannot be
+       added without also handling this case. */
+    transform: none;
+  }
+}

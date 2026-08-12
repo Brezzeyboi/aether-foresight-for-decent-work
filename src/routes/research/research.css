@@ -886,18 +886,31 @@
   color: color-mix(in oklab, var(--ink-on-dark) 78%, transparent);
 }
 
+/* The tooltip on the ivory plate is the one element that stays DARK, because it
+   floats above the chart and needs to read as a raised panel rather than as more
+   plate. That means its text must invert too: --ink-on-dark is near-black, and
+   using it here put dark text on a dark panel, which made the whole tooltip
+   unreadable. Text on this panel uses the light ink. */
 .plate .chart-tip {
   background: #24261f;
-  border-color: color-mix(in oklab, var(--ink-on-dark) 40%, transparent);
+  border-color: color-mix(in oklab, var(--ink) 34%, transparent);
 }
 
 .plate .chart-tip__title,
 .plate .chart-tip__value {
-  color: var(--ink-on-dark);
+  color: var(--ink);
 }
 
 .plate .chart-tip__detail {
-  color: color-mix(in oklab, var(--ink-on-dark) 76%, transparent);
+  color: var(--ink-secondary);
+}
+
+/* The "Can say" / "Cannot say" labels inside the tooltip inherit the plate's
+   dark ink from .prose, so they are re-inverted here along with everything else
+   on the panel. */
+.plate .chart-tip strong,
+.plate .chart-tip__detail strong {
+  color: var(--ink);
 }
 
 /* Print: paper cannot afford a flooded dark plate, and a judge printing the

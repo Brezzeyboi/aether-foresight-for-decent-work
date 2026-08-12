@@ -1,0 +1,113 @@
+/* SDG 8 badge. Official UN Goal 8 colour, #A21942. */
+
+.sdg-badge {
+  --sdg8: #a21942;
+  /* Lifted a little for the numeral, so the block reads as printed rather than
+     flat filled. Both stay dark enough for white text. */
+  --sdg8-lift: #b81d4c;
+
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: var(--r-2);
+  overflow: hidden;
+  text-decoration: none;
+  background: var(--sdg8);
+  box-shadow: var(--metal-bevel);
+  transition:
+    box-shadow var(--dur-2) var(--ease),
+    transform var(--dur-2) var(--ease-out);
+}
+
+.sdg-badge:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    var(--metal-bevel),
+    0 6px 22px -10px var(--sdg8);
+}
+
+/* The numeral block. This is the part that is recognisable at a glance, so it
+   gets the weight and the lifted panel. */
+.sdg-badge__num {
+  display: grid;
+  place-items: center;
+  padding-inline: 0.62em;
+  background: var(--sdg8-lift);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums;
+}
+
+.sdg-badge__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.14rem;
+  padding: 0.42rem 0.7rem 0.46rem;
+  min-width: 0;
+}
+
+.sdg-badge__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  /* Slightly held back from pure white so the name below leads. */
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1;
+}
+
+.sdg-badge__name {
+  font-size: var(--t-meta);
+  font-weight: 500;
+  line-height: 1.25;
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+/* --- Compact -------------------------------------------------------------
+   For chrome, where there is room for the number and one short line. */
+.sdg-badge--compact .sdg-badge__num {
+  font-size: 1.15rem;
+  padding-inline: 0.5em;
+}
+
+.sdg-badge--compact .sdg-badge__eyebrow {
+  display: none;
+}
+
+.sdg-badge--compact .sdg-badge__name {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Underline is suppressed on the badge itself; focus is still visible via the
+   global :focus-visible ring. */
+.sdg-badge:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sdg-badge,
+  .sdg-badge:hover {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* On paper the maroon prints as a heavy ink block. Keep the colour, since it is
+   the identifying feature, but drop the elevation. */
+@media print {
+  .sdg-badge {
+    box-shadow: none;
+  }
+}

@@ -4,9 +4,13 @@
 
 import { useState } from 'react';
 import { Basis } from '../components/Basis.tsx';
-import { ScreenHeader, Section } from '../components/Layout.tsx';
+import { Section } from '../components/Layout.tsx';
+import { RouteHero } from '../components/RouteHero.tsx';
 import { RISKS } from '../data/risks.ts';
 import './dash.css';
+
+// Generated at development time and bundled locally; never fetched at runtime.
+import heroImage from '../assets/hero-safety.webp';
 
 export function Safety() {
   const [open, setOpen] = useState<string | null>(RISKS[0].key);
@@ -14,7 +18,9 @@ export function Safety() {
 
   return (
     <>
-      <ScreenHeader
+      <RouteHero
+        src={heroImage}
+        focus="32%"
         title="What could go wrong for workers?"
         standfirst="Seven documented risks, each with what reduces it. The levels are our assessment; the findings under them are cited."
         aside={

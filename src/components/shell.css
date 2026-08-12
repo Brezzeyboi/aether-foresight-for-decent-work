@@ -62,10 +62,28 @@
    repeated across the interface. */
 .wordmark {
   display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
+  align-items: center;
+  gap: 0.6rem;
   text-decoration: none;
   color: var(--ink);
+}
+
+.wordmark__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+/* The mark carries the accent, the wordmark stays in ink: the logo is the one
+   place in the chrome where the colour is allowed to lead. */
+.wordmark__mark {
+  color: var(--accent);
+  flex: none;
+  transition: color var(--dur-2) var(--ease);
+}
+
+.wordmark:hover .wordmark__mark {
+  color: var(--accent-deep);
 }
 
 .wordmark:hover {
@@ -441,6 +459,25 @@
 
 .colophon__credit {
   color: var(--ink-muted);
+}
+
+/* --- SDG alignment in the footer ---------------------------------------- */
+
+.colophon__sdg {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4) var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+}
+
+.colophon__sdg-note {
+  font-size: var(--t-meta);
+  line-height: 1.5;
+  color: var(--ink-muted);
+  max-width: 52ch;
 }
 
 /* --- Per-screen colour --------------------------------------------------

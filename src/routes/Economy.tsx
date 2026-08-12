@@ -6,10 +6,14 @@
 
 import { useState } from 'react';
 import { Basis } from '../components/Basis.tsx';
-import { ScreenHeader, Section } from '../components/Layout.tsx';
+import { Section } from '../components/Layout.tsx';
+import { RouteHero } from '../components/RouteHero.tsx';
 import { SCENARIOS } from '../data/horizons.ts';
 import { routeHref } from '../router.ts';
 import './dash.css';
+
+// Generated at development time and bundled locally; never fetched at runtime.
+import heroImage from '../assets/hero-economy.webp';
 
 export function Economy() {
   const [active, setActive] = useState(SCENARIOS[2].id);
@@ -17,7 +21,9 @@ export function Economy() {
 
   return (
     <>
-      <ScreenHeader
+      <RouteHero
+        src={heroImage}
+        focus="56%"
         title="What could all this mean at scale?"
         standfirst="Three pathways to 2045, each with the conditions it needs and what it cannot support. Conditional routes, not forecasts."
         aside={

@@ -3,9 +3,13 @@
 
 import { useState } from 'react';
 import { Basis } from '../components/Basis.tsx';
-import { ScreenHeader, Section } from '../components/Layout.tsx';
+import { Section } from '../components/Layout.tsx';
+import { RouteHero } from '../components/RouteHero.tsx';
 import { PATHWAYS } from '../data/learning.ts';
 import './dash.css';
+
+// Generated at development time and bundled locally; never fetched at runtime.
+import heroImage from '../assets/hero-learning.webp';
 
 export function Learning() {
   const [career, setCareer] = useState(PATHWAYS[0].career);
@@ -16,7 +20,9 @@ export function Learning() {
 
   return (
     <>
-      <ScreenHeader
+      <RouteHero
+        src={heroImage}
+        focus="40%"
         title="What do I actually do next?"
         standfirst="A staged route to a chosen role. Each stage makes the next possible, and each ends in something built."
         aside={

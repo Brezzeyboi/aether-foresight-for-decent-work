@@ -17,6 +17,8 @@ import { CLAIMS } from '../data/claims.ts';
 import { SOURCES } from '../data/evidence.ts';
 import { ROUTES, routeHref, type Route } from '../router.ts';
 import { Icon, type IconName } from './Icon.tsx';
+import { Logo } from './Logo.tsx';
+import { SdgBadge } from './SdgBadge.tsx';
 import { Tip } from './Tip.tsx';
 import './shell.css';
 
@@ -97,9 +99,16 @@ export function Shell({ route, phase = 'idle', dir = 'forward', children }: Shel
 
       <header className="masthead">
         <div className="masthead__inner page">
-          <a className="wordmark" href={routeHref('overview')} aria-label="AETHER, workforce intelligence, home">
-            <span className="wordmark__name">AETHER</span>
-            <span className="wordmark__descriptor">Foresight for Decent Work</span>
+          <a
+            className="wordmark"
+            href={routeHref('overview')}
+            aria-label="AETHER, foresight for decent work, home"
+          >
+            <Logo className="wordmark__mark" size={2.1} />
+            <span className="wordmark__text">
+              <span className="wordmark__name">AETHER</span>
+              <span className="wordmark__descriptor">Foresight for Decent Work</span>
+            </span>
           </a>
 
           <nav className="nav" aria-label="Main">
@@ -184,6 +193,16 @@ export function Shell({ route, phase = 'idle', dir = 'forward', children }: Shel
               pathways that show what could follow if stated conditions hold.
             </p>
           </div>
+          {/* The alignment claim, on every screen rather than only in the
+              research board. It links to the section that substantiates it. */}
+          <div className="colophon__sdg">
+            <SdgBadge />
+            <p className="colophon__sdg-note">
+              Goal 8 asks for full and productive employment and decent work for all. Five of its
+              targets are where this research lands.
+            </p>
+          </div>
+
           <p className="colophon__foot meta">
             <a href={routeHref('research', 'sources')}>Sources and method</a>
             <span className="colophon__credit">

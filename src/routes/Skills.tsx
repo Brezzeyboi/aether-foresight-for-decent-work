@@ -3,10 +3,14 @@
 
 import { useState } from 'react';
 import { Basis } from '../components/Basis.tsx';
-import { ScreenHeader, Section } from '../components/Layout.tsx';
+import { Section } from '../components/Layout.tsx';
+import { RouteHero } from '../components/RouteHero.tsx';
 import { CLAIMS, type ClaimId } from '../data/claims.ts';
 import { SKILLS, type Skill } from '../data/profile.ts';
 import './dash.css';
+
+// Generated at development time and bundled locally; never fetched at runtime.
+import heroImage from '../assets/hero-skills.webp';
 
 // Employer demand on a 0-100 axis. Our translation, hence the assumption basis.
 const RELEVANCE: Record<Skill['relevance'], number> = {
@@ -27,7 +31,9 @@ export function Skills() {
 
   return (
     <>
-      <ScreenHeader
+      <RouteHero
+        src={heroImage}
+        focus="38%"
         title="Which of my skills will still matter?"
         standfirst="Ordered by the distance between capability now and where employer demand is heading. Start at the top."
         aside={

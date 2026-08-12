@@ -14,12 +14,16 @@
    ============================================================================ */
 
 import { Basis, EvidenceFigure } from '../components/Basis.tsx';
-import { Grid, Panel, ScreenHeader, Section } from '../components/Layout.tsx';
+import { Grid, Panel, Section } from '../components/Layout.tsx';
+import { RouteHero } from '../components/RouteHero.tsx';
 import { CLAIMS } from '../data/claims.ts';
 import { PROFILE } from '../data/profile.ts';
 import { routeHref, type Route } from '../router.ts';
 import { Readiness } from '../viz/Readiness.tsx';
 import './overview.css';
+
+// Generated at development time and bundled locally; never fetched at runtime.
+import heroImage from '../assets/hero-overview.webp';
 
 /* Employer-reported demand per readiness dimension, 0-100.
 
@@ -82,7 +86,9 @@ const AREAS: {
 export function Overview() {
   return (
     <>
-      <ScreenHeader
+      <RouteHero
+        src={heroImage}
+        focus="30%"
         title="Understand where work is going. Prepare for where you want to be."
         standfirst="AETHER connects published workforce research to one person's position, and states the basis for every figure."
         aside={
