@@ -99,7 +99,7 @@
   position: relative;
   height: 12px;
   background: var(--surface-sunken);
-  border-radius: 1px;
+  border-radius: var(--r-mark);
 }
 
 .readiness__bar {
@@ -107,7 +107,7 @@
   inset-block: 0;
   inset-inline-start: 0;
   background: var(--accent-live);
-  border-radius: 1px;
+  border-radius: var(--r-mark);
   transition: inline-size var(--dur-4) var(--ease-out);
 }
 
@@ -193,7 +193,7 @@
 .readiness__key-need {
   display: inline-block;
   height: 9px;
-  border-radius: 1px;
+  border-radius: var(--r-mark);
 }
 
 .readiness__key-bar {

@@ -236,17 +236,27 @@
   --max-text: 1100px;
 
   /* --- Radius ------------------------------------------------------------- */
+/* Radii were 2-3px, which is effectively square: every panel, chip and image
+   read as a hard-cut rectangle and the whole product felt sharp. These are the
+   softened set. Still restrained — this is a publication, not a consumer app, so
+   nothing becomes a pill — but enough curvature that edges feel eased rather
+   than cut. Scale roughly doubles at each step so components keep their
+   relationship: marks stay tightest, panels and media get the most. */
   --r-0: 0;
-  --r-1: 2px;
-  --r-2: 3px;
-  --r-mark: 1.5px;
+  --r-1: 5px; /* chips, small controls, nav items */
+  --r-2: 9px; /* panels, cards, tooltips */
+  --r-3: 14px; /* media frames, consoles, large surfaces */
+  --r-mark: 2.5px; /* chart marks, where curvature would distort the data */
 
   /* --- Elevation ----------------------------------------------------------
      On dark, elevation is light, not shadow: a raised surface lifts by being a
      touch lighter, and the glow is a faint green bloom. Shadows stay dark. */
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-2: 0 2px 12px rgba(0, 0, 0, 0.42), 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-3: 0 16px 44px rgba(0, 0, 0, 0.5), 0 3px 8px rgba(0, 0, 0, 0.32);
+/* Softened: wider spread, lower opacity, and a second longer layer. A tight
+     dark shadow reads as a hard cut-out; a broad faint one reads as a surface
+     lifted off the page, which is the effect wanted on a dark ground. */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 4px 18px -4px rgba(0, 0, 0, 0.36), 0 1px 4px rgba(0, 0, 0, 0.22);
+  --shadow-3: 0 22px 56px -18px rgba(0, 0, 0, 0.46), 0 6px 18px -8px rgba(0, 0, 0, 0.28);
   --glow-mint: 0 0 40px rgba(52, 211, 153, 0.14);
 
   /* --- Motion ------------------------------------------------------------- */

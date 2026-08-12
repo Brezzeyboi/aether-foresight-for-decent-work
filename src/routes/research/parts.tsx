@@ -211,7 +211,13 @@ export function Cite({ id }: { id: ClaimId }) {
  * Not hidden behind hover: a real button with aria-expanded, reachable by
  * keyboard and usable on touch.
  */
-export function Caveat({ label = 'What this does not say', children }: { label?: string; children: ReactNode }) {
+export function Caveat({
+  label = 'What this does not say',
+  children,
+}: {
+  label?: string;
+  children: ReactNode;
+}) {
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -307,6 +313,57 @@ export function Prose({ children }: { children: ReactNode }) {
  */
 export function Finding({ children }: { children: ReactNode }) {
   return <p className="finding">{children}</p>;
+}
+
+/* --- Photograph ---------------------------------------------------------
+   Documentary photography, used where a scene carries a finding faster than a
+   paragraph does.
+
+   The rule that keeps it out of stock-image territory: a photograph must be
+   anchored to a claim. The figure and its basis sit in the caption, so the
+   picture stands beside a sourced number rather than decorating a section. The
+   caption states what the reader is looking at and why it is here; it never
+   asserts anything the image cannot show. */
+
+export function ReportPhoto({
+  src,
+  alt,
+  caption,
+  claim,
+  span = false,
+}: {
+  src: string;
+  /** Describes the scene. The caption carries the argument, so these differ. */
+  alt: string;
+  caption: string;
+  /** The sourced figure this image sits beside. */
+  claim?: ClaimId;
+  /** Span the margin column too, for the images that open a section. */
+  span?: boolean;
+}) {
+  const c = claim ? CLAIMS[claim] : undefined;
+  return (
+    <figure className="photo" data-span={span || undefined} data-reveal>
+      <img
+        className="photo__img"
+        src={src}
+        alt={alt}
+        width={1400}
+        height={933}
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption className="photo__caption">
+        {c && (
+          <span className="photo__anchor">
+            <span className="photo__value">{c.value}</span>
+            <Basis basis={c.basis} source={c.source} compact />
+          </span>
+        )}
+        <span className="photo__text">{caption}</span>
+      </figcaption>
+    </figure>
+  );
 }
 
 /* --- Figure -------------------------------------------------------------- */

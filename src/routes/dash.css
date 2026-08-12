@@ -112,7 +112,7 @@
   position: relative;
   height: 12px;
   background: var(--surface-sunken);
-  border-radius: 1px;
+  border-radius: var(--r-mark);
 }
 
 .bar__fill {
@@ -120,7 +120,7 @@
   inset-block: 0;
   inset-inline-start: 0;
   background: var(--sec);
-  border-radius: 1px;
+  border-radius: var(--r-mark);
 }
 
 /* Hatched clay: a shortfall is an absence, not a second measurement. */
@@ -215,7 +215,7 @@
   display: inline-block;
   width: 20px;
   height: 9px;
-  border-radius: 1px;
+  border-radius: var(--r-mark);
 }
 
 .key__swatch--fill {

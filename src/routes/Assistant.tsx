@@ -177,7 +177,10 @@ export function Assistant() {
       <div className="ai-frame page">
         <div className="ai">
           <aside className="ai__profile">
-            <p className="ai__profile-label">Working from</p>
+            {/* Written from the reader's side, not the system's. "Working from"
+                described what the assistant was doing, which put the reader in
+                the third person about their own profile. */}
+            <p className="ai__profile-label">Your profile</p>
             <p className="ai__profile-name">{PROFILE.name}</p>
             <p className="ai__profile-context">{PROFILE.position}</p>
             <dl className="ai__profile-stats">

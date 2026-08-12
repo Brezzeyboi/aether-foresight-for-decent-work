@@ -458,7 +458,52 @@
 }
 
 .colophon__credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: var(--ink-muted);
+}
+
+/* The heart. Set at the risk-elevated clay rather than a pure red, so it belongs
+   to the palette instead of being the one saturated pixel on the page. */
+.colophon__heart {
+  color: var(--risk-elevated);
+  font-size: 1em;
+  line-height: 1;
+}
+
+.colophon__school {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+}
+
+/* The school crest is a colour JPEG on a yellow ground, which would be the
+   loudest thing in the footer. Held back at rest and brought to full colour on
+   hover, so it reads as a mark rather than as a sticker. */
+.colophon__school-logo {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: var(--r-1);
+  object-fit: cover;
+  filter: saturate(0.75) brightness(0.92);
+  transition:
+    filter var(--dur-2) var(--ease),
+    transform var(--dur-2) var(--ease-out);
+}
+
+.colophon__school:hover .colophon__school-logo {
+  filter: none;
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .colophon__school-logo,
+  .colophon__school:hover .colophon__school-logo {
+    transform: none;
+    transition: none;
+  }
 }
 
 /* --- SDG alignment in the footer ---------------------------------------- */

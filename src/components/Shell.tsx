@@ -15,6 +15,9 @@
 import type { ReactNode } from 'react';
 import { CLAIMS } from '../data/claims.ts';
 import { SOURCES } from '../data/evidence.ts';
+
+// Bundled at build time rather than hotlinked, so the footer renders offline.
+import maxfortLogo from '../assets/maxfort-logo.webp';
 import { ROUTES, routeHref, type Route } from '../router.ts';
 import { Icon, type IconName } from './Icon.tsx';
 import { Logo } from './Logo.tsx';
@@ -54,7 +57,12 @@ const NAV_GROUPS: { group: string; items: NavItem[] }[] = [
   {
     group: 'Ask',
     items: [
-      { route: 'assistant', label: 'AETHER AI', question: 'Guidance for my profile', icon: 'spark' },
+      {
+        route: 'assistant',
+        label: 'AETHER AI',
+        question: 'Guidance for my profile',
+        icon: 'spark',
+      },
     ],
   },
   {
@@ -160,7 +168,9 @@ export function Shell({ route, phase = 'idle', dir = 'forward', children }: Shel
                   <span className="status__sep" aria-hidden="true" />
                   <span className="status__value">{CLAIM_COUNT}</span> claims
                 </span>
-                <span className="status__detail">Local evidence base &middot; demonstration profile</span>
+                <span className="status__detail">
+                  Local evidence base &middot; demonstration profile
+                </span>
               </span>
             </a>
           </Tip>
@@ -180,9 +190,10 @@ export function Shell({ route, phase = 'idle', dir = 'forward', children }: Shel
             <p className="label">About this prototype</p>
             <p className="colophon__text">
               AETHER is a concept prototype built for the AI Workforce Lab. The demonstration
-              profile is fictional. Every figure drawn from published research carries its source
-              and states whether it is measured data, a projection, a scenario, or an assumption
-              made for this prototype.
+              profile is fictional, and the photography throughout is illustrative rather than
+              documentary. Every figure drawn from published research carries its source and states
+              whether it is measured data, a projection, a scenario, or an assumption made for this
+              prototype.
             </p>
           </div>
           <div className="colophon__block">
@@ -206,9 +217,29 @@ export function Shell({ route, phase = 'idle', dir = 'forward', children }: Shel
           <p className="colophon__foot meta">
             <a href={routeHref('research', 'sources')}>Sources and method</a>
             <span className="colophon__credit">
-              Made by{' '}
-              <a href="https://maxfortpitampura.com/" target="_blank" rel="noreferrer noopener">
-                Maxfortian
+              Made with{' '}
+              <span className="colophon__heart" role="img" aria-label="love">
+                &#9829;
+              </span>{' '}
+              by{' '}
+              <a
+                className="colophon__school"
+                href="https://maxfortpitampura.com/"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                {/* Copied into the bundle at build time rather than hotlinked, so
+                    the footer still renders with no network. */}
+                <img
+                  className="colophon__school-logo"
+                  src={maxfortLogo}
+                  alt="Maxfort School, Pitampura"
+                  width={200}
+                  height={200}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span>Maxfortian</span>
               </a>
             </span>
           </p>

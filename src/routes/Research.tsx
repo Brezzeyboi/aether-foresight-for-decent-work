@@ -26,6 +26,7 @@ import {
   Finding,
   Matrix,
   ReportFigure,
+  ReportPhoto,
   ReportSection,
   Prose,
 } from './research/parts.tsx';
@@ -33,9 +34,23 @@ import './research/research.css';
 import './research/opening.css';
 import '../viz/small.css';
 
-// Generated at development time, saved locally, and imported through the bundler
-// so it is emitted as a hashed local asset. Nothing is fetched at runtime.
+/* Generated at development time, saved locally, and imported through the bundler
+   so each is emitted as a hashed local asset. Nothing is fetched at runtime.
+
+   These are illustrations made for this publication, not documentary records of
+   real workplaces, and the key near the top of the page says so. Each one is
+   captioned with the sourced figure it stands beside, so an image can never be
+   mistaken for the evidence. */
 import openingImage from '../assets/opening-workbench.webp';
+import photoClerical from '../assets/research-clerical.webp';
+import photoClericalWomen from '../assets/research-clerical-women.webp';
+import photoClimate from '../assets/research-climate.webp';
+import photoHomecare from '../assets/research-homecare.webp';
+import photoInformal from '../assets/research-informal.webp';
+import photoOversight from '../assets/research-oversight.webp';
+import photoRural from '../assets/research-rural.webp';
+import photoSupport from '../assets/research-support.webp';
+import photoVoice from '../assets/research-voice.webp';
 
 /* Counted from the registry rather than typed in, so the figure quoted in the
    contents and in section 12 can never drift from the list actually rendered
@@ -103,10 +118,18 @@ export function Research() {
         <ol className="headline__list" data-reveal-stagger>
           {(
             [
-              ['CLAIM-AUG-01', 'Assistance, not replacement', 'is the larger category, in every income group'],
+              [
+                'CLAIM-AUG-01',
+                'Assistance, not replacement',
+                'is the larger category, in every income group',
+              ],
               ['CLAIM-AUG-04', 'One worker in four', 'is in a job with any measurable AI exposure'],
               ['CLAIM-EMP-03', 'Net jobs still rising', 'on the most-cited projection to 2030'],
-              ['CLAIM-SCEN-01', 'Nothing reaches 2045', 'the furthest credible projection stops at 2034'],
+              [
+                'CLAIM-SCEN-01',
+                'Nothing reaches 2045',
+                'the furthest credible projection stops at 2034',
+              ],
             ] as const
           ).map(([id, headline, tail], i) => {
             const c = CLAIMS[id];
@@ -129,11 +152,60 @@ export function Research() {
           })}
         </ol>
         <p className="headline__foot">
-          Every figure in this publication carries its source and states whether it is measured
-          data, a projection, a scenario, or an assumption made for this prototype. Where sources
+          Every figure in this publication carries its source and one of four labels. Where sources
           disagree, both are shown.
         </p>
       </section>
+
+      {/* The key, third thing on the page rather than last.
+          It used to sit at the foot of section 12, where a reader met the labels
+          for the twelfth time before being told what they meant. The four chips
+          are the contract this publication runs on, so they are stated before
+          the first one appears. */}
+      <div className="method-note" data-lead>
+        <h2 className="subhead">How the basis labels work</h2>
+        <p className="method-note__text">
+          Every figure in AETHER carries one of these four, on screen and in print. Nothing is
+          quoted without one.
+        </p>
+        <dl className="method-note__list">
+          <div>
+            <dt>
+              <Basis basis="measured" />
+            </dt>
+            <dd>Observed data, already collected and published by the cited source.</dd>
+          </div>
+          <div>
+            <dt>
+              <Basis basis="projection" />
+            </dt>
+            <dd>
+              A modelled forward estimate published by the cited source, sensitive to its
+              assumptions.
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <Basis basis="scenario" />
+            </dt>
+            <dd>A conditional pathway. Not a forecast.</dd>
+          </div>
+          <div>
+            <dt>
+              <Basis basis="assumption" />
+            </dt>
+            <dd>Our own assumption for this prototype, carried by no external source.</dd>
+          </div>
+        </dl>
+        {/* Said once, at the top, before the first photograph appears. A
+            publication that spends a section on what it cannot claim does not get
+            to imply its illustrations are documentary evidence. */}
+        <p className="method-note__text">
+          Photographs in this publication are illustrations made for it, not records of real
+          workplaces. Each is captioned with the sourced figure it stands beside, so no image is
+          ever doing the work of evidence.
+        </p>
+      </div>
 
       {/* SDG alignment. Five targets, each quoted from the UN text rather than
           re-titled, and each paired with the official indicator where this report
@@ -153,16 +225,19 @@ export function Research() {
             Aligned with Sustainable Development Goal 8
           </h2>
           <p className="sdg__text">
-            Goal 8 asks for sustained, inclusive and sustainable economic growth, full and productive
-            employment, and decent work for all. Both halves matter here: this report argues about
-            productivity as much as about jobs. Five targets are where it lands, and each is a place
-            the evidence shows a gap rather than progress.
+            Goal 8 asks for sustained, inclusive and sustainable economic growth, full and
+            productive employment, and decent work for all. Both halves matter here: this report
+            argues about productivity as much as about jobs. Five targets are where it lands, and
+            each is a place the evidence shows a gap rather than progress.
           </p>
           <dl className="sdg__targets">
             <div>
               <dt>
-                8.2 <span className="sdg__quote">Higher levels of economic productivity through
-                technological upgrading and innovation</span>
+                8.2{' '}
+                <span className="sdg__quote">
+                  Higher levels of economic productivity through technological upgrading and
+                  innovation
+                </span>
               </dt>
               <dd>
                 Indicator 8.2.1 is output per worker, and that is exactly the quantity credible
@@ -171,8 +246,10 @@ export function Research() {
             </div>
             <div>
               <dt>
-                8.3 <span className="sdg__quote">Encourage the formalization and growth of
-                enterprises</span>
+                8.3{' '}
+                <span className="sdg__quote">
+                  Encourage the formalization and growth of enterprises
+                </span>
               </dt>
               <dd>
                 Indicator 8.3.1 is the informal share of employment. 2.1 billion people work
@@ -181,8 +258,11 @@ export function Research() {
             </div>
             <div>
               <dt>
-                8.5 <span className="sdg__quote">Full and productive employment and decent work for
-                all women and men, and equal pay for work of equal value</span>
+                8.5{' '}
+                <span className="sdg__quote">
+                  Full and productive employment and decent work for all women and men, and equal
+                  pay for work of equal value
+                </span>
               </dt>
               <dd>
                 Indicator 8.5.2 is the unemployment rate. Exposure also falls unevenly by sex:
@@ -191,20 +271,26 @@ export function Research() {
             </div>
             <div>
               <dt>
-                8.6 <span className="sdg__quote">Substantially reduce the proportion of youth NOT in
-                employment, education or training</span>
+                8.6{' '}
+                <span className="sdg__quote">
+                  Substantially reduce the proportion of youth NOT in employment, education or
+                  training
+                </span>
               </dt>
               <dd>
                 The only target here with a deadline already passed, 2020, and the share has since
                 risen. The ILO flags AI as a risk factor for educated first-job seekers, and 11 in
-                every 100 workers are projected to need training and not receive it. Sections 01
-                and 10.
+                every 100 workers are projected to need training and not receive it. Sections 01 and
+                10.
               </dd>
             </div>
             <div>
               <dt>
-                8.8 <span className="sdg__quote">Protect labour rights and promote safe and secure
-                working environments for all workers</span>
+                8.8{' '}
+                <span className="sdg__quote">
+                  Protect labour rights and promote safe and secure working environments for all
+                  workers
+                </span>
               </dt>
               <dd>
                 Indicator 8.8.2 measures labour-rights compliance. Algorithmic management is
@@ -248,33 +334,51 @@ export function Research() {
       >
         <EvidenceRow ids={['CLAIM-AUG-02', 'CLAIM-EMP-08', 'CLAIM-EMP-04', 'CLAIM-SKILL-01']} />
 
+        {/* What the evidence sees, beside what it does not. The pair carries the
+            two asymmetries that run through every section, and does it faster
+            than the paragraph that used to state them. */}
+        <div className="photo-pair">
+          <ReportPhoto
+            src={photoClerical}
+            claim="CLAIM-AUG-02"
+            alt="An open-plan office at dusk, one clerical worker at the far end of a row of empty desks."
+            caption="Exposure is concentrated rather than general. Clerical work is the only broad occupational group where a substantial share of tasks is highly exposed."
+          />
+          <ReportPhoto
+            src={photoInformal}
+            claim="CLAIM-EMP-09"
+            alt="A trader weighing produce by hand on a balance in a busy open-air market."
+            caption="And the surveys behind these projections see formal employment. Informal work, around two billion people, is largely invisible to them."
+          />
+        </div>
+
         <Depth words={280}>
-        <Prose>
-          <p>
-            Four findings hold across the sources reviewed here. First, exposure to generative AI is
-            real but concentrated: around one in four workers globally is in an occupation with some
-            exposure, and 24% of clerical tasks are highly exposed against 1% to 4% for every other
-            broad occupational group <Cite id="CLAIM-AUG-02" />. Second, augmentation potential
-            exceeds automation potential in every income group <Cite id="CLAIM-AUG-01" />, which
-            inverts the assumption most public discussion begins from.
-          </p>
-          <p>
-            Third, aggregate employment has not collapsed and is not projected to. Unemployment is
-            projected stable near 4.9% <Cite id="CLAIM-EMP-08" />, and the most-cited employer
-            projection for 2030 is net growth of 78 million jobs <Cite id="CLAIM-EMP-03" />. The
-            disruption appears as churn, equal to 22% of formal jobs, and as pressure on job quality
-            rather than on headline unemployment.
-          </p>
-          <p>
-            Fourth, and most consequentially for a product about 2045:{' '}
-            <strong>no institutional projection in this evidence base reaches past 2034</strong>{' '}
-            <Cite id="CLAIM-SCEN-01" />. The ILO describes its own exposure classifications as only
-            illustrative and as a static snapshot <Cite id="CLAIM-SCEN-02" />, and states that the
-            outcomes of the transition are not predetermined because humans decide how to incorporate
-            these technologies{' '}
-            <Cite id="CLAIM-SCEN-04" />.
-          </p>
-        </Prose>
+          <Prose>
+            <p>
+              Four findings hold across the sources reviewed here. First, exposure to generative AI
+              is real but concentrated: around one in four workers globally is in an occupation with
+              some exposure, and 24% of clerical tasks are highly exposed against 1% to 4% for every
+              other broad occupational group <Cite id="CLAIM-AUG-02" />. Second, augmentation
+              potential exceeds automation potential in every income group{' '}
+              <Cite id="CLAIM-AUG-01" />, which inverts the assumption most public discussion begins
+              from.
+            </p>
+            <p>
+              Third, aggregate employment has not collapsed and is not projected to. Unemployment is
+              projected stable near 4.9% <Cite id="CLAIM-EMP-08" />, and the most-cited employer
+              projection for 2030 is net growth of 78 million jobs <Cite id="CLAIM-EMP-03" />. The
+              disruption appears as churn, equal to 22% of formal jobs, and as pressure on job
+              quality rather than on headline unemployment.
+            </p>
+            <p>
+              Fourth, and most consequentially for a product about 2045:{' '}
+              <strong>no institutional projection in this evidence base reaches past 2034</strong>{' '}
+              <Cite id="CLAIM-SCEN-01" />. The ILO describes its own exposure classifications as
+              only illustrative and as a static snapshot <Cite id="CLAIM-SCEN-02" />, and states
+              that the outcomes of the transition are not predetermined because humans decide how to
+              incorporate these technologies <Cite id="CLAIM-SCEN-04" />.
+            </p>
+          </Prose>
         </Depth>
 
         <Finding>
@@ -312,7 +416,9 @@ export function Research() {
             full width and the only tonal contrast in twelve sections. */}
         <div className="plate">
           <div className="plate__head">
-            <h3 className="plate__title">Nobody can see 2045. The honest thing is to show where sight ends.</h3>
+            <h3 className="plate__title">
+              Nobody can see 2045. The honest thing is to show where sight ends.
+            </h3>
             <p className="plate__standfirst">
               The band is what can defensibly be said at each horizon. It widens because the range
               genuinely widens, and turns to texture where published evidence runs out and inference
@@ -357,10 +463,7 @@ export function Research() {
               </dd>
             </div>
             <div className="plate__key-item">
-              <span
-                className="plate__key-swatch plate__key-swatch--textured"
-                aria-hidden="true"
-              />
+              <span className="plate__key-swatch plate__key-swatch--textured" aria-hidden="true" />
               <dt className="plate__key-term">Scenario</dt>
               <dd className="plate__key-def">Conditional pathways. Not forecasts.</dd>
             </div>
@@ -376,18 +479,19 @@ export function Research() {
         <Depth words={150}>
           <Prose>
             <p>
-              The four registers are not stylistic. At 2026 the sources report what they measured. At
-              2030 they report what they model, and the WEF figures in particular are extrapolations
-              from employer expectations rather than econometric forecasts. At 2035 nothing published
-              reaches that far, so any statement is our own inference from direction of travel and
-              carries no source's authority. At 2040 and beyond only conditional pathways are
-              defensible.
+              The four registers are not stylistic. At 2026 the sources report what they measured.
+              At 2030 they report what they model, and the WEF figures in particular are
+              extrapolations from employer expectations rather than econometric forecasts. At 2035
+              nothing published reaches that far, so any statement is our own inference from
+              direction of travel and carries no source's authority. At 2040 and beyond only
+              conditional pathways are defensible.
             </p>
             <p>
               Two asymmetries run through every horizon and are permanent features of this evidence
-              base rather than caveats to be noted once. The datasets see the formal-sector minority.
-              And exposure is not job loss: it measures task overlap with model capability, which is
-              the most commonly misread quantity in this field <Cite id="CLAIM-EMP-05" />.
+              base rather than caveats to be noted once. The datasets see the formal-sector
+              minority. And exposure is not job loss: it measures task overlap with model
+              capability, which is the most commonly misread quantity in this field{' '}
+              <Cite id="CLAIM-EMP-05" />.
             </p>
           </Prose>
         </Depth>
@@ -438,15 +542,15 @@ export function Research() {
         </ReportFigure>
 
         <Depth words={47}>
-<Prose>
-          <p>
-            Fastest growing is not the same as most important. AI and big data lead the growth
-            ranking <Cite id="CLAIM-SKILL-06" />, but analytical thinking remains the top core skill
-            employers name, and what they describe wanting is technical and human skills together
-            rather than one substituting for the other <Cite id="CLAIM-SKILL-08" />.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              Fastest growing is not the same as most important. AI and big data lead the growth
+              ranking <Cite id="CLAIM-SKILL-06" />, but analytical thinking remains the top core
+              skill employers name, and what they describe wanting is technical and human skills
+              together rather than one substituting for the other <Cite id="CLAIM-SKILL-08" />.
+            </p>
+          </Prose>
+        </Depth>
 
         <ReportFigure
           title="Which skills are employers adding, and which are they losing?"
@@ -521,22 +625,22 @@ export function Research() {
         takeaway="Ranked by percentage, technology roles lead. Ranked by number of jobs, care and frontline work leads. Conflating the two is the standard error in careers advice."
       >
         <Depth words={91}>
-<Prose>
-          <p>
-            Ranked by percentage growth, technology roles lead: Big Data Specialists, FinTech
-            Engineers, AI and Machine Learning Specialists, Software Developers{' '}
-            <Cite id="CLAIM-JOB-01" />. Ranked by absolute growth, frontline and care roles lead, and
-            the driver is demography rather than AI <Cite id="CLAIM-JOB-02" />.
-          </p>
-          <p>
-            The distinction is not academic. The two fastest-growing occupations in the US
-            projections add fewer than 20,000 jobs combined, a caveat the Bureau of Labor Statistics
-            supplies itself <Cite id="CLAIM-JOB-08" />. Meanwhile home health and personal care aides
-            add 739,800 positions at a median wage of $34,900, against software developers at 267,700
-            and $133,080 <Cite id="CLAIM-JOB-09" />.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              Ranked by percentage growth, technology roles lead: Big Data Specialists, FinTech
+              Engineers, AI and Machine Learning Specialists, Software Developers{' '}
+              <Cite id="CLAIM-JOB-01" />. Ranked by absolute growth, frontline and care roles lead,
+              and the driver is demography rather than AI <Cite id="CLAIM-JOB-02" />.
+            </p>
+            <p>
+              The distinction is not academic. The two fastest-growing occupations in the US
+              projections add fewer than 20,000 jobs combined, a caveat the Bureau of Labor
+              Statistics supplies itself <Cite id="CLAIM-JOB-08" />. Meanwhile home health and
+              personal care aides add 739,800 positions at a median wage of $34,900, against
+              software developers at 267,700 and $133,080 <Cite id="CLAIM-JOB-09" />.
+            </p>
+          </Prose>
+        </Depth>
 
         <Finding>
           Growth in jobs is not growth in good jobs, and percentage growth is not scale.
@@ -567,6 +671,24 @@ export function Research() {
             ]}
           />
         </ReportFigure>
+
+        {/* The section's whole argument as two pictures: the same growth, ranked
+            two ways. Left is the biggest number of jobs, right is the biggest
+            percentage, and they are different kinds of work. */}
+        <div className="photo-pair">
+          <ReportPhoto
+            src={photoHomecare}
+            claim="CLAIM-JOB-09"
+            alt="A home health aide crouching beside an elderly person in an armchair, steadying their arm to help them stand."
+            caption="Ranked by number of jobs, growth looks like this: the largest single source of new US employment, at a median wage of $34,900."
+          />
+          <ReportPhoto
+            src={photoClimate}
+            claim="CLAIM-JOB-08"
+            alt="Two technicians on a rooftop solar array at golden hour, one fastening a panel bracket while the other points along the row."
+            caption="Ranked by percentage, it looks like this: the fastest-growing US occupation, from a base of 13,600 jobs. Both lists are true and they answer different questions."
+          />
+        </div>
 
         <Matrix
           caption="The six career categories this project's dashboard presents, assessed against the evidence. Only one has direct projection support."
@@ -647,22 +769,22 @@ export function Research() {
         <Evidence id="CLAIM-AUG-06" emphasis />
 
         <Depth words={96}>
-<Prose>
-          <p>
-            In 2023 the ILO's highest task-level automation score reached 0.9. In the 2025 refined
-            index the highest is 0.76, with the highest occupational mean at 0.7{' '}
-            <Cite id="CLAIM-AUG-06" />. Two years of real-world deployment caused the source to
-            revise its own estimate downward. A source correcting itself after contact with reality
-            is stronger evidence than either estimate alone.
-          </p>
-          <p>
-            The same update replaced the binary automation-or-augmentation split with a four-gradient
-            spectrum <Cite id="CLAIM-AUG-05" />. This has a direct design consequence for any product
-            built on it: exposure should be rendered as gradient position with task-level variance,
-            never as a safe-or-at-risk verdict.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              In 2023 the ILO's highest task-level automation score reached 0.9. In the 2025 refined
+              index the highest is 0.76, with the highest occupational mean at 0.7{' '}
+              <Cite id="CLAIM-AUG-06" />. Two years of real-world deployment caused the source to
+              revise its own estimate downward. A source correcting itself after contact with
+              reality is stronger evidence than either estimate alone.
+            </p>
+            <p>
+              The same update replaced the binary automation-or-augmentation split with a
+              four-gradient spectrum <Cite id="CLAIM-AUG-05" />. This has a direct design
+              consequence for any product built on it: exposure should be rendered as gradient
+              position with task-level variance, never as a safe-or-at-risk verdict.
+            </p>
+          </Prose>
+        </Depth>
 
         <ReportFigure
           title="How is global employment distributed across the exposure gradients?"
@@ -725,8 +847,8 @@ export function Research() {
             Two findings run against the augmentation-dominant reading and are stated rather than
             omitted. The share of employment in the highest gradient rose from 2.3% to 3.3% between
             editions <Cite id="CLAIM-AUG-07" />, and exposure expanded into strongly digitised
-            professional and technical roles <Cite id="CLAIM-AUG-08" />. Every estimate here was also
-            computed against 2023 to 2025 model generations.
+            professional and technical roles <Cite id="CLAIM-AUG-08" />. Every estimate here was
+            also computed against 2023 to 2025 model generations.
           </p>
         </Caveat>
       </ReportSection>
@@ -773,6 +895,14 @@ export function Research() {
         </ReportFigure>
 
         <Finding>Compliance and control are not the same thing.</Finding>
+
+        <ReportPhoto
+          span
+          src={photoOversight}
+          claim="CLAIM-GOV-04"
+          alt="Two people either side of a desk in a small meeting room, one leaning in to point at a printed page, the other sitting back with folded arms."
+          caption="What the requirement looks like when it is met formally rather than substantively: a review happens, and the outcome rarely changes."
+        />
 
         <Matrix
           caption="Governance instruments covering AI at work, with what each actually requires and its force."
@@ -827,17 +957,17 @@ export function Research() {
         />
 
         <Depth words={59}>
-<Prose>
-          <p>
-            The structural problem beneath the specific risks is information asymmetry. Algorithmic
-            management concentrates knowledge and control on the employer's side, so workers are
-            managed by a system whose logic they cannot see <Cite id="CLAIM-GOV-11" />. It is
-            spreading beyond platform work into customer service, transport, logistics, banking and
-            healthcare, and the ILO notes it does not require AI to operate{' '}
-            <Cite id="CLAIM-GOV-09" />.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              The structural problem beneath the specific risks is information asymmetry.
+              Algorithmic management concentrates knowledge and control on the employer's side, so
+              workers are managed by a system whose logic they cannot see <Cite id="CLAIM-GOV-11" />
+              . It is spreading beyond platform work into customer service, transport, logistics,
+              banking and healthcare, and the ILO notes it does not require AI to operate{' '}
+              <Cite id="CLAIM-GOV-09" />.
+            </p>
+          </Prose>
+        </Depth>
 
         <Caveat label="What cannot be quantified here">
           <p>
@@ -848,8 +978,8 @@ export function Research() {
             platform workers specifically <Cite id="CLAIM-GOV-10" />.
           </p>
           <p>
-            Job quality and algorithmic management are measured at 2026 and nowhere else. There is no
-            projection to extend, so this section cannot show a forward trajectory for its own
+            Job quality and algorithmic management are measured at 2026 and nowhere else. There is
+            no projection to extend, so this section cannot show a forward trajectory for its own
             subject matter.
           </p>
         </Caveat>
@@ -931,15 +1061,33 @@ export function Research() {
           />
         </ReportFigure>
 
+        {/* Two pictures for the two asymmetries this section measures: who
+            carries the exposure, and who has the connection that every
+            reskilling proposal quietly assumes. */}
+        <div className="photo-pair">
+          <ReportPhoto
+            src={photoClericalWomen}
+            claim="CLAIM-DIV-09"
+            alt="Three women at adjacent desks in an administrative office, the nearest sorting a tall stack of paper files by hand."
+            caption="Occupational segregation is the mechanism, not capability: the most exposed group of tasks is also the one most performed by women."
+          />
+          <ReportPhoto
+            src={photoRural}
+            claim="CLAIM-DIV-01"
+            alt="A young woman at the edge of a rural track at dusk, holding a small phone up at arm's length to find a signal."
+            caption="Before any of that, connectivity. A quarter of the world is not online, and every training proposal in this report assumes otherwise."
+          />
+        </div>
+
         <Depth words={26}>
-<Prose>
-          <p>
-            This is why aggregate training figures are the wrong measure. Completion can rise while
-            exclusion persists, so reach among currently-excluded groups is the honest metric{' '}
-            <Cite id="CLAIM-SKILL-10" />.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              This is why aggregate training figures are the wrong measure. Completion can rise
+              while exclusion persists, so reach among currently-excluded groups is the honest
+              metric <Cite id="CLAIM-SKILL-10" />.
+            </p>
+          </Prose>
+        </Depth>
 
         <Finding>
           The people whose work is most exposed to these systems are underrepresented among the
@@ -1017,28 +1165,36 @@ export function Research() {
           />
         </ReportFigure>
 
+        <ReportPhoto
+          span
+          src={photoSupport}
+          claim="CLAIM-RESK-02"
+          alt="A customer support agent wearing a headset at a partitioned desk, other agents receding down the row behind her."
+          caption="The cleanest measurement in this field covers one occupation in one firm: 5,172 support agents, where the least experienced gained most and the most skilled saw small quality declines."
+        />
+
         <Depth words={77}>
-<Prose>
-          <p>
-            On distribution the reading is more consistent, and less comfortable. AI is not expected
-            to reduce inequality on its own: no evidence of labour income inequality relief, a
-            widening capital-labour gap, and small real wage declines projected for some groups{' '}
-            <Cite id="CLAIM-ECON-04" />. The IMF's position runs both ways in a single sentence,
-            which is itself informative <Cite id="CLAIM-ECON-06" />. Cross-country divergence is the
-            more consistent warning: economies facing less immediate disruption are also least ready
-            to capture the benefits <Cite id="CLAIM-DIV-12" />.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              On distribution the reading is more consistent, and less comfortable. AI is not
+              expected to reduce inequality on its own: no evidence of labour income inequality
+              relief, a widening capital-labour gap, and small real wage declines projected for some
+              groups <Cite id="CLAIM-ECON-04" />. The IMF's position runs both ways in a single
+              sentence, which is itself informative <Cite id="CLAIM-ECON-06" />. Cross-country
+              divergence is the more consistent warning: economies facing less immediate disruption
+              are also least ready to capture the benefits <Cite id="CLAIM-DIV-12" />.
+            </p>
+          </Prose>
+        </Depth>
 
         <Caveat>
           <p>
-            The IMF states directly that AI's exact economic implications are challenging to predict,
-            comparing the uncertainty to past general-purpose technologies such as electricity{' '}
-            <Cite id="CLAIM-ECON-07" />. The sceptical estimates exist in two live versions, 0.71% in
-            the 2024 working paper and 0.66% in the 2025 published version, and must not be mixed in
-            one chart. Consultancy projections widely circulated in this space were deliberately
-            excluded.
+            The IMF states directly that AI's exact economic implications are challenging to
+            predict, comparing the uncertainty to past general-purpose technologies such as
+            electricity <Cite id="CLAIM-ECON-07" />. The sceptical estimates exist in two live
+            versions, 0.71% in the 2024 working paper and 0.66% in the 2025 published version, and
+            must not be mixed in one chart. Consultancy projections widely circulated in this space
+            were deliberately excluded.
           </p>
         </Caveat>
       </ReportSection>
@@ -1053,16 +1209,16 @@ export function Research() {
         takeaway="Assistance-led transformation is where the evidence points. Whether that turns out well depends on governance, not on the technology."
       >
         <Depth words={49}>
-<Prose>
-          <p>
-            The three differ on two axes, chosen because the evidence identifies both as unresolved
-            and consequential: where deployment lands in the task distribution, and whether
-            governance and reskilling delivery are substantive or nominal. The method follows the
-            ILO's own, mapping drivers onto job quantity, job quality and inequality{' '}
-            <Cite id="CLAIM-SCEN-07" />.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              The three differ on two axes, chosen because the evidence identifies both as
+              unresolved and consequential: where deployment lands in the task distribution, and
+              whether governance and reskilling delivery are substantive or nominal. The method
+              follows the ILO's own, mapping drivers onto job quantity, job quality and inequality{' '}
+              <Cite id="CLAIM-SCEN-07" />.
+            </p>
+          </Prose>
+        </Depth>
 
         <div className="scenario-grid">
           {SCENARIOS.map((s) => (
@@ -1116,25 +1272,25 @@ export function Research() {
         </Finding>
 
         <Depth words={121}>
-<Prose>
-          <p>
-            Stating a preference rather than treating the three as equally likely, because the
-            evidence does lean and false balance is its own form of dishonesty. The strongest single
-            reason: augmentation potential exceeds automation potential in every income group{' '}
-            <Cite id="CLAIM-AUG-01" />, and the revision that mattered most went against the
-            high-automation pathway, with the ILO lowering its own peak task scores after real-world
-            experience <Cite id="CLAIM-AUG-06" />.
-          </p>
-          <p>
-            But support for Scenario 03 as a <em>direction</em> says nothing about whether its
-            outcomes are good. Its core mechanism, effective human-AI integration, is currently an
-            evidence gap with a negative pooled synergy effect <Cite id="CLAIM-RESK-03" />. And
-            collaboration-centred work is fully compatible with algorithmic management{' '}
-            <Cite id="CLAIM-GOV-09" />, so its conditions outcome depends on governance rather than on
-            the collaboration design itself.
-          </p>
-        </Prose>
-</Depth>
+          <Prose>
+            <p>
+              Stating a preference rather than treating the three as equally likely, because the
+              evidence does lean and false balance is its own form of dishonesty. The strongest
+              single reason: augmentation potential exceeds automation potential in every income
+              group <Cite id="CLAIM-AUG-01" />, and the revision that mattered most went against the
+              high-automation pathway, with the ILO lowering its own peak task scores after
+              real-world experience <Cite id="CLAIM-AUG-06" />.
+            </p>
+            <p>
+              But support for Scenario 03 as a <em>direction</em> says nothing about whether its
+              outcomes are good. Its core mechanism, effective human-AI integration, is currently an
+              evidence gap with a negative pooled synergy effect <Cite id="CLAIM-RESK-03" />. And
+              collaboration-centred work is fully compatible with algorithmic management{' '}
+              <Cite id="CLAIM-GOV-09" />, so its conditions outcome depends on governance rather
+              than on the collaboration design itself.
+            </p>
+          </Prose>
+        </Depth>
       </ReportSection>
 
       {/* 10 ---------------------------------------------------------------- */}
@@ -1197,35 +1353,44 @@ export function Research() {
       >
         <Prose>
           <p>
-            What the research establishes is that tasks are being reallocated faster than occupations
-            are being eliminated, that augmentation is the larger category in every income group, and
-            that the effects are concentrated rather than general. What it does not establish is
-            anything about 2045. The furthest institutional projection reviewed here reaches 2034, and
-            the ILO presents its own exposure estimates as a static snapshot rather than a trajectory.
+            What the research establishes is that tasks are being reallocated faster than
+            occupations are being eliminated, that augmentation is the larger category in every
+            income group, and that the effects are concentrated rather than general. What it does
+            not establish is anything about 2045. The furthest institutional projection reviewed
+            here reaches 2034, and the ILO presents its own exposure estimates as a static snapshot
+            rather than a trajectory.
           </p>
           <p>
-            That combination is not a failure of the research. It is the finding. The outcomes of this
-            transition are not predetermined, because humans decide how to incorporate these
-            technologies and need to guide the transition <Cite id="CLAIM-SCEN-04" />. Which means the
-            question worth putting to a person deciding what to learn is not what the future holds,
-            but which tasks in their work are changing and what judgement they are building.
+            That combination is not a failure of the research. It is the finding. The outcomes of
+            this transition are not predetermined, because humans decide how to incorporate these
+            technologies and need to guide the transition <Cite id="CLAIM-SCEN-04" />. Which means
+            the question worth putting to a person deciding what to learn is not what the future
+            holds, but which tasks in their work are changing and what judgement they are building.
           </p>
           <p>
-            There is a second reading of that. If the outcome is decided by people rather than by the
-            technology, then the thing to measure is not only how much work gets done but whether the
-            person doing it can still question a decision made about them. The evidence says that is
-            where the pathways actually diverge: oversight can exist on paper while the system decides{' '}
-            <Cite id="CLAIM-GOV-04" />, and a worker cannot contest what they cannot inspect{' '}
-            <Cite id="CLAIM-GOV-09" />. Productivity is the easier thing to count. Dignity is the
-            thing that has to be designed in, and it is the part no projection will deliver on its
-            own.
+            There is a second reading of that. If the outcome is decided by people rather than by
+            the technology, then the thing to measure is not only how much work gets done but
+            whether the person doing it can still question a decision made about them. The evidence
+            says that is where the pathways actually diverge: oversight can exist on paper while the
+            system decides <Cite id="CLAIM-GOV-04" />, and a worker cannot contest what they cannot
+            inspect <Cite id="CLAIM-GOV-09" />. Productivity is the easier thing to count. Dignity
+            is the thing that has to be designed in, and it is the part no projection will deliver
+            on its own.
           </p>
         </Prose>
 
+        <ReportPhoto
+          span
+          src={photoVoice}
+          claim="CLAIM-GOV-11"
+          alt="A shop-floor meeting in a plain works canteen, one worker standing mid-sentence while the others listen, one taking notes."
+          caption="The part no projection delivers. A worker cannot contest a decision they cannot inspect, which makes voice something to design in rather than an outcome to wait for."
+        />
+
         <Finding>
-          Every confident claim about the workforce of 2045 is either a scenario wearing a forecast's
-          clothes, or an invention. What is not a scenario is the choice: whether the systems built
-          between now and then leave the people inside them able to be heard.
+          Every confident claim about the workforce of 2045 is either a scenario wearing a
+          forecast's clothes, or an invention. What is not a scenario is the choice: whether the
+          systems built between now and then leave the people inside them able to be heard.
         </Finding>
       </ReportSection>
 
@@ -1243,8 +1408,8 @@ export function Research() {
             Sources were selected for institutional authority and retrieved directly. Consultancy
             projections widely circulated in this field were deliberately excluded in favour of
             intergovernmental, statistical-office and peer-reviewed material. Each entry notes what
-            the source is authoritative for and where it stops, because most misreadings in this field
-            come from stretching a source past its own stated scope.
+            the source is authoritative for and where it stops, because most misreadings in this
+            field come from stretching a source past its own stated scope.
           </p>
           <p>
             Figures are transcribed to the source's own precision. Where a source revised its own
@@ -1254,63 +1419,31 @@ export function Research() {
         </Prose>
 
         <ul className="source-list">
-          {SOURCE_IDS
-            .map((id) => {
-              const s = SOURCES[id];
-              return (
-                <li className="source-list__item" key={id}>
-                  <p className="source-list__org">{s.org}</p>
-                  <p className="source-list__title">
-                    {s.title} ({s.year})
-                  </p>
-                  <p className="source-list__scope">{s.scope}</p>
-                  <a className="source-list__url" href={s.url}>
-                    {s.url}
-                  </a>
-                </li>
-              );
-            })}
+          {SOURCE_IDS.map((id) => {
+            const s = SOURCES[id];
+            return (
+              <li className="source-list__item" key={id}>
+                <p className="source-list__org">{s.org}</p>
+                <p className="source-list__title">
+                  {s.title} ({s.year})
+                </p>
+                <p className="source-list__scope">{s.scope}</p>
+                <a className="source-list__url" href={s.url}>
+                  {s.url}
+                </a>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="method-note">
-          <h3 className="subhead">How the basis labels work</h3>
-          <p className="method-note__text">
-            Every figure in AETHER carries one of these four labels.
-          </p>
-          <dl className="method-note__list">
-            <div>
-              <dt>
-                <Basis basis="measured" />
-              </dt>
-              <dd>Observed data, already collected and published by the cited source.</dd>
-            </div>
-            <div>
-              <dt>
-                <Basis basis="projection" />
-              </dt>
-              <dd>
-                A modelled forward estimate published by the cited source, sensitive to its
-                assumptions.
-              </dd>
-            </div>
-            <div>
-              <dt>
-                <Basis basis="scenario" />
-              </dt>
-              <dd>A conditional pathway. Not a forecast.</dd>
-            </div>
-            <div>
-              <dt>
-                <Basis basis="assumption" />
-              </dt>
-              <dd>Our own assumption for this prototype, carried by no external source.</dd>
-            </div>
-          </dl>
+          <h3 className="subhead">What is kept alongside this list</h3>
           <p className="method-note__text">
             The full evidence base, including supporting quotations, methodological caveats, and the
-            list of figures that could <strong>not</strong> be verified, is maintained alongside this
-            publication. That unverified list is load-bearing: it records what this project is not
-            allowed to claim. Sources are cited in the form {citeShort('ilo-wp140')}.
+            list of figures that could <strong>not</strong> be verified, is maintained alongside
+            this publication. That unverified list is load-bearing: it records what this project is
+            not allowed to claim. Sources are cited in the form {citeShort('ilo-wp140')}, and the
+            four basis labels are set out at the top of this publication.
           </p>
         </div>
       </ReportSection>

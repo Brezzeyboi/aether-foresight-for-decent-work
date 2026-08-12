@@ -327,7 +327,7 @@ export function DivergingBars({
                   y={y}
                   width={barW}
                   height={band.bandwidth}
-                  rx={1.5}
+                  rx={2.5}
                   fill={positive ? 'var(--accent-live)' : 'var(--risk-elevated)'}
                 />
                 {/* Name in the outer gutter, value at the bar tip. Splitting the
