@@ -1,7 +1,7 @@
 # AETHER — The Workforce Transformation Model
 
 **Compiled:** August 2026
-**Inputs:** [`04-research-evidence.md`](04-research-evidence.md) (100 verified claims), [`05-sources.md`](05-sources.md) (24 sources).
+**Inputs:** [`04-research-evidence.md`](04-research-evidence.md) (100 documented claims, 84 of them implemented in `src/data/claims.ts`), [`05-sources.md`](05-sources.md) (23 published sources, plus one internal marker for this project's own assumptions).
 **Purpose:** Turn the evidence base into a structured model of workforce change across 2026 → 2030 → 2035 → 2040 → 2045, with the certainty of every statement made explicit.
 
 ---
