@@ -240,6 +240,10 @@ export function Shell({ route, phase = 'idle', dir = 'forward', children }: Shel
                   decoding="async"
                 />
                 <span>Maxfortian</span>
+                {/* The one other link in the product that leaves the site. Said
+                    aloud rather than only signalled by target, since nothing in
+                    the visible text tells a screen-reader user a new tab opens. */}
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </span>
           </p>

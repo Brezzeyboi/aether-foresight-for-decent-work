@@ -1428,7 +1428,18 @@ export function Research() {
                   {s.title} ({s.year})
                 </p>
                 <p className="source-list__scope">{s.scope}</p>
-                <a className="source-list__url" href={s.url}>
+                {/* Every source lives on someone else's site, so it opens in a new
+                    tab: a judge following a citation should not lose their place in
+                    the publication. rel is not optional with target, and the label
+                    says where the link goes and that it leaves this page, because
+                    the visible text is a bare URL. */}
+                <a
+                  className="source-list__url"
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={`${s.title} (${s.org}), opens in a new tab`}
+                >
                   {s.url}
                 </a>
               </li>
