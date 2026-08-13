@@ -309,6 +309,25 @@ export function Research() {
             Each opens with its finding in one line. The full analysis sits behind a toggle, so the
             depth is there if you want it and out of the way if you do not.
           </p>
+          {/* The compiled document. This publication is meant to leave the screen,
+              so the print stylesheet is a first-class view rather than an
+              afterthought: the PDF beside it is this page, printed, and Ctrl+P
+              produces the same thing. Hidden from the print output itself, where a
+              link to the file you are already holding is noise. */}
+          <p className="report-contents__pdf no-print">
+            <a
+              className="report-contents__pdf-link"
+              href="./AETHER-Research-Board.pdf"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Download this publication as a PDF
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <span className="report-contents__pdf-note">
+              A4, typeset from this page &middot; Ctrl&nbsp;+&nbsp;P gives the same document
+            </span>
+          </p>
         </div>
         <ol className="report-contents__list">
           {CONTENTS.map(([n, title, id, gist]) => (

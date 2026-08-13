@@ -532,6 +532,11 @@
 
   .report-section {
     border-bottom: 0;
+    /* On paper a page break separates the sections, so the screen's block padding
+       has nothing left to do: at the top it pushes every section 5rem below an
+       18mm page margin, and at the bottom it can spill past the last line as a
+       fragment of its own — which is exactly how page 13 came out blank. */
+    padding-block: 0;
   }
 
   /* Caveats must be open on paper: there is nothing to click. */

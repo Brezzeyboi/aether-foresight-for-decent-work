@@ -383,12 +383,20 @@ interface ReportFigureProps {
 export function ReportFigure({ title, help, sources, note, children }: ReportFigureProps) {
   return (
     <figure className="report-figure" data-reveal>
-      <figcaption className="report-figure__head">
-        <h3 className="report-figure__title">{title}</h3>
-        {help && <p className="report-figure__help">{help}</p>}
-      </figcaption>
+      {/* The caption and the chart are wrapped rather than left as siblings for
+          one reason: paper. Chrome ignores `break-after: avoid` between siblings
+          — it honours `break-inside: avoid` and nothing else — so a figure title
+          could sit alone at the foot of a page with its chart overleaf. A box
+          around the pair is the only thing the printer respects. On screen it is
+          an unstyled block and changes nothing. */}
+      <div className="report-figure__keep">
+        <figcaption className="report-figure__head">
+          <h3 className="report-figure__title">{title}</h3>
+          {help && <p className="report-figure__help">{help}</p>}
+        </figcaption>
 
-      <div className="report-figure__body">{children}</div>
+        <div className="report-figure__body">{children}</div>
+      </div>
 
       {(sources || note) && (
         <div className="report-figure__foot">

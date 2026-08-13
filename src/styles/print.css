@@ -204,8 +204,22 @@
   .panel,
   .callout,
   .figure-frame,
-  .scenario-panel,
+  .scenario-panel {
+    break-inside: avoid;
+  }
+
+  /* Except a chart figure, which carries a chart, a data table and a source list
+     and is routinely taller than the space left on the page. Held atomic it jumps
+     whole and leaves a two-line page behind it, so it is allowed to split — with
+     the title and the chart bound together in __keep, and the source list free to
+     flow, because Chrome honours break-inside and ignores break-after. */
+  .report-figure,
   table {
+    break-inside: auto;
+  }
+
+  .report-figure__keep,
+  .chart-block__figure {
     break-inside: avoid;
   }
 
@@ -264,7 +278,14 @@
   }
 
   /* Tables that back up charts should print, since a printed chart cannot be
-     hovered for values. */
+     hovered for values. The wrapper is what the on-screen toggle collapses, so
+     it has to be forced open too — styling only the table left it inside a
+     display:none parent and the numbers never reached the page. */
+  .chart-table-wrap {
+    display: block !important;
+    overflow: visible !important;
+  }
+
   .chart-table {
     display: table !important;
     margin-top: var(--s-4);
