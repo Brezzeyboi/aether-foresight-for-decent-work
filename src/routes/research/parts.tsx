@@ -72,24 +72,31 @@ export function ReportSection({
       id={id}
       aria-labelledby={`${id}-title`}
     >
-      <div className="report-section__head">
-        <p className="report-section__number" aria-hidden="true">
-          {number}
-        </p>
-        <div className="report-section__intro">
-          <h2 className="report-section__title" id={`${id}-title`}>
-            {title}
-          </h2>
-          <p className="report-section__standfirst">{standfirst}</p>
+      {/* Head and takeaway are wrapped for the same reason ReportFigure wraps its
+          caption: on paper Chrome honours `break-inside` and ignores
+          `break-after`, so a box around the pair is the only way to stop a
+          section title landing at the foot of a page with its finding overleaf.
+          On screen it is an unstyled block and changes nothing. */}
+      <div className="report-section__keep">
+        <div className="report-section__head">
+          <p className="report-section__number" aria-hidden="true">
+            {number}
+          </p>
+          <div className="report-section__intro">
+            <h2 className="report-section__title" id={`${id}-title`}>
+              {title}
+            </h2>
+            <p className="report-section__standfirst">{standfirst}</p>
+          </div>
         </div>
-      </div>
 
-      {takeaway && (
-        <p className="report-section__takeaway">
-          <span className="report-section__takeaway-mark" aria-hidden="true" />
-          {takeaway}
-        </p>
-      )}
+        {takeaway && (
+          <p className="report-section__takeaway">
+            <span className="report-section__takeaway-mark" aria-hidden="true" />
+            {takeaway}
+          </p>
+        )}
+      </div>
 
       <div className="report-section__body">{children}</div>
     </section>

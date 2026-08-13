@@ -189,17 +189,21 @@
   }
 
   /* --- Pagination -----------------------------------------------------
-     Report sections start on a fresh page; figures, tables, and callouts are
-     never split across a page boundary. */
-  .report-section {
-    break-before: page;
-    break-inside: auto;
+     Sections flow. Starting each one on a fresh page sounds like a publication
+     and reads like a fault: a section whose last paragraph spills two lines
+     leaves a page holding two lines and nothing else, because the section after
+     it cannot come up to fill the space. Chrome implements neither `widows` nor
+     `orphans`, so the spill cannot be prevented — only absorbed, by letting the
+     next section begin where the last one ended.
+
+     What the forced break was really protecting is a section opening at the
+     foot of a page, and that is a keep box's job: the head and the takeaway
+     travel together, so a title is never stranded from its finding. */
+  .report-section__keep {
+    break-inside: avoid;
   }
 
-  .report-section:first-of-type {
-    break-before: avoid;
-  }
-
+  /* Figures, tables, and callouts are never split across a page boundary. */
   figure,
   .panel,
   .callout,
