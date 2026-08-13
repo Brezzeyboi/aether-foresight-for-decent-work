@@ -203,11 +203,14 @@
     break-inside: avoid;
   }
 
-  /* Figures, tables, and callouts are never split across a page boundary. */
+  /* Figures, tables, and callouts are never split across a page boundary. A box
+     is the one thing that must not fragment: split across pages it loses its
+     bottom edge, gains a false one, and leaves a band of empty tint behind. */
   figure,
   .panel,
   .callout,
   .figure-frame,
+  .method-note,
   .scenario-panel {
     break-inside: avoid;
   }
